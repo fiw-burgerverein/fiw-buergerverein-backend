@@ -54,6 +54,13 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
+		<!-- zum Senden von Emails -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+			<version>2.2.0.RELEASE</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

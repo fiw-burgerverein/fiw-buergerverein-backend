@@ -10,4 +10,6 @@ public interface UserService {
 
     ApiResponse login(LoginDto loginDto);
 
+    //ApiResponse createVerificationTokenForUser( User user, final String token) //dto missing
+
 }

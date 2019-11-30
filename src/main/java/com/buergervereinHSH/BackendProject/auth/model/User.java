@@ -1,6 +1,5 @@
 package com.buergervereinHSH.BackendProject.auth.model;
 
-import com.buergervereinHSH.BackendProject.auth.model.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.Set;
@@ -11,18 +10,25 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long user_id;
     private String email;
     @JsonIgnore
     private String password;
     @ManyToMany
     private Set<Role> roles;
+    @Column(name = "enabled")  //new
+    private boolean enabled;    //new
 
-    public long getId() {
-        return id;
+    public User() {             //new
+        //super();
+        this.enabled=false;
     }
-    public void setId(long id) {
-        this.id = id;
+
+    public long getUser_id() {
+        return user_id;
+    }
+    public void setUser_id(long user_id) {
+        this.user_id = user_id;
     }
 
     public String getEmail() {
@@ -32,9 +38,7 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
+    public String getPassword() { return password; }
     public void setPassword(String password) {
         this.password = password;
     }
