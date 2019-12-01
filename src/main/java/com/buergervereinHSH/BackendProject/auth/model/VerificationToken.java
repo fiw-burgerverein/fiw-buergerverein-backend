@@ -1,13 +1,58 @@
 package com.buergervereinHSH.BackendProject.auth.model;
 
+//baeldung, 24h token:
+/*
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
+*/
+
+import java.util.Date;
+import java.util.UUID;
+import javax.persistence.*;
 
 @Entity   //Angabe table?
 public class VerificationToken {
 
-    private static final int EXPIRATION = 60 * 24;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="token_id")
+    private long tokenid;
+
+    @Column(name="verification_token")
+    private String token;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
+
+    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false, name = "user_id")
+    private User user;
+
+    public VerificationToken() {
+    }
+
+    public VerificationToken(User user) {
+        this.user = user;
+        createdDate = new Date();
+        token = UUID.randomUUID().toString();
+    }
+
+    public long getTokenid() {return tokenid;}
+    public void setTokenid(long tokenid) { this.tokenid = tokenid;}
+
+    public String getToken() {return token;}
+    public void setToken(String token) {this.token = token;}
+
+    public Date getCreatedDate() {return createdDate;}
+    public void setCreatedDate(Date createdDate) {this.createdDate = createdDate; }
+
+    public User getUser() {return user;}
+    public void setUser(User user) {this.user = user;}
+
+
+    //baeldung, 24h Token
+   /* private static final int EXPIRATION = 60 * 24;
 
     @Id //specifies the primary key of an entity
     @GeneratedValue(strategy = GenerationType.AUTO)  //provides for the specification of generation strategies for the values of primary keys
@@ -96,5 +141,5 @@ public class VerificationToken {
         final StringBuilder builder = new StringBuilder();
         builder.append("Token [String=").append(token).append("]").append("[Expires").append(expiryDate).append("]");
         return builder.toString();
-    }
+    }*/
 }
