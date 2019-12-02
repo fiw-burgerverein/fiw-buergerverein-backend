@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/")
 public class UserController {
@@ -18,10 +20,10 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/registrieren")
-    public ApiResponse signUp(@RequestBody SignUpDto signUpDto){ return userService.signUp(signUpDto); }
+    public ApiResponse signUp(@Valid @RequestBody SignUpDto signUpDto){ return userService.signUp(signUpDto); }
 
     @PostMapping("/login")
-    public ApiResponse login(@RequestBody LoginDto loginDto){
+    public ApiResponse login(@Valid @RequestBody LoginDto loginDto){
         return userService.login(loginDto);
     }
 }
