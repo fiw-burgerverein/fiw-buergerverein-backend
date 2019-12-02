@@ -5,7 +5,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-//@Table(name = "USERS")
+@Table(name = "Users")
 public class User {
 
     @Id
@@ -17,7 +17,7 @@ public class User {
     private String password;
     @ManyToMany
     private Set<Role> roles;
-   // @Column(name = "enabled")  //new
+    @Column(name = "enabled")  //new
     private boolean enabled;    //new
 
 /*    public User() {             //new

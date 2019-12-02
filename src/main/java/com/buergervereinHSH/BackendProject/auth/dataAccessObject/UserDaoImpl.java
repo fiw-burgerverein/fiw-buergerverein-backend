@@ -1,6 +1,6 @@
 package com.buergervereinHSH.BackendProject.auth.dataAccessObject;
 
-//wird überflüssig mit CRUD?
+//würde überflüssig mit CRUD?
 
 import com.buergervereinHSH.BackendProject.auth.model.User;
 import org.hibernate.Session;

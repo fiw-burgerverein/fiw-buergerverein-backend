@@ -6,9 +6,10 @@ import com.buergervereinHSH.BackendProject.auth.dataTransferObject.SignUpDto;
 
 public interface UserService {
 
-   /* ApiResponse signUp(SignUpDto signUpDto);
+    ApiResponse signUp(SignUpDto signUpDto);
 
-    ApiResponse login(LoginDto loginDto);*/
+    ApiResponse login(LoginDto loginDto);
+
 
     //ApiResponse createVerificationTokenForUser( User user, final String token) //dto missing
 

@@ -1,17 +1,6 @@
 package com.buergervereinHSH.BackendProject.auth.dataAccessObject;
 
-
-import org.springframework.data.repository.CrudRepository;
-import com.buergervereinHSH.BackendProject.auth.model.VerificationToken;
-
-public interface VerificationTokenRepository extends CrudRepository<VerificationToken, String> {
-
-    VerificationToken findByVerificationToken(String verificationToken);
-}
-
-
 //baeldung, 24h token:
-/*
 import com.buergervereinHSH.BackendProject.auth.model.User;
 import com.buergervereinHSH.BackendProject.auth.model.VerificationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,11 +16,23 @@ public interface VerificationTokenRepository extends JpaRepository<VerificationT
 
     VerificationToken findByUser(User user);
 
-    Stream<VerificationToken> findAllByExpiryDateLessThan(Date now);
+    //not necessary now:
+/*    Stream<VerificationToken> findAllByExpiryDateLessThan(Date now);
 
     void deleteByExpiryDateLessThan(Date now);
 
     @Modifying
     @Query("delete from VerificationToken t where t.expiryDate <= ?1")
-    void deleteAllExpiredSince(Date now);
-}*/
+    void deleteAllExpiredSince(Date now);*/
+}
+
+//StackAbuse:
+/*
+import org.springframework.data.repository.CrudRepository;
+import com.buergervereinHSH.BackendProject.auth.model.VerificationToken;
+
+public interface VerificationTokenRepository extends CrudRepository<VerificationToken, String> {
+
+    VerificationToken findByVerificationToken(String verificationToken);
+}
+*/

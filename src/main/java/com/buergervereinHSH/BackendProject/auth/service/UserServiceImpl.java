@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserServiceImpl implements UserService {
 
-   /* @Autowired
+    @Autowired
     private UserDao userDao;
     @Autowired
     private UserDaoImpl userDaoImpl;
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
         if (signUpDto.getPassword().length() < 8 || signUpDto.getPassword().length() > 32) {
             throw new RuntimeException("Bitte wählen Sie einen Passwort, der länger als 8 Symbole und kürzer als 32 Symbole ist.");
         }
-        if (userDao.findByEmailIdIgnoreCase(signUpDto.getEmail()) != null) {
+        if (userDao.findByEmail(signUpDto.getEmail()) != null) {
             throw new RuntimeException("Diese Email-Adresse wird von einem anderen Account benutzt.");
         }
 
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ApiResponse login(LoginDto loginDto) {
-        User user = userDao.findByEmailIdIgnoreCase(loginDto.getEmail());
+        User user = userDao.findByEmail(loginDto.getEmail());
 
         if(loginDto.getEmail() == null || loginDto.getPassword() == null) {
             throw new RuntimeException("Bitte füllen Sie die Email- und Passwort-Felder aus.");
@@ -85,8 +85,8 @@ public class UserServiceImpl implements UserService {
     private void validateSignUp(SignUpDto signUpDto) {
     }
 
-*//*    //@Override //dto missing!
-    public ApiResponse createVerificationTokenForUser(final User user, final String token) {
+    //@Override //dto missing!
+/*    public ApiResponse createVerificationTokenForUser(final User user, final String token) {
         final VerificationToken myToken = new VerificationToken(token, user);
         tokenRepository.save(myToken);  //wo wird gesaved?
         return new ApiResponse(200, "Token erstellt", null);
