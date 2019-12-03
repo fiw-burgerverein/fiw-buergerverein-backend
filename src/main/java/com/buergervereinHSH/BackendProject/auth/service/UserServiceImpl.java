@@ -67,7 +67,6 @@ public class UserServiceImpl implements UserService {
         //zum testen, noch ohne URL in Email;
         emailImpl.sendSimpleMessage(user.getEmail(), "Confirmation Registration", "Durch Betätigen" +
                 "des Links: "+token);
-
         return new ApiResponse(200, "Ein Besätigungslink wurde an die von Ihnen angebenen Email gesendet.", user); //eigentlich noch nicht
     }
 
@@ -81,8 +80,12 @@ public class UserServiceImpl implements UserService {
         if(loginDto.getEmail() == null || loginDto.getPassword() == null) {
             throw new RuntimeException("Bitte füllen Sie die Email- und Passwort-Felder aus.");
         }
-        if(user == null) {
-            throw new RuntimeException("Dieser Account existiert nicht.");
+        if(user == null) {  //noch nicht freigeschaltet --> eigene exception schmeißen besser
+            throw new RuntimeException("Dieser Account existiert nicht");
+        }
+        if(user.isEnabled()==false)
+        {
+            throw new RuntimeException("Bitte bestätigen Sie Ihre Email-Adresse anhand des Bestätigungslinks in Ihrem Email Postfach");
         }
         if(!encoder.matches(loginDto.getPassword(), user.getPassword())) {
             throw new RuntimeException("Falsches Passwort.");
