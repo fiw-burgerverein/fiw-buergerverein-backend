@@ -13,15 +13,8 @@ import java.util.UUID;*/
 @Table(name = "VerificationTokens") //nötig?
 public class VerificationToken {
 
-    //oder token direkt im Konstruktor erzeugen? (StackAbuse) Token hier Attribut created Date
-/*    public VerificationToken(User user) {
-        this.user = user;
-        createdDate = new Date();
-        token = UUID.randomUUID().toString();
-    }*/
-
     //baeldung, 24h Token
-    private static final int EXPIRATION = 60 * 24;
+   // private static final int EXPIRATION = 60 * 24;
 
     @Id //specifies the primary key of an entity
     @GeneratedValue(strategy = GenerationType.AUTO)  //provides for the specification of generation strategies for the values of primary keys
@@ -53,6 +46,13 @@ public class VerificationToken {
         this.user = user;
         //this.expiryDate = calculateExpiryDate(EXPIRATION);
     }
+
+    //oder token direkt im Konstruktor erzeugen? (StackAbuse) Token hier Attribut created Date
+/*    public VerificationToken(User user) {
+        this.user = user;
+        createdDate = new Date();
+        token = UUID.randomUUID().toString();
+    }*/
 
     public Long getVt_id() {return vt_id;}
 

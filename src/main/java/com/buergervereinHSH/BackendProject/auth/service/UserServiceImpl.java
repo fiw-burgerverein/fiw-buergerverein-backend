@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
         //zum testen, noch ohne Token
         emailImpl.sendSimpleMessage(user.getEmail(), "Willkommen bei etc", "Durch Betätigen" +
                 "des Links: account aktiviert");
-        //
+
         return new ApiResponse(200, "Sie sind erfolgreich registriert.", user); //eigentlich noch nicht
     }
 

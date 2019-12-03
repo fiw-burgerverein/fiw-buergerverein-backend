@@ -1,6 +1,5 @@
 package com.buergervereinHSH.BackendProject.auth.dataAccessObject;
 
-//baeldung, 24h token:
 import com.buergervereinHSH.BackendProject.auth.model.User;
 import com.buergervereinHSH.BackendProject.auth.model.VerificationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
