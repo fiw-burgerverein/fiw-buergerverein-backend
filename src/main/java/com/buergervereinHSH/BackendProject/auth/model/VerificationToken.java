@@ -39,9 +39,8 @@ public class VerificationToken {
        //this.expiryDate = calculateExpiryDate(EXPIRATION);
     }
 
-    public VerificationToken(final String token, final User user) {
-        super();
-
+    public VerificationToken(final User user, final String token) {
+       // super();
         this.token = token;
         this.user = user;
         //this.expiryDate = calculateExpiryDate(EXPIRATION);

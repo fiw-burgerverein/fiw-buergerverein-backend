@@ -22,6 +22,7 @@ public class UserController {
     @PostMapping("/registrieren")
     public ApiResponse signUp(@RequestBody SignUpDto signUpDto){ return userService.signUp(signUpDto); }
 
+
     @PostMapping("/login")
     public ApiResponse login(@RequestBody LoginDto loginDto){
         return userService.login(loginDto);

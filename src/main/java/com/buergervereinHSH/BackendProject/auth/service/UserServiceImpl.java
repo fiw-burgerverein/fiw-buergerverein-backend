@@ -16,9 +16,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 @Transactional
 @Service
 public class UserServiceImpl implements UserService {
+
 
     @Autowired
     private UserDao userDao;
@@ -36,7 +39,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ApiResponse signUp(SignUpDto signUpDto) {  //fehlt methode zur bestätigung des Links
         validateSignUp(signUpDto);
-        User user = new User();
+        User user = new User();   //Objekterzeugung in Spring
 
         if(!signUpDto.getEmail().equals(signUpDto.getEmailConfirm())) {
             throw new RuntimeException("Die eingegebene Email-Adressen stimmen nicht überein.");
@@ -58,16 +61,22 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encoder.encode(user.getPassword()));
         userDaoImpl.save(user);
 
-        //zum testen, noch ohne Token
-        emailImpl.sendSimpleMessage(user.getEmail(), "Willkommen bei etc", "Durch Betätigen" +
-                "des Links: account aktiviert");
+        String token = UUID.randomUUID().toString();  //erstellen eines random Strings (als Token)
+        createVerificationTokenForUser(user, token);  //erstellen eines VerificationTokens mit token als String
 
-        return new ApiResponse(200, "Sie sind erfolgreich registriert.", user); //eigentlich noch nicht
+        //zum testen, noch ohne URL in Email;
+        emailImpl.sendSimpleMessage(user.getEmail(), "Confirmation Registration", "Durch Betätigen" +
+                "des Links: "+token);
+
+        return new ApiResponse(200, "Ein Besätigungslink wurde an die von Ihnen angebenen Email gesendet.", user); //eigentlich noch nicht
     }
 
     @Override
     public ApiResponse login(LoginDto loginDto) {
+
         User user = userDao.findByEmail(loginDto.getEmail());
+
+        //if user.enabled==true:
 
         if(loginDto.getEmail() == null || loginDto.getPassword() == null) {
             throw new RuntimeException("Bitte füllen Sie die Email- und Passwort-Felder aus.");
@@ -82,13 +91,27 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    private void validateSignUp(SignUpDto signUpDto) {
+    @Override
+    public void createVerificationTokenForUser(User user, String token) {
+        VerificationToken myToken = new VerificationToken(user, token);
+        tokenRepository.save(myToken);
+        //return new ApiResponse(200, "Token was created", null);
     }
 
-    //@Override //dto missing!
-/*    public ApiResponse createVerificationTokenForUser(final User user, final String token) {
-        final VerificationToken myToken = new VerificationToken(token, user);
-        tokenRepository.save(myToken);  //wo wird gesaved?
-        return new ApiResponse(200, "Token erstellt", null);
+    /*@Override
+    public void setEmailParam(User user, VerificationToken token) {
+
     }*/
+
+   /* @Override   //alten überschreiben, fehlt updateMethode (unr reicht?)
+    public VerificationToken generateNewVerificationToken(String existingVerificationToken) {
+        VerificationToken vToken = tokenRepository.findByToken(existingVerificationToken);
+        vToken.updateToken(UUID.randomUUID()
+                .toString());
+        vToken = tokenRepository.save(vToken);
+        return vToken;
+    }*/
+
+    private void validateSignUp(SignUpDto signUpDto) {
+    }
 }

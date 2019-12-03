@@ -18,12 +18,12 @@ public class User {
     @ManyToMany
     private Set<Role> roles;
     @Column(name = "enabled")  //new
-    private boolean enabled;    //new
+    private boolean enabled; //= false;?
 
-/*    public User() {             //new
-        //super();
+    public User() {  //new
+        super();
         this.enabled=false;
-    }*/
+    }
 
     public long getUser_id() {return user_id;}
     public void setUser_id(long user_id) {this.user_id = user_id;}

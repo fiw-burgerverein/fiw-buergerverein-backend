@@ -13,6 +13,8 @@ public class EmailServiceImpl implements EmailService  {
     @Autowired
     public JavaMailSender emailSender;
 
+  //  public String tokenMessageEmail; ?
+
     public void sendSimpleMessage(String to, String subject, String text) {  //Hier Subject und text am besten schon festlegen?
         try {
             SimpleMailMessage message = new SimpleMailMessage();
