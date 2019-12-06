@@ -19,6 +19,8 @@ public class User {
     private Set<Role> roles;
     @Column(name = "enabled")  //new
     private boolean enabled; //= false;?
+    @JsonIgnore //brauchen wir das?
+    private String resetToken;
 
     public User() {  //new
         super();
@@ -40,5 +42,6 @@ public class User {
     public boolean isEnabled() {return enabled;}
     public void setEnabled(boolean enabled) { this.enabled = enabled;}
 
-
+    public String getResetToken() { return resetToken; }
+    public void setResetToken(String resetToken) { this.resetToken = resetToken; }
 }
