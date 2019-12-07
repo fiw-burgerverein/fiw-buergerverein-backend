@@ -31,18 +31,18 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
     public ApiResponse sendResetToken(ForgotPasswordDto forgotPasswordDto) {
 
         User user = userDao.findByEmail(forgotPasswordDto.getEmail());
-        if(user == null) {  //runtime exceptione werde ich spaeter in exception-Klassen umwandeln
+        if(user == null) {  //runtime exceptions werde ich spaeter in exception-Klassen umwandeln
             throw new RuntimeException("Dieser Account existiert nicht");
         }
-        if(user.isEnabled()==false)
-        {
-            throw new RuntimeException("Bitte bestätigen Sie Ihre Email-Adresse anhand des Bestätigungslinks in Ihrem Email Postfach");
-        }
+//        if(user.isEnabled()==false)
+//        {
+//            throw new RuntimeException("Bitte bestätigen Sie Ihre Email-Adresse anhand des Bestätigungslinks in Ihrem Email Postfach");
+//        }
         String resetToken = UUID.randomUUID().toString();   //token erzeugen
-        LocalDateTime expiryDate = LocalDateTime.now().plusSeconds(60 * 60 * 24);
+        LocalDateTime expiryDate = LocalDateTime.now().plusSeconds(60 * 60 * 24 * 3);   // valid for 3 days
         user.setResetToken(resetToken);
         user.setResetTokenExpiryDate(expiryDate);
-        userDaoImpl.save(user);     //wird es mit dem save-Methode funktionieren oder brauchen wir noch eine update-Methode?
+        userDaoImpl.save(user);     //kann noch eine update-Methode sein, aber save() scheint zu reichen
         emailImpl.sendSimpleMessage(user.getEmail(), "Reset Password", "Durch Betätigen" +
                 "des Links: "+resetToken);
         return new ApiResponse(200, "Ein Link wurde an die von Ihnen angebenen Email gesendet.", user);
