@@ -2,6 +2,8 @@ package com.buergervereinHSH.BackendProject.auth.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -19,8 +21,12 @@ public class User {
     private Set<Role> roles;
     @Column(name = "enabled")  //new
     private boolean enabled; //= false;?
+
     @JsonIgnore //brauchen wir das?
     private String resetToken;
+    @JsonIgnore
+    private LocalDateTime resetTokenExpiryDate;
+
 
     public User() {  //new
         super();
@@ -44,4 +50,8 @@ public class User {
 
     public String getResetToken() { return resetToken; }
     public void setResetToken(String resetToken) { this.resetToken = resetToken; }
+
+    public LocalDateTime getResetTokenExpiryDate() { return resetTokenExpiryDate; }
+    public void setResetTokenExpiryDate(LocalDateTime resetTokenExpiryDate) { this.resetTokenExpiryDate = resetTokenExpiryDate; }
+
 }
