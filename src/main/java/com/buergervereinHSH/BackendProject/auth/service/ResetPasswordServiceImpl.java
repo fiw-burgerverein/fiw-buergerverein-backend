@@ -34,12 +34,15 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
         if(user == null) {  //runtime exceptions werde ich spaeter in exception-Klassen umwandeln
             throw new RuntimeException("Dieser Account existiert nicht");
         }
+
+// erstmal auskommentiert da es unmöglich war, sonst den user zu checken
 //        if(user.isEnabled()==false)
 //        {
 //            throw new RuntimeException("Bitte bestätigen Sie Ihre Email-Adresse anhand des Bestätigungslinks in Ihrem Email Postfach");
 //        }
+
         String resetToken = UUID.randomUUID().toString();   //token erzeugen
-        LocalDateTime expiryDate = LocalDateTime.now().plusSeconds(24);  //(60 * 60 * 24 * 3);   // valid for 3 days
+        LocalDateTime expiryDate = LocalDateTime.now().plusSeconds(60 * 60 * 24 * 3);   // valid for 3 days
         user.setResetToken(resetToken);
         user.setResetTokenExpiryDate(expiryDate);
         userDaoImpl.save(user);     //kann auch eine update-Methode sein, aber save() scheint zu reichen
