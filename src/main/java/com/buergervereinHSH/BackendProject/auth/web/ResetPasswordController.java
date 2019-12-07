@@ -2,6 +2,7 @@ package com.buergervereinHSH.BackendProject.auth.web;
 
 import com.buergervereinHSH.BackendProject.auth.ApiResponse;
 import com.buergervereinHSH.BackendProject.auth.dataTransferObject.ForgotPasswordDto;
+import com.buergervereinHSH.BackendProject.auth.dataTransferObject.ResetTokenDto;
 import com.buergervereinHSH.BackendProject.auth.service.ResetPasswordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,11 @@ public class ResetPasswordController {
     @PostMapping("/forgot")
     public ApiResponse sendResetToken(@RequestBody ForgotPasswordDto forgotPasswordDto) {
         return resetPasswordService.sendResetToken(forgotPasswordDto);
+    }
+
+    @PostMapping("/check-token")
+    public ApiResponse checkResetToken(@RequestBody ResetTokenDto resetTokenDto) {
+        return resetPasswordService.checkResetToken(resetTokenDto);
     }
 
 }

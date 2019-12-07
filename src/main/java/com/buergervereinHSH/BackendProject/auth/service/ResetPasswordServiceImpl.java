@@ -5,6 +5,7 @@ import com.buergervereinHSH.BackendProject.auth.dataAccessObject.UserDao;
 import com.buergervereinHSH.BackendProject.auth.dataAccessObject.UserDaoImpl;
 import com.buergervereinHSH.BackendProject.auth.dataAccessObject.VerificationTokenRepository;
 import com.buergervereinHSH.BackendProject.auth.dataTransferObject.ForgotPasswordDto;
+import com.buergervereinHSH.BackendProject.auth.dataTransferObject.ResetTokenDto;
 import com.buergervereinHSH.BackendProject.auth.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -46,5 +47,18 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
         emailImpl.sendSimpleMessage(user.getEmail(), "Reset Password", "Durch Betätigen" +
                 "des Links: "+resetToken);
         return new ApiResponse(200, "Ein Link wurde an die von Ihnen angebenen Email gesendet.", user);
+    }
+
+    @Override
+    public ApiResponse checkResetToken (ResetTokenDto resetTokenDto) {
+
+        User user = userDao.findByResetToken(resetTokenDto.getResetToken());
+        if(user == null) {
+            throw new RuntimeException("Dieser Account existiert nicht");
+        }
+        if (user.getResetTokenExpiryDate().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("Dieses Link ist nicht mehr aktuell.");
+        }
+        return new ApiResponse(200, "Link's valid, proceed.", user);
     }
 }
