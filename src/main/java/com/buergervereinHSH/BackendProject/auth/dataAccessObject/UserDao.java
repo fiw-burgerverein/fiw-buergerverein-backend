@@ -10,5 +10,6 @@ public interface UserDao extends CrudRepository<User, Long> {
     //User findByEmailIdIgnoreCase(String email);
     User findByEmail(String email);
     User save(User user);
+    User findByResetToken(String resetToken);
 
 }
