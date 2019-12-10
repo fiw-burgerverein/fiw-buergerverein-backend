@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
         userDao.save(user);
 
         String token = UUID.randomUUID().toString();  //erstellen eines random Strings (als Token)
-        createVerificationTokenForUser(user, token);  //erstellen eines VerificationTokens mit token als String
+        createVerificationTokenForUser(user, token);  ////erstellen&speichern eines VerificationTokens-Objekts&zuordnung zu User
 
         //zum testen, noch ohne URL in Email;
         emailImpl.sendSimpleMessage(user.getEmail(), "Confirmation Registration", "Bitte bestätigen Sie Ihren Account " +
@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
         if(user == null) {  //noch nicht freigeschaltet --> eigene exception schmeißen besser
             throw new NoUserFoundException();
         }
-        if(user.isEnabled()==false)
+        if(!user.isEnabled())
         {
             throw new AccountNotActivatedException();
         }
@@ -86,6 +86,24 @@ public class UserServiceImpl implements UserService {
         VerificationToken myToken = new VerificationToken(user, token);
         verificationTokenDao.save(myToken);
         //return new ApiResponse(200, "Token was created", null);
+    }
+
+    @Override
+    public ApiResponse confirmAccount(String verificationToken) {
+        VerificationToken token = verificationTokenDao.findByToken(verificationToken);
+
+        if(token != null)
+        {
+            User user = token.getUser();  //geht das sicher?
+            user.setEnabled(true);
+            userDao.save(user); //nötig?
+            return new ApiResponse(200, "Sie haben Ihren Account erfolgreich freigeschalten und " +
+                    "werden nun  weitergelitet zum Login", user) ; //weiterleitung zum login (return "redirect:/login.html?lang=" + request.getLocale().getLanguage(); )
+        }
+        else
+        {
+            return new ApiResponse(400," The link is invalid or broken!", null);
+        }
     }
 
     private void validateSignUp(SignUpDto signUpDto) {
