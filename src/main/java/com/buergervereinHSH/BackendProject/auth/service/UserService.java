@@ -13,7 +13,7 @@ public interface UserService {
 
     void createVerificationTokenForUser(User user, String token);
 
-    //ApiResponse confirmRegistration(
+    ApiResponse confirmAccount(String verificationToken);
 
    //public VerificationToken generateNewVerificationToken(final String existingVerificationToken); //neuen Token generieren
 
