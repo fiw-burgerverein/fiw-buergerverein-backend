@@ -11,15 +11,18 @@ import javax.persistence.EntityManager;
 
 @Repository
 public class UserDaoImpl {
-
+/*
     @Autowired
     private EntityManager em;
+*//*    @Autowired
+    private User user;*//*
 
-    public User save(User user) {
+
+     *//*    public User save(User user) {
         Session session = em.unwrap(Session.class);
         session.persist(user);
         return user;
-    }
+    }*/
 
 
 }
