@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+
 @RestController
 @RequestMapping("/")
 public class UserController {
@@ -22,9 +23,12 @@ public class UserController {
     @PostMapping("/registrieren")
     public ApiResponse signUp(@Valid @RequestBody SignUpDto signUpDto){ return userService.signUp(signUpDto); }
 
+
     @PostMapping("/login")
     public ApiResponse login(@Valid @RequestBody LoginDto loginDto){
         return userService.login(loginDto);
     }
 }
+
+
 
