@@ -11,16 +11,14 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  //maybe @Generated(strategy = GenerationType.AUTO)? (sets primary key to auto-increment)
-    @Column(name="user_id")  //new
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long user_id;
     private String email;
     @JsonIgnore
     private String password;
     @ManyToMany
     private Set<Role> roles;
-    @Column(name = "enabled")  //new
-    private boolean enabled; //= false;?
+    private boolean enabled;
 
     @JsonIgnore //brauchen wir das?
     private String resetToken;
@@ -28,9 +26,14 @@ public class User {
     private LocalDateTime resetTokenExpiryDate;
 
 
-    public User() {  //new
-        super();
-        this.enabled=false;
+    public User(){
+    }
+
+    public User(String email, String password, Set<Role> roles, boolean enabled) {
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+        this.enabled = enabled;
     }
 
     public long getUser_id() {return user_id;}

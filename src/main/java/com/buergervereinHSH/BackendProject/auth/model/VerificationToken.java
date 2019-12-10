@@ -1,26 +1,25 @@
 package com.buergervereinHSH.BackendProject.auth.model;
 
-//baeldung, 24h token:
 import javax.persistence.*;
-import java.util.Calendar;  //nur mit Ablaufdatum wichtig
-import java.util.Date;
+/*import java.util.Calendar;  //nur mit Ablaufdatum wichtig
+import java.util.Date;*/
 
 //nur nötig wenn Konstruktor nach StackAbuse:
 /*import java.util.Date;
 import java.util.UUID;*/
 
+
 @Entity
 @Table(name = "VerificationTokens") //nötig?
 public class VerificationToken {
 
-    //baeldung, 24h Token
+    //baeldung, 24h Token:
    // private static final int EXPIRATION = 60 * 24;
 
     @Id //specifies the primary key of an entity
-    @GeneratedValue(strategy = GenerationType.AUTO)  //provides for the specification of generation strategies for the values of primary keys
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long vt_id;
-
-    private String token;  //@column name?
+    private String token;
 
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER) //eins-zu-eins Beziehung zw Token und User
     @JoinColumn(nullable = false, name = "user_id")   //grün: Name der Spalte des Fremdschlüssels in der UserTabelle
