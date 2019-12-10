@@ -13,7 +13,7 @@ import java.util.stream.Stream;*/
 public interface VerificationTokenDao extends CrudRepository<VerificationToken, Long>  {
 
     VerificationToken findByToken(String token);
-
+    VerificationToken save(VerificationToken token);
     VerificationToken findByUser(User user);
 
 
