@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder encoder;
     @Autowired
-    private VerificationTokenDao tokenRepository;
+    private VerificationTokenDao verificationTokenDao;
     @Autowired
     private EmailServiceImpl emailImpl;
 
@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createVerificationTokenForUser(User user, String token) {
         VerificationToken myToken = new VerificationToken(user, token);
-        tokenRepository.save(myToken);
+        verificationTokenDao.save(myToken);
         //return new ApiResponse(200, "Token was created", null);
     }
 
