@@ -1,10 +1,11 @@
 package com.buergervereinHSH.BackendProject.auth.service;
 
-import com.buergervereinHSH.BackendProject.auth.ApiResponse;
+import com.buergervereinHSH.BackendProject.auth.exceptions.NoUserFoundException;
+import com.buergervereinHSH.BackendProject.auth.exceptions.PasswordMismatchException;
+import com.buergervereinHSH.BackendProject.auth.web.ApiResponse;
 import com.buergervereinHSH.BackendProject.auth.dataAccessObject.UserDao;
-import com.buergervereinHSH.BackendProject.auth.dataAccessObject.UserDaoImpl;
-import com.buergervereinHSH.BackendProject.auth.dataTransferObject.ForgotPasswordDto;
-import com.buergervereinHSH.BackendProject.auth.dataTransferObject.ResetPasswordDto;
+import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.ForgotPasswordDto;
+import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.ResetPasswordDto;
 import com.buergervereinHSH.BackendProject.auth.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,7 +31,7 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
 
         User user = userDao.findByEmail(forgotPasswordDto.getEmail());
         if(user == null) {  //runtime exceptions werde ich spaeter in exception-Klassen umwandeln
-            throw new RuntimeException("Dieser Account existiert nicht");
+            throw new NoUserFoundException();
         }
 
 // erstmal auskommentiert da es unmöglich war, sonst den user zu checken
@@ -54,7 +55,7 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
 
         User user = userDao.findByResetToken(resetPasswordDto.getResetToken());
         if(user == null) {
-            throw new RuntimeException("Dieser Account existiert nicht");
+            throw new NoUserFoundException();
         }
         if (user.getResetTokenExpiryDate().isBefore(LocalDateTime.now())) {
             throw new RuntimeException("Dieses Link ist nicht mehr aktuell.");
@@ -67,10 +68,7 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
 
         User user = userDao.findByResetToken(resetPasswordDto.getResetToken());
         if(!resetPasswordDto.getPassword().equals(resetPasswordDto.getPasswordConfirm())) {
-            throw new RuntimeException("Die eingegebene Passwörter stimmen nicht überein.");
-        }
-        if (resetPasswordDto.getPassword().length() < 8 || resetPasswordDto.getPassword().length() > 32) {
-            throw new RuntimeException("Bitte wählen Sie einen Passwort, der länger als 8 Symbole und kürzer als 32 Symbole ist.");
+            throw new PasswordMismatchException();
         }
         user.setPassword(encoder.encode(resetPasswordDto.getPassword()));
         userDao.save(user);

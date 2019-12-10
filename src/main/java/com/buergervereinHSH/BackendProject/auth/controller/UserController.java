@@ -1,8 +1,8 @@
-package com.buergervereinHSH.BackendProject.auth.web;
+package com.buergervereinHSH.BackendProject.auth.controller;
 
-import com.buergervereinHSH.BackendProject.auth.ApiResponse;
-import com.buergervereinHSH.BackendProject.auth.dataTransferObject.LoginDto;
-import com.buergervereinHSH.BackendProject.auth.dataTransferObject.SignUpDto;
+import com.buergervereinHSH.BackendProject.auth.web.ApiResponse;
+import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.LoginDto;
+import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.SignUpDto;
 import com.buergervereinHSH.BackendProject.auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

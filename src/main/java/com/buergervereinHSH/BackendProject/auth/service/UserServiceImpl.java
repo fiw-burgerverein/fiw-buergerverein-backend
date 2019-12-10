@@ -1,11 +1,10 @@
 package com.buergervereinHSH.BackendProject.auth.service;
 
-import com.buergervereinHSH.BackendProject.auth.ApiResponse;
+import com.buergervereinHSH.BackendProject.auth.web.ApiResponse;
 import com.buergervereinHSH.BackendProject.auth.dataAccessObject.UserDao;
-import com.buergervereinHSH.BackendProject.auth.dataAccessObject.UserDaoImpl;
 import com.buergervereinHSH.BackendProject.auth.dataAccessObject.VerificationTokenDao;
-import com.buergervereinHSH.BackendProject.auth.dataTransferObject.LoginDto;
-import com.buergervereinHSH.BackendProject.auth.dataTransferObject.SignUpDto;
+import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.LoginDto;
+import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.SignUpDto;
 import com.buergervereinHSH.BackendProject.auth.exceptions.*;
 import com.buergervereinHSH.BackendProject.auth.model.User;
 import com.buergervereinHSH.BackendProject.auth.model.VerificationToken;
@@ -67,18 +66,15 @@ public class UserServiceImpl implements UserService {
 
         User user = userDao.findByEmail(loginDto.getEmail());
 
-        if(loginDto.getEmail() == null || loginDto.getPassword() == null) {
-            throw new RuntimeException("Bitte füllen Sie die Email- und Passwort-Felder aus.");
-        }
         if(user == null) {  //noch nicht freigeschaltet --> eigene exception schmeißen besser
-            throw new RuntimeException("Dieser Account existiert nicht");
+            throw new NoUserFoundException();
         }
         if(user.isEnabled()==false)
         {
-            throw new RuntimeException("Bitte bestätigen Sie Ihre Email-Adresse anhand des Bestätigungslinks in Ihrem Email Postfach");
+            throw new AccountNotActivatedException();
         }
         if(!encoder.matches(loginDto.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Falsches Passwort.");
+            throw new WrongPasswordException();
         }
 
         return new ApiResponse(200, "Sie sind jetzt eingeloggt!", null) ;

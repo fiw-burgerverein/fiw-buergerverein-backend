@@ -1,4 +1,4 @@
-package com.buergervereinHSH.BackendProject.auth.dataTransferObject;
+package com.buergervereinHSH.BackendProject.auth.dataTransferObject.request;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

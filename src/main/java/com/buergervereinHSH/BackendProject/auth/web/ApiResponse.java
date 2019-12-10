@@ -1,4 +1,4 @@
-package com.buergervereinHSH.BackendProject.auth;
+package com.buergervereinHSH.BackendProject.auth.web;
 
 public class ApiResponse {
 

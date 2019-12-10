@@ -1,8 +1,8 @@
-package com.buergervereinHSH.BackendProject.auth.web;
+package com.buergervereinHSH.BackendProject.auth.controller;
 
-import com.buergervereinHSH.BackendProject.auth.ApiResponse;
-import com.buergervereinHSH.BackendProject.auth.dataTransferObject.ForgotPasswordDto;
-import com.buergervereinHSH.BackendProject.auth.dataTransferObject.ResetPasswordDto;
+import com.buergervereinHSH.BackendProject.auth.web.ApiResponse;
+import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.ForgotPasswordDto;
+import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.ResetPasswordDto;
 import com.buergervereinHSH.BackendProject.auth.service.ResetPasswordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

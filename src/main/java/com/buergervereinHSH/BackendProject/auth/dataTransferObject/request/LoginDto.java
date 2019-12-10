@@ -1,4 +1,4 @@
-package com.buergervereinHSH.BackendProject.auth.dataTransferObject;
+package com.buergervereinHSH.BackendProject.auth.dataTransferObject.request;
 
 import com.buergervereinHSH.BackendProject.auth.model.Role;
 
