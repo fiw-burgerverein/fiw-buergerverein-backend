@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
 
         //zum testen, noch ohne URL in Email;
         emailImpl.sendSimpleMessage(user.getEmail(), "Confirmation Registration", "Bitte bestätigen Sie Ihren Account " +
-                "durch Betätigen des Links: "+token);
+                "durch Betätigen des Links: http://localhost:8080/accountbestaetigung "+token);
         return new ApiResponse(200, "Ein Bestätigungslink wurde an die von Ihnen angebenen Email gesendet.", user);
     }
 
