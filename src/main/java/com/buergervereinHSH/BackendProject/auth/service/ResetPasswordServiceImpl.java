@@ -21,8 +21,6 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
     @Autowired
     private UserDao userDao;
     @Autowired
-    private UserDaoImpl userDaoImpl;
-    @Autowired
     private BCryptPasswordEncoder encoder;
     @Autowired
     private EmailServiceImpl emailImpl;
@@ -45,7 +43,7 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
         LocalDateTime expiryDate = LocalDateTime.now().plusSeconds(60 * 60 * 24 * 3);   // valid for 3 days
         user.setResetToken(resetToken);
         user.setResetTokenExpiryDate(expiryDate);
-        userDaoImpl.save(user);     //kann auch eine update-Methode sein, aber save() scheint zu reichen
+        userDao.save(user);     //kann auch eine update-Methode sein, aber save() scheint zu reichen
         emailImpl.sendSimpleMessage(user.getEmail(), "Reset Password", "Durch Betätigen" +
                 "des Links: "+resetToken);
         return new ApiResponse(200, "Ein Link wurde an die von Ihnen angebenen Email gesendet.", user);
@@ -75,7 +73,7 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
             throw new RuntimeException("Bitte wählen Sie einen Passwort, der länger als 8 Symbole und kürzer als 32 Symbole ist.");
         }
         user.setPassword(encoder.encode(resetPasswordDto.getPassword()));
-        userDaoImpl.save(user);
+        userDao.save(user);
         return new ApiResponse(200, "Sie haben erfolgreich Ihren Passwort verändert!", user);
     }
 
