@@ -23,8 +23,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
-   /* @Autowired
-    private UserDaoImpl userDaoImpl;*/
     @Autowired
     private BCryptPasswordEncoder encoder;
     @Autowired
@@ -55,10 +53,13 @@ public class UserServiceImpl implements UserService {
         String token = UUID.randomUUID().toString();  //erstellen eines random Strings (als Token)
         createVerificationTokenForUser(user, token);  ////erstellen&speichern eines VerificationTokens-Objekts&zuordnung zu User
 
-        //zum testen, noch ohne URL in Email;
-        emailImpl.sendSimpleMessage(user.getEmail(), "Confirmation Registration", "Bitte bestätigen Sie Ihren Account " +
-                "durch Betätigen des Links: http://localhost:8080/accountbestaetigung "+token);
-        return new ApiResponse(200, "Ein Bestätigungslink wurde an die von Ihnen angebenen Email gesendet.", user);
+        //vollständige URL muss noch geändert werden
+        emailImpl.sendSimpleMessage(user.getEmail(), "Bestätigung Ihres Accounts bei der Stadtteilkoordination HSH Nord",
+                "Herzlich Willkommen bei der Stadtteilkoordination HSH Nord! \n\n" +
+                "Um Ihre Email Adresse zu bestätigen und somit Ihren Account freizuschalten, bitte klicken Sie auf den folgenden Link: "
+                + "http://localhost:8080/accountbestaetigung?token="+token+" \n\nNach erfolgreicher Aktivierung Ihres Accounts haben Sie die Möglichkeit sich einzuloggen. " +
+                "\n\nViele Grüße, \nIhre Stadtteilkoordination Hohenschönhausen Nord");
+        return new ApiResponse(200, "Ein Bestätigungslink wurde an die von Ihnen angebene Email gesendet.", user);
     }
 
     @Override
@@ -66,7 +67,7 @@ public class UserServiceImpl implements UserService {
 
         User user = userDao.findByEmail(loginDto.getEmail());
 
-        if(user == null) {  //noch nicht freigeschaltet --> eigene exception schmeißen besser
+        if(user == null) {
             throw new NoUserFoundException();
         }
         if(!user.isEnabled())
@@ -85,7 +86,6 @@ public class UserServiceImpl implements UserService {
     public void createVerificationTokenForUser(User user, String token) {
         VerificationToken myToken = new VerificationToken(user, token);
         verificationTokenDao.save(myToken);
-        //return new ApiResponse(200, "Token was created", null);
     }
 
     @Override
@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
 
         if(token != null)
         {
-            User user = token.getUser();  //geht das sicher?
+            User user = token.getUser();  //geht sicher?
             user.setEnabled(true);
             userDao.save(user); //nötig?
             return new ApiResponse(200, "Sie haben Ihren Account erfolgreich freigeschalten und " +
