@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
         if(!signUpDto.getPassword().equals(signUpDto.getPasswordConfirm())) {
             throw new PasswordMismatchException();
         }
-        if (userDao.findByEmail(signUpDto.getEmail()) != null) {
+        if (userDao.findByEmail(signUpDto.getEmail()) != null && userDao.findByEmail(signUpDto.getEmail()).isEnabled()) { //nur wenn Benutzer bereits erfolgreich registriert
             throw new EmailAlreadyInUseException();
         }
 
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
         user.setEnabled(false);
         userDao.save(user);
 
-        String token = UUID.randomUUID().toString();  //erstellen eines random Strings (als Token)
+        String token = UUID.randomUUID().toString();
         createVerificationTokenForUser(user, token);  ////erstellen&speichern eines VerificationTokens-Objekts&zuordnung zu User
 
         //vollständige URL muss noch geändert werden
@@ -94,16 +94,19 @@ public class UserServiceImpl implements UserService {
 
         if(token != null)
         {
-            User user = token.getUser();  //geht sicher?
+            User user = token.getUser();
             user.setEnabled(true);
-            userDao.save(user); //nötig?
+            userDao.save(user);
             return new ApiResponse(200, "Sie haben Ihren Account erfolgreich freigeschalten und " +
-                    "werden nun  weitergelitet zum Login", user) ; //weiterleitung zum login (return "redirect:/login.html?lang=" + request.getLocale().getLanguage(); )
+                    "werden nun  weitergeleitet zum Login", user) ; //weiterleitung zum login (return "redirect:/login.html?lang=" + request.getLocale().getLanguage(); )
         }
         else
         {
-            return new ApiResponse(400," The link is invalid or broken!", null);
+            return new ApiResponse(400,"Dieser Link ist nicht gültig", null);
         }
+
+
+
     }
 
     private void validateSignUp(SignUpDto signUpDto) {
