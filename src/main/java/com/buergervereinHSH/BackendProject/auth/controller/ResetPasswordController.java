@@ -18,19 +18,24 @@ public class ResetPasswordController {
         return resetPasswordService.sendResetToken(forgotPasswordDto);
     }
 
-//    @PostMapping("/check-token")
-//    public ApiResponse checkResetToken(@RequestBody ResetPasswordDto resetPasswordDto) {
-//        return resetPasswordService.checkResetToken(resetPasswordDto);
-//    }
-
     @RequestMapping(value = "/reset-password", method = {RequestMethod.GET, RequestMethod.POST})
     public ApiResponse checkResetToken(@RequestParam("resetToken") String resetToken) {
         return resetPasswordService.checkResetToken(resetToken);
     }
 
-    @PostMapping("/check-token/ok")
-    public ApiResponse saveNewPassword(@RequestBody ResetPasswordDto resetPasswordDto){
-        return resetPasswordService.saveNewPassword(resetPasswordDto);
+    @PostMapping("reset-password/ok")
+    public ApiResponse saveNewPassword(@RequestParam("resetToken") String resetToken, @RequestBody ResetPasswordDto resetPasswordDto) {
+        return resetPasswordService.saveNewPassword(resetToken, resetPasswordDto);
     }
+
+//    altes code
+//    @PostMapping("/check-token")
+//    public ApiResponse checkResetToken(@RequestBody ResetPasswordDto resetPasswordDto) {
+//        return resetPasswordService.checkResetToken(resetPasswordDto);
+//    }
+//    @PostMapping("/check-token/ok")
+//    public ApiResponse saveNewPassword(@RequestBody ResetPasswordDto resetPasswordDto){
+//        return resetPasswordService.saveNewPassword(resetPasswordDto);
+//    }
 
 }

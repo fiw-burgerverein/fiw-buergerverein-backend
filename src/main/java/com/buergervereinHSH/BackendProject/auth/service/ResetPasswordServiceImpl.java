@@ -82,9 +82,9 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
 
 
     @Override
-    public ApiResponse saveNewPassword(ResetPasswordDto resetPasswordDto) {
+    public ApiResponse saveNewPassword(String resetToken, ResetPasswordDto resetPasswordDto) {
 
-        User user = userDao.findByResetToken(resetPasswordDto.getResetToken());
+        User user = userDao.findByResetToken(resetToken);
         if(!resetPasswordDto.getPassword().equals(resetPasswordDto.getPasswordConfirm())) {
             throw new PasswordMismatchException();
         }

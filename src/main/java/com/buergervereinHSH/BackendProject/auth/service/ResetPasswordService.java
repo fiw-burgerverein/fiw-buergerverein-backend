@@ -9,5 +9,5 @@ public interface ResetPasswordService {
     ApiResponse sendResetToken (ForgotPasswordDto forgotPasswordDto);
 //    ApiResponse checkResetToken (ResetPasswordDto resetPasswordDto);
     ApiResponse checkResetToken (String resetToken);
-    ApiResponse saveNewPassword (ResetPasswordDto resetPasswordDto);
+    ApiResponse saveNewPassword (String resetToken, ResetPasswordDto resetPasswordDto);
 }
