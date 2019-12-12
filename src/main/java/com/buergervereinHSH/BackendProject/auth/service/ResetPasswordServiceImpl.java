@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -25,6 +26,8 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
     private BCryptPasswordEncoder encoder;
     @Autowired
     private EmailServiceImpl emailImpl;
+    @Autowired
+    HttpServletRequest request;
 
     @Override
     public ApiResponse sendResetToken(ForgotPasswordDto forgotPasswordDto) {
@@ -45,23 +48,38 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
         user.setResetToken(resetToken);
         user.setResetTokenExpiryDate(expiryDate);
         userDao.save(user);     //kann auch eine update-Methode sein, aber save() scheint zu reichen
-        emailImpl.sendSimpleMessage(user.getEmail(), "Reset Password", "Durch Betätigen" +
-                "des Links: "+resetToken);
+        String reset_url = "http://" + request.getServerName() + request.getServerPort() + request.getContextPath()
+                + "/reset-password?token=" + resetToken;
+        emailImpl.sendSimpleMessage(user.getEmail(), "Reset Password", "Durch Betätigen des Links: " +reset_url);
         return new ApiResponse(200, "Ein Link wurde an die von Ihnen angebenen Email gesendet.", user);
     }
 
-    @Override
-    public ApiResponse checkResetToken (ResetPasswordDto resetPasswordDto) {
+//    @Override
+//    public ApiResponse checkResetToken (ResetPasswordDto resetPasswordDto) {
+//
+//        User user = userDao.findByResetToken(resetPasswordDto.getResetToken());
+//        if(user == null) {
+//            throw new NoUserFoundException();
+//        }
+//        if (user.getResetTokenExpiryDate().isBefore(LocalDateTime.now())) {
+//            throw new RuntimeException("Dieses Link ist nicht mehr aktuell.");
+//        }
+//        return new ApiResponse(200, "Link valid, proceed.", user);
+//    }
 
-        User user = userDao.findByResetToken(resetPasswordDto.getResetToken());
+    @Override
+    public ApiResponse checkResetToken (String resetToken) {
+
+        User user = userDao.findByResetToken(resetToken);
         if(user == null) {
             throw new NoUserFoundException();
         }
         if (user.getResetTokenExpiryDate().isBefore(LocalDateTime.now())) {
             throw new RuntimeException("Dieses Link ist nicht mehr aktuell.");
         }
-        return new ApiResponse(200, "Link valid, proceed.", user);
+        return new ApiResponse(200, "Link valid", user);
     }
+
 
     @Override
     public ApiResponse saveNewPassword(ResetPasswordDto resetPasswordDto) {
@@ -71,6 +89,7 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
             throw new PasswordMismatchException();
         }
         user.setPassword(encoder.encode(resetPasswordDto.getPassword()));
+        user.setResetTokenExpiryDate(LocalDateTime.now());
         userDao.save(user);
         return new ApiResponse(200, "Sie haben erfolgreich Ihren Passwort verändert!", user);
     }
