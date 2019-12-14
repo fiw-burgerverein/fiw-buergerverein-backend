@@ -29,13 +29,15 @@ public class Formular {
     private enum activities { JA, NEIN };
     private String activitiesBeschreibung;
 
-    @OneToOne(targetEntity = Sachkosten.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "sachkostenId")
+//    @OneToOne(targetEntity = Sachkosten.class, fetch = FetchType.EAGER)
+//    @JoinColumn(nullable = false, name = "sachkostenId")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long sachkostenId;
     private int sachkostenSum;
 
-    @OneToOne(targetEntity = Aufwand.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "aufwandId")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long aufwandId;
     private int aufwandSum;
 
@@ -53,7 +55,7 @@ public class Formular {
     public void setFormId(long formId) { this.formId = formId; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }\
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
     public long getUserId() { return userId; }
 
