@@ -1,5 +1,7 @@
 package com.buergervereinHSH.BackendProject.forms.model;
 
+import com.buergervereinHSH.BackendProject.auth.model.User;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -12,6 +14,10 @@ public class Formular {
     private long formId;
     @GeneratedValue(strategy = GenerationType.AUTO)
     private LocalDateTime createdAt;    //welcher Datentyp?
+
+    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false, name = "userId")
+    private long userId;
 
     private String projectName;
     private String beschreibung;
@@ -47,7 +53,9 @@ public class Formular {
     public void setFormId(long formId) { this.formId = formId; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }\
+
+    public long getUserId() { return userId; }
 
     public String getProjectName() { return projectName; }
     public void setProjectName(String projectName) { this.projectName = projectName; }
