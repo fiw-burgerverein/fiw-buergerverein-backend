@@ -35,7 +35,7 @@ public class Formular {
 
     private enum anrede { FRAU, HERR, DIVERSE };
     private String vorname;
-    private String Nachname;
+    private String nachname;
     private String einrichtung;
     private String strasse;
     private int hausNr;
@@ -89,8 +89,8 @@ public class Formular {
     public String getVorname() { return vorname; }
     public void setVorname(String vorname) { this.vorname = vorname; }
 
-    public String getNachname() { return Nachname; }
-    public void setNachname(String nachname) { Nachname = nachname; }
+    public String getNachname() { return nachname; }
+    public void setNachname(String nachname) { nachname = nachname; }
 
     public String getEinrichtung() { return einrichtung; }
     public void setEinrichtung(String einrichtung) { this.einrichtung = einrichtung; }
