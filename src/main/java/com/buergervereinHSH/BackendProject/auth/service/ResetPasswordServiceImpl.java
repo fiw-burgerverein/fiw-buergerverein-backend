@@ -1,5 +1,6 @@
 package com.buergervereinHSH.BackendProject.auth.service;
 
+import com.buergervereinHSH.BackendProject.auth.exceptions.ExpiredLinkException;
 import com.buergervereinHSH.BackendProject.auth.exceptions.NoUserFoundException;
 import com.buergervereinHSH.BackendProject.auth.exceptions.PasswordMismatchException;
 import com.buergervereinHSH.BackendProject.auth.web.ApiResponse;
@@ -54,28 +55,20 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
         return new ApiResponse(200, "Ein Link wurde an die von Ihnen angebenen Email gesendet.", user);
     }
 
-//    @Override
-//    public ApiResponse checkResetToken (ResetPasswordDto resetPasswordDto) {
-//
-//        User user = userDao.findByResetToken(resetPasswordDto.getResetToken());
-//        if(user == null) {
-//            throw new NoUserFoundException();
-//        }
-//        if (user.getResetTokenExpiryDate().isBefore(LocalDateTime.now())) {
-//            throw new RuntimeException("Dieses Link ist nicht mehr aktuell.");
-//        }
-//        return new ApiResponse(200, "Link valid, proceed.", user);
-//    }
 
     @Override
     public ApiResponse checkResetToken (String resetToken) {
+
+//    altes code
+//    public ApiResponse checkResetToken (ResetPasswordDto resetPasswordDto):
+//        User user = userDao.findByResetToken(resetPasswordDto.getResetToken());
 
         User user = userDao.findByResetToken(resetToken);
         if(user == null) {
             throw new NoUserFoundException();
         }
         if (user.getResetTokenExpiryDate().isBefore(LocalDateTime.now())) {
-            throw new RuntimeException("Dieses Link ist nicht mehr aktuell.");
+            throw new ExpiredLinkException();
         }
         return new ApiResponse(200, "Link valid", user);
     }
@@ -85,6 +78,12 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
     public ApiResponse saveNewPassword(String resetToken, ResetPasswordDto resetPasswordDto) {
 
         User user = userDao.findByResetToken(resetToken);
+        if(user == null) {
+            throw new NoUserFoundException();
+        }
+        if (user.getResetTokenExpiryDate().isBefore(LocalDateTime.now())) {
+            throw new ExpiredLinkException();
+        }
         if(!resetPasswordDto.getPassword().equals(resetPasswordDto.getPasswordConfirm())) {
             throw new PasswordMismatchException();
         }

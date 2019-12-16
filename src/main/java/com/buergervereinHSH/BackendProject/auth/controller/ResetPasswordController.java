@@ -18,22 +18,16 @@ public class ResetPasswordController {
         return resetPasswordService.sendResetToken(forgotPasswordDto);
     }
 
-    @RequestMapping(value = "/reset-password?token={resetToken}", method = {RequestMethod.GET, RequestMethod.POST})
-    public ApiResponse checkResetToken(@PathVariable("resetToken") @RequestParam String resetToken) {
+    @GetMapping("/reset-password")
+    public ApiResponse checkResetToken(@RequestParam("token") String resetToken) {
         return resetPasswordService.checkResetToken(resetToken);
     }
 
-    @PostMapping("reset-password/ok?token={resetToken}")
-    public ApiResponse saveNewPassword(@PathVariable("resetToken") String resetToken, @RequestBody ResetPasswordDto resetPasswordDto) {
+    @RequestMapping(value = "reset-password/ok", method = {RequestMethod.GET, RequestMethod.POST} )
+    public ApiResponse saveNewPassword(@RequestParam("token") String resetToken,
+                                       @RequestBody ResetPasswordDto resetPasswordDto) {
         return resetPasswordService.saveNewPassword(resetToken, resetPasswordDto);
     }
-
-
-//  auch altes code
-//    @PostMapping("reset-password/ok")
-//    public ApiResponse saveNewPassword(@RequestParam("resetToken") String resetToken, @RequestBody ResetPasswordDto resetPasswordDto) {
-//        return resetPasswordService.saveNewPassword(resetToken, resetPasswordDto);
-//    }
 
 //    altes code
 //    @PostMapping("/check-token")
