@@ -11,6 +11,8 @@ import com.buergervereinHSH.BackendProject.forms.model.Sachkosten;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 public class FormServiceImpl implements FormService {
 
     @Autowired
@@ -27,7 +29,7 @@ public class FormServiceImpl implements FormService {
 
         BeanUtils.copyProperties(formDto, formular, "sachkosten", "aufwand");
 
-        for (int i = formDto.getSachkosten().length / 2; i > 0; i--) { //weiss nicht genau wie das zu loesen
+        for (int i = formDto.getSachkosten().size() / 2; i > 0; i--) { //weiss nicht genau wie das zu loesen
             Sachkosten sachkosten = new Sachkosten();
             BeanUtils.copyProperties(formDto, sachkosten, "projectName", "beschreibung", "startDate", "endDate",
                     "ort", "zielgruppe", "anzTeilnehmer", "activities", "activitiesBeschreibung", "aufwand", "anrede", "vorname",
@@ -35,7 +37,7 @@ public class FormServiceImpl implements FormService {
             sachkosten.setFormId(formular.getFormId());
             sachkostenDao.save(sachkosten);
         }
-        for (int i = formDto.getAufwand().length / 2; i > 0; i--) { //weiss nicht genau wie das zu loesen
+        for (int i = formDto.getAufwand().size() / 2; i > 0; i--) { //weiss nicht genau wie das zu loesen
             Aufwand aufwand = new Aufwand();
             BeanUtils.copyProperties(formDto, aufwand, "projectName", "beschreibung", "startDate", "endDate",
                     "ort", "zielgruppe", "anzTeilnehmer", "activities", "activitiesBeschreibung", "sachkosten", "anrede", "vorname",
@@ -44,11 +46,12 @@ public class FormServiceImpl implements FormService {
             aufwandDao.save(aufwand);
         }
 
-//  for (sachkostenDao.findByFormId(formular.getFormId)) {
-//        i =+ sachkostenDao.findByFormId(formular.getFormId).getKosten()
-//        return i;
-//    }
-//   formular.setSachkostenSum(i);
+        int sachkostenGesamt;
+        List<Sachkosten> table = sachkostenDao.findByFormId(formular.getFormId());
+        for (int i = 1; i < table.size(); i --) {
+            sachkostenGesamt =+ table.getCost();
+        }
+        formular.setSachkostenSum(sachkostenGesamt);
 
         formDao.save(formular);
 
