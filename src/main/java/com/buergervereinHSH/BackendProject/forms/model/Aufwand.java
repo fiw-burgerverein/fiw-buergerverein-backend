@@ -19,6 +19,7 @@ public class Aufwand {
     public void setAufwandId(long aufwandId) { this.aufwandId = aufwandId; }
 
     public long getFormId() { return formId; }
+    public void setFormId(long formId) { this.formId = formId; }
 
     public String getZweck() { return Zweck; }
     public void setZweck(String zweck) { Zweck = zweck; }

@@ -1,9 +1,13 @@
 package com.buergervereinHSH.BackendProject.forms.dataTransferObject.request;
 
+import com.buergervereinHSH.BackendProject.forms.model.Aufwand;
+import com.buergervereinHSH.BackendProject.forms.model.Sachkosten;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 public class FormDto {
 
@@ -19,6 +23,9 @@ public class FormDto {
     private int anzTeilnehmer;
     private String activities;
     private String activitiesBeschreibung;
+    //  es ist viel einfacher als 3 separate DTOs zu haben, da wir den Formular als 1 Objekt erhalten
+    private List<Sachkosten> sachkosten;
+    private List<Aufwand> aufwand;
 
     private String anrede;
     @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
@@ -63,6 +70,12 @@ public class FormDto {
 
     public String getActivitiesBeschreibung() { return activitiesBeschreibung; }
     public void setActivitiesBeschreibung(String activitiesBeschreibung) { this.activitiesBeschreibung = activitiesBeschreibung; }
+
+    public List<Sachkosten> getSachkosten() { return sachkosten; }
+    public void setSachkosten(List<Sachkosten> sachkosten) { this.sachkosten = sachkosten; }
+
+    public List<Aufwand> getAufwand() { return aufwand; }
+    public void setAufwand(List<Aufwand> aufwand) { this.aufwand = aufwand; }
 
     public String getAnrede() { return anrede; }
     public void setAnrede(String anrede) { this.anrede = anrede; }

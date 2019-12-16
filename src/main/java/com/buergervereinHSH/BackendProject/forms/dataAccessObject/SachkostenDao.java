@@ -8,4 +8,5 @@ public interface SachkostenDao {
     //wenn ich das zum List machen wollte??
     //Sachkosten findBySachkostenId(long sachkostenId);
     List<Sachkosten> getAllSachkosten(long formId);
+    Sachkosten save(Sachkosten sachkosten);
 }

@@ -8,4 +8,5 @@ public interface AufwandDao {
     //wenn ich das zum List machen wollte??
     //Aufwand findByAufwandId(long aufwandId);
     List<Aufwand> getAllAufwande(long formId);
+    Aufwand save(Aufwand aufwand);
 }

@@ -18,6 +18,7 @@ public class Sachkosten {
     public void setSachkostenId(long sachkostenId) { this.sachkostenId = sachkostenId; }
 
     public long getFormId() { return formId; }
+    public void setFormId(long formId) { this.formId = formId; }
 
     public String getZweck() { return Zweck; }
     public void setZweck(String zweck) { Zweck = zweck; }
