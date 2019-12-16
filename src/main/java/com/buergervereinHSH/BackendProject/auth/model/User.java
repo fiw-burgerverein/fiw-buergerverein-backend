@@ -20,11 +20,14 @@ public class User {
     private Set<Role> roles;
     private boolean enabled;
 
-    @JsonIgnore //brauchen wir das?
+    @JsonIgnore
     private String resetToken;
     @JsonIgnore
     private LocalDateTime resetTokenExpiryDate;
 
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade =  CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+    private VerificationToken verificationToken;
 
     public User(){
     }
