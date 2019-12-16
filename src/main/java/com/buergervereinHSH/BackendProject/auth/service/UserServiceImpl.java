@@ -32,7 +32,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ApiResponse signUp(SignUpDto signUpDto) {
-        validateSignUp(signUpDto);
         User user = new User();
 
         if(!signUpDto.getEmail().equals(signUpDto.getEmailConfirm())) {
@@ -41,8 +40,17 @@ public class UserServiceImpl implements UserService {
         if(!signUpDto.getPassword().equals(signUpDto.getPasswordConfirm())) {
             throw new PasswordMismatchException();
         }
-        if (userDao.findByEmail(signUpDto.getEmail()) != null && userDao.findByEmail(signUpDto.getEmail()).isEnabled()) { //nur wenn Benutzer bereits erfolgreich registriert
-            throw new EmailAlreadyInUseException();
+
+        User oldUser = null;
+
+        if ((oldUser = userDao.findByEmail(signUpDto.getEmail())) != null){
+
+            if(oldUser.isEnabled()){
+                throw new EmailAlreadyInUseException();
+            }
+            else {
+                userDao.deleteById(oldUser.getUser_id());
+            }
         }
 
         BeanUtils.copyProperties(signUpDto, user);
@@ -51,7 +59,7 @@ public class UserServiceImpl implements UserService {
         userDao.save(user);
 
         String token = UUID.randomUUID().toString();
-        createVerificationTokenForUser(user, token);  ////erstellen&speichern eines VerificationTokens-Objekts&zuordnung zu User
+        createVerificationTokenForUser(user, token);  //Erstellen&Speichern eines VerificationTokens-Objekts&Zuordnung zu User
 
         //vollständige URL muss noch geändert werden
         emailImpl.sendSimpleMessage(user.getEmail(), "Bestätigung Ihres Accounts bei der Stadtteilkoordination HSH Nord",
