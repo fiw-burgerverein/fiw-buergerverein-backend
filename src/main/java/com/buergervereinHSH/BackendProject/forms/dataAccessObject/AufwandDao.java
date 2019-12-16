@@ -7,5 +7,5 @@ import java.util.List;
 public interface AufwandDao {
     //wenn ich das zum List machen wollte??
     //Aufwand findByAufwandId(long aufwandId);
-    List<Aufwand> getAllAufwande(long aufwandId);
+    List<Aufwand> getAllAufwande(long formId);
 }
