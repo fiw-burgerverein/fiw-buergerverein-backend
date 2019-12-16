@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/login")   //oder root?
+@RequestMapping("/login")
 public class ResetPasswordController {
     @Autowired
     private ResetPasswordService resetPasswordService;
@@ -23,7 +23,7 @@ public class ResetPasswordController {
         return resetPasswordService.checkResetToken(resetToken);
     }
 
-    @RequestMapping(value = "reset-password/ok", method = {RequestMethod.GET, RequestMethod.POST} )
+    @PostMapping("reset-password/ok")
     public ApiResponse saveNewPassword(@RequestParam("token") String resetToken,
                                        @RequestBody ResetPasswordDto resetPasswordDto) {
         return resetPasswordService.saveNewPassword(resetToken, resetPasswordDto);
