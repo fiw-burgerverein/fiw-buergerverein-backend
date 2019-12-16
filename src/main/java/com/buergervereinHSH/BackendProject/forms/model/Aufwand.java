@@ -7,14 +7,18 @@ import javax.persistence.*;
 public class Aufwand {
 
     @Id
-    @OneToOne(targetEntity = Formular.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "aufwandId")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long aufwandId;
+    @OneToOne(targetEntity = Formular.class, fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false, name = "formId")
+    private long formId;
     private String Zweck;
     private float cost;
 
     public long getAufwandId() { return aufwandId; }
     public void setAufwandId(long aufwandId) { this.aufwandId = aufwandId; }
+
+    public long getFormId() { return formId; }
 
     public String getZweck() { return Zweck; }
     public void setZweck(String zweck) { Zweck = zweck; }

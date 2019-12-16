@@ -6,14 +6,18 @@ import javax.persistence.*;
 @Table(name = "Sachkosten")
 public class Sachkosten {
     @Id
-    @OneToOne(targetEntity = Formular.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "sachkostenId")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long sachkostenId;
+    @OneToOne(targetEntity = Formular.class, fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false, name = "formId")
+    private long formId;
     private String Zweck;
     private float cost;
 
     public long getSachkostenId() { return sachkostenId; }
     public void setSachkostenId(long sachkostenId) { this.sachkostenId = sachkostenId; }
+
+    public long getFormId() { return formId; }
 
     public String getZweck() { return Zweck; }
     public void setZweck(String zweck) { Zweck = zweck; }

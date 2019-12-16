@@ -14,7 +14,6 @@ public class Formular {
     private long formId;
     @GeneratedValue(strategy = GenerationType.AUTO)
     private LocalDateTime createdAt;    //welcher Datentyp?
-
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "userId")
     private long userId;
@@ -31,14 +30,13 @@ public class Formular {
 
 //    @OneToOne(targetEntity = Sachkosten.class, fetch = FetchType.EAGER)
 //    @JoinColumn(nullable = false, name = "sachkostenId")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long sachkostenId;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private long sachkostenId;        <-- wir können kein sachkostenId hier generieren weil jede Spalte in der
+//                                          Sachkosten-Tabelle sollte ihren eigenen Schlüssel haben; und wir können kein
+//                                          Id hier anbinden da es eigtl für jede Spalte einen gibt! Also rufen wir die
+//                                          Sachkosten- und Aufwandtabellen per Fremdschlüssel FormId auf.
     private int sachkostenSum;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long aufwandId;
     private int aufwandSum;
 
     private enum anrede { FRAU, HERR, DIVERSE };
@@ -84,14 +82,8 @@ public class Formular {
     public void setActivitiesBeschreibung(String activitiesBeschreibung)
     { this.activitiesBeschreibung = activitiesBeschreibung; }
 
-    public long getSachkostenId() { return sachkostenId; }
-    public void setSachkostenId(long sachkostenId) { this.sachkostenId = sachkostenId; }
-
     public int getSachkostenSum() { return sachkostenSum; }
     public void setSachkostenSum(int sachkostenSum) { this.sachkostenSum = sachkostenSum; }
-
-    public long getAufwandId() { return aufwandId; }
-    public void setAufwandId(long aufwandId) { this.aufwandId = aufwandId; }
 
     public int getAufwandSum() { return aufwandSum; }
     public void setAufwandSum(int aufwandSum) { this.aufwandSum = aufwandSum; }
