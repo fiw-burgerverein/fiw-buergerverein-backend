@@ -27,7 +27,7 @@ public class FormServiceImpl implements FormService {
 
         BeanUtils.copyProperties(formDto, formular, "sachkosten", "aufwand");
 
-        for (i=formDto.getSachkosten().length/2; i --) {
+        for (int i = formDto.getSachkosten().length / 2; i > 0; i--) { //weiss nicht genau wie das zu loesen
             Sachkosten sachkosten = new Sachkosten();
             BeanUtils.copyProperties(formDto, sachkosten, "projectName", "beschreibung", "startDate", "endDate",
                     "ort", "zielgruppe", "anzTeilnehmer", "activities", "activitiesBeschreibung", "aufwand", "anrede", "vorname",
@@ -35,8 +35,20 @@ public class FormServiceImpl implements FormService {
             sachkosten.setFormId(formular.getFormId());
             sachkostenDao.save(sachkosten);
         }
+        for (int i = formDto.getAufwand().length / 2; i > 0; i--) { //weiss nicht genau wie das zu loesen
+            Aufwand aufwand = new Aufwand();
+            BeanUtils.copyProperties(formDto, aufwand, "projectName", "beschreibung", "startDate", "endDate",
+                    "ort", "zielgruppe", "anzTeilnehmer", "activities", "activitiesBeschreibung", "sachkosten", "anrede", "vorname",
+                    "nachname", "einrichtung", "strasse", "hausNr", "plz", "email", "telNr");
+            aufwand.setFormId(formular.getFormId());
+            aufwandDao.save(aufwand);
+        }
 
-
+//  for (sachkostenDao.findByFormId(formular.getFormId)) {
+//        i =+ sachkostenDao.findByFormId(formular.getFormId).getKosten()
+//        return i;
+//    }
+//   formular.setSachkostenSum(i);
 
         formDao.save(formular);
 

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface SachkostenDao {
     //wenn ich das zum List machen wollte??
-    //Sachkosten findBySachkostenId(long sachkostenId);
+    List<Sachkosten> findByFormId(long formId);
     List<Sachkosten> getAllSachkosten(long formId);
     Sachkosten save(Sachkosten sachkosten);
 }
