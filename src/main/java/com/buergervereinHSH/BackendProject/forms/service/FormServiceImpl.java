@@ -31,7 +31,7 @@ public class FormServiceImpl implements FormService {
 
         for (int i = formDto.getSachkosten().size() / 2; i > 0; i--) { //weiss nicht genau wie das zu loesen
             Sachkosten sachkosten = new Sachkosten();
-            BeanUtils.copyProperties(formDto, sachkosten, "projectName", "beschreibung", "startDate", "endDate",
+            BeanUtils.copyProperties(formDto.getSachkosten[i](), sachkosten, "projectName", "beschreibung", "startDate", "endDate",
                     "ort", "zielgruppe", "anzTeilnehmer", "activities", "activitiesBeschreibung", "aufwand", "anrede", "vorname",
                     "nachname", "einrichtung", "strasse", "hausNr", "plz", "email", "telNr");
             sachkosten.setFormId(formular.getFormId());
@@ -46,12 +46,18 @@ public class FormServiceImpl implements FormService {
             aufwandDao.save(aufwand);
         }
 
-        int sachkostenGesamt;
-        List<Sachkosten> table = sachkostenDao.findByFormId(formular.getFormId());
-        for (int i = 1; i < table.size(); i --) {
-            sachkostenGesamt =+ table.getCost();
+        float sachkostenGesamt = 0;
+        List<Sachkosten> sachkostenTable = sachkostenDao.findByFormId(formular.getFormId());
+        for (int i = 1; i < sachkostenTable.size(); i ++) {
+            sachkostenGesamt =+ sachkostenTable.get(i).getCost();
         }
         formular.setSachkostenSum(sachkostenGesamt);
+        float aufwandGesamt = 0;
+        List<Aufwand> aufwandTable = aufwandDao.findByFormId(formular.getFormId());
+        for (int i = 1; i < aufwandTable.size(); i ++) {
+            aufwandGesamt =+ aufwandTable.get(i).getCost();
+        }
+        formular.setAufwandSum(aufwandGesamt);
 
         formDao.save(formular);
 
