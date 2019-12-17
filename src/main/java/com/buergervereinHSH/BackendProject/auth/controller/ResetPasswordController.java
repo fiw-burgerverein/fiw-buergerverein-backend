@@ -7,6 +7,8 @@ import com.buergervereinHSH.BackendProject.auth.service.ResetPasswordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/login")
 public class ResetPasswordController {
@@ -14,7 +16,7 @@ public class ResetPasswordController {
     private ResetPasswordService resetPasswordService;
 
     @PostMapping("/forgot")
-    public ApiResponse sendResetToken(@RequestBody ForgotPasswordDto forgotPasswordDto) {
+    public ApiResponse sendResetToken(@Valid @RequestBody ForgotPasswordDto forgotPasswordDto) {
         return resetPasswordService.sendResetToken(forgotPasswordDto);
     }
 
@@ -25,7 +27,7 @@ public class ResetPasswordController {
 
     @PostMapping("reset-password/ok")
     public ApiResponse saveNewPassword(@RequestParam("token") String resetToken,
-                                       @RequestBody ResetPasswordDto resetPasswordDto) {
+                                       @Valid @RequestBody ResetPasswordDto resetPasswordDto) {
         return resetPasswordService.saveNewPassword(resetToken, resetPasswordDto);
     }
 
