@@ -26,38 +26,36 @@ public class FormServiceImpl implements FormService {
     @Override
     public ApiResponse saveForm(FormDto formDto) {
         Formular formular = new Formular();
-
         BeanUtils.copyProperties(formDto, formular, "sachkosten", "aufwand");
 
-        for (int i = formDto.getSachkosten().size() / 2; i > 0; i--) { //weiss nicht genau wie das zu loesen
-            Sachkosten sachkosten = new Sachkosten();
-            BeanUtils.copyProperties(formDto.getSachkosten[i](), sachkosten, "projectName", "beschreibung", "startDate", "endDate",
-                    "ort", "zielgruppe", "anzTeilnehmer", "activities", "activitiesBeschreibung", "aufwand", "anrede", "vorname",
-                    "nachname", "einrichtung", "strasse", "hausNr", "plz", "email", "telNr");
-            sachkosten.setFormId(formular.getFormId());
-            sachkostenDao.save(sachkosten);
-        }
-        for (int i = formDto.getAufwand().size() / 2; i > 0; i--) { //weiss nicht genau wie das zu loesen
-            Aufwand aufwand = new Aufwand();
-            BeanUtils.copyProperties(formDto, aufwand, "projectName", "beschreibung", "startDate", "endDate",
-                    "ort", "zielgruppe", "anzTeilnehmer", "activities", "activitiesBeschreibung", "sachkosten", "anrede", "vorname",
-                    "nachname", "einrichtung", "strasse", "hausNr", "plz", "email", "telNr");
-            aufwand.setFormId(formular.getFormId());
-            aufwandDao.save(aufwand);
-        }
+//        for (int i = formDto.getSachkosten().size() / 2; i > 0; i--) { //weiss nicht genau wie das zu loesen
+//            Sachkosten sachkosten = new Sachkosten();
+//            BeanUtils.copyProperties(formDto.getSachkosten[i](), sachkosten, "projectName", "beschreibung", "startDate", "endDate",
+//                    "ort", "zielgruppe", "anzTeilnehmer", "activities", "activitiesBeschreibung", "aufwand", "anrede", "vorname",
+//                    "nachname", "einrichtung", "strasse", "hausNr", "plz", "email", "telNr");
+//            sachkosten.setFormId(formular.getFormId());
+//            sachkostenDao.save(sachkosten);
+//        }
 
         float sachkostenGesamt = 0;
-        List<Sachkosten> sachkostenTable = sachkostenDao.findByFormId(formular.getFormId());
-        for (int i = 1; i < sachkostenTable.size(); i ++) {
-            sachkostenGesamt =+ sachkostenTable.get(i).getCost();
+        Sachkosten[] sachkostenArray = formDto.getSachkostenArray();
+        for (int i = sachkostenArray.length; i > 1; i--) {
+            Sachkosten sachkosten = new Sachkosten();
+            BeanUtils.copyProperties(sachkostenArray[i], sachkosten);
+            sachkosten.setFormId(formular.getFormId());
+            sachkostenDao.save(sachkosten);
+
+            sachkostenGesamt =+ sachkostenArray[i].getCost();
         }
         formular.setSachkostenSum(sachkostenGesamt);
-        float aufwandGesamt = 0;
-        List<Aufwand> aufwandTable = aufwandDao.findByFormId(formular.getFormId());
-        for (int i = 1; i < aufwandTable.size(); i ++) {
-            aufwandGesamt =+ aufwandTable.get(i).getCost();
-        }
-        formular.setAufwandSum(aufwandGesamt);
+
+
+//        float aufwandGesamt = 0;
+//        List<Aufwand> aufwandTable = aufwandDao.findByFormId(formular.getFormId());
+//        for (int i = 1; i < aufwandTable.size(); i ++) {
+//            aufwandGesamt =+ aufwandTable.get(i).getCost();
+//        }
+//        formular.setAufwandSum(aufwandGesamt);
 
         formDao.save(formular);
 

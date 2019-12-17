@@ -24,9 +24,13 @@ public class FormDto {
     private String activities;
     private String activitiesBeschreibung;
     //  es ist viel einfacher als 3 separate DTOs zu haben, da wir den Formular als 1 Objekt erhalten
-    private List<Sachkosten> sachkosten;
-    private List<Aufwand> aufwand;
+//    private List<Sachkosten> sachkosten;
+//    private List<Aufwand> aufwand;
 
+    private Sachkosten[] sachkostenArray;
+    private Aufwand[] aufwandArray;
+
+    private int userId;
     private String anrede;
     @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
     private String vorname;
@@ -71,11 +75,11 @@ public class FormDto {
     public String getActivitiesBeschreibung() { return activitiesBeschreibung; }
     public void setActivitiesBeschreibung(String activitiesBeschreibung) { this.activitiesBeschreibung = activitiesBeschreibung; }
 
-    public List<Sachkosten> getSachkosten() { return sachkosten; }
-    public void setSachkosten(List<Sachkosten> sachkosten) { this.sachkosten = sachkosten; }
+    public Sachkosten[] getSachkostenArray() { return sachkostenArray; }
+    public void setSachkostenArray(Sachkosten[] sachkostenArray) { this.sachkostenArray = sachkostenArray; }
 
-    public List<Aufwand> getAufwand() { return aufwand; }
-    public void setAufwand(List<Aufwand> aufwand) { this.aufwand = aufwand; }
+    public Aufwand[] getAufwandArray() { return aufwandArray; }
+    public void setAufwandArray(Aufwand[] aufwandArray) { this.aufwandArray = aufwandArray; }
 
     public String getAnrede() { return anrede; }
     public void setAnrede(String anrede) { this.anrede = anrede; }
@@ -84,7 +88,7 @@ public class FormDto {
     public void setVorname(String vorname) { this.vorname = vorname; }
 
     public String getNachname() { return nachname; }
-    public void setNachname(String nachname) { nachname = nachname; }
+    public void setNachname(String nachname) { this.nachname = nachname; }
 
     public String getEinrichtung() { return einrichtung; }
     public void setEinrichtung(String einrichtung) { this.einrichtung = einrichtung; }
