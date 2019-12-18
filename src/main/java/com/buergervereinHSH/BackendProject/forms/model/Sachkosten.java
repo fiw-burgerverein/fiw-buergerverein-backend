@@ -8,17 +8,18 @@ public class Sachkosten {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long sachkostenId;
-//    @ManyToOne(targetEntity = Formular.class, fetch = FetchType.LAZY)
-//    @JoinColumn(nullable = false, name = "formId")
-//    private long formId;
+    @ManyToOne(targetEntity = Formular.class, fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false, name = "formId")
+    private Formular form;
+
     private String Zweck;
     private float cost;
 
     public long getSachkostenId() { return sachkostenId; }
     public void setSachkostenId(long sachkostenId) { this.sachkostenId = sachkostenId; }
 
-//    public long getFormId() { return formId; }
-//    public void setFormId(long formId) { this.formId = formId; }
+    public Formular getForm() { return form; }
+    public void setForm(Formular form) { this.form = form; }
 
     public String getZweck() { return Zweck; }
     public void setZweck(String zweck) { Zweck = zweck; }

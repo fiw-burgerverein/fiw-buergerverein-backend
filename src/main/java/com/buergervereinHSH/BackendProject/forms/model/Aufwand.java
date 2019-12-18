@@ -5,21 +5,21 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Aufwand")
 public class Aufwand {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long aufwandId;
-    @OneToOne(targetEntity = Formular.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Formular.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "formId")
-    private long formId;
+    private Formular form;
+
     private String Zweck;
     private float cost;
 
     public long getAufwandId() { return aufwandId; }
     public void setAufwandId(long aufwandId) { this.aufwandId = aufwandId; }
 
-    public long getFormId() { return formId; }
-    public void setFormId(long formId) { this.formId = formId; }
+    public Formular getForm() { return form; }
+    public void setForm(Formular form) { this.form = form; }
 
     public String getZweck() { return Zweck; }
     public void setZweck(String zweck) { Zweck = zweck; }

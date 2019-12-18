@@ -27,25 +27,37 @@ public class FormServiceImpl implements FormService {
     @Autowired
     private AufwandDao aufwandDao;
 
-
     @Override
     public ApiResponse saveForm(FormDto formDto) {
         Formular formular = new Formular();
 //        formular.setUserId(userId);
         BeanUtils.copyProperties(formDto, formular, "sachkosten", "sachkostenSum", "aufwand", "aufwandSum");
         formular.setCreatedAt(LocalDateTime.now());
-//        formDao.save(formular);
+        formDao.save(formular);
 
         float sachkostenGesamt = 0;
         Sachkosten[] sachkostenArray = formDto.getSachkostenArray();
-        for (Sachkosten value : sachkostenArray) {      // ??
+        for (Sachkosten value : sachkostenArray) {
             Sachkosten sachkosten = new Sachkosten();
             BeanUtils.copyProperties(value, sachkosten);
-//            sachkosten.setFormId(formular.getFormId());
+            sachkosten.setForm(formular);
             sachkostenDao.save(sachkosten);
 
             sachkostenGesamt += value.getCost();
         }
+
+        float aufwandGesamt = 0;
+        Aufwand[] aufwandArray = formDto.getAufwandArray();
+        for (Aufwand value : aufwandArray) {
+            Aufwand aufwand = new Aufwand();
+            BeanUtils.copyProperties(value, aufwand);
+            aufwand.setForm(formular);
+            aufwandDao.save(aufwand);
+
+            aufwandGesamt += value.getCost();
+        }
+
+        formular.setAufwandSum(aufwandGesamt);
         formular.setSachkostenSum(sachkostenGesamt);
         formDao.save(formular);
 //        for (int i = formDto.getSachkosten().size() / 2; i > 0; i--) { //weiss nicht genau wie das zu loesen
