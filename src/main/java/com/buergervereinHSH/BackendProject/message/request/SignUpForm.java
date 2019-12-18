@@ -7,9 +7,6 @@ import java.util.Set;
 
 public class SignUpForm {
 
-    @NotBlank
-    @Size(min=3, max=50)
-    private String username;
 
     @NotBlank
     @Size(max = 60)
@@ -23,17 +20,10 @@ public class SignUpForm {
     private String password;
 
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getEmail() {
         return email;
     }
+
 
     public void setEmail(String email) {
         this.email = email;

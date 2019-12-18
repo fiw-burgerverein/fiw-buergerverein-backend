@@ -2,6 +2,7 @@ package com.buergervereinHSH.BackendProject.auth.security.services;
 
 import com.buergervereinHSH.BackendProject.auth.model.User;
 import com.buergervereinHSH.BackendProject.auth.repository.UserRepository;
+import org.apache.naming.factory.SendMailFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,9 +19,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username).orElseThrow(
-                () -> new UsernameNotFoundException("User Not Found with -> username or email : " + username));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email).orElseThrow(
+                () -> new UsernameNotFoundException("User Not Found with -> username or email : " + email));
 
         return UserPrinciple.build(user);
     }

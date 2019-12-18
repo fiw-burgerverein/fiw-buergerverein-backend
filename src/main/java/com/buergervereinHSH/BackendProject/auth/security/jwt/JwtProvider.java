@@ -26,7 +26,7 @@ public class JwtProvider {
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
 
         return Jwts.builder()
-                .setSubject((userPrinciple.getUsername()))
+                .setSubject((userPrinciple.getEmail()))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpiration*1000))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
@@ -52,7 +52,7 @@ public class JwtProvider {
         return false;
     }
 
-    public String getUserNameFromJwtToken(String token){
+    public String getEmailFromJwtToken(String token){
         return Jwts.parser()
                 .setSigningKey(jwtSecret)
                 .parseClaimsJws(token)
