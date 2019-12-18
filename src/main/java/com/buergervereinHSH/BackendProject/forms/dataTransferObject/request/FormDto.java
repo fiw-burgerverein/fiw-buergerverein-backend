@@ -30,7 +30,7 @@ public class FormDto {
     private Sachkosten[] sachkostenArray;
     private Aufwand[] aufwandArray;
 
-    private int userId;
+    private long userId;
     private String anrede;
     @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
     private String vorname;
@@ -39,9 +39,9 @@ public class FormDto {
     private String einrichtung;
     @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
     private String strasse;
-    @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
+//    @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
     private int hausNr;
-    @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
+//    @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
     private int plz;
     @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
     private String email;
@@ -80,6 +80,9 @@ public class FormDto {
 
     public Aufwand[] getAufwandArray() { return aufwandArray; }
     public void setAufwandArray(Aufwand[] aufwandArray) { this.aufwandArray = aufwandArray; }
+
+    public long getUserId() { return userId; }
+    public void setUserId(long userId) { this.userId = userId; }
 
     public String getAnrede() { return anrede; }
     public void setAnrede(String anrede) { this.anrede = anrede; }

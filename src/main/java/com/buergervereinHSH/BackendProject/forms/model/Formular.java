@@ -12,10 +12,9 @@ public class Formular {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long formId;
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private LocalDateTime createdAt;    //welcher Datentyp?
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "userId")
+//    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+//    @JoinColumn(nullable = false, name = "userId")
     private long userId;
 
     private String projectName;
@@ -56,6 +55,7 @@ public class Formular {
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
     public long getUserId() { return userId; }
+    public void setUserId(long userId) { this.userId = userId; }
 
     public String getProjectName() { return projectName; }
     public void setProjectName(String projectName) { this.projectName = projectName; }
@@ -92,7 +92,7 @@ public class Formular {
     public void setVorname(String vorname) { this.vorname = vorname; }
 
     public String getNachname() { return nachname; }
-    public void setNachname(String nachname) { nachname = nachname; }
+    public void setNachname(String nachname) { this.nachname = nachname; }
 
     public String getEinrichtung() { return einrichtung; }
     public void setEinrichtung(String einrichtung) { this.einrichtung = einrichtung; }

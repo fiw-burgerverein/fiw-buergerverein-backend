@@ -10,9 +10,14 @@ import com.buergervereinHSH.BackendProject.forms.model.Formular;
 import com.buergervereinHSH.BackendProject.forms.model.Sachkosten;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+@Transactional
+@Service
 public class FormServiceImpl implements FormService {
 
     @Autowired
@@ -26,8 +31,23 @@ public class FormServiceImpl implements FormService {
     @Override
     public ApiResponse saveForm(FormDto formDto) {
         Formular formular = new Formular();
-        BeanUtils.copyProperties(formDto, formular, "sachkosten", "aufwand");
+//        formular.setUserId(userId);
+        BeanUtils.copyProperties(formDto, formular, "sachkosten", "sachkostenSum", "aufwand", "aufwandSum");
+        formular.setCreatedAt(LocalDateTime.now());
+//        formDao.save(formular);
 
+        float sachkostenGesamt = 0;
+        Sachkosten[] sachkostenArray = formDto.getSachkostenArray();
+        for (Sachkosten value : sachkostenArray) {      // ??
+            Sachkosten sachkosten = new Sachkosten();
+            BeanUtils.copyProperties(value, sachkosten);
+//            sachkosten.setFormId(formular.getFormId());
+            sachkostenDao.save(sachkosten);
+
+            sachkostenGesamt += value.getCost();
+        }
+        formular.setSachkostenSum(sachkostenGesamt);
+        formDao.save(formular);
 //        for (int i = formDto.getSachkosten().size() / 2; i > 0; i--) { //weiss nicht genau wie das zu loesen
 //            Sachkosten sachkosten = new Sachkosten();
 //            BeanUtils.copyProperties(formDto.getSachkosten[i](), sachkosten, "projectName", "beschreibung", "startDate", "endDate",
@@ -36,20 +56,6 @@ public class FormServiceImpl implements FormService {
 //            sachkosten.setFormId(formular.getFormId());
 //            sachkostenDao.save(sachkosten);
 //        }
-
-        float sachkostenGesamt = 0;
-        Sachkosten[] sachkostenArray = formDto.getSachkostenArray();
-        for (int i = sachkostenArray.length; i > 1; i--) {
-            Sachkosten sachkosten = new Sachkosten();
-            BeanUtils.copyProperties(sachkostenArray[i], sachkosten);
-            sachkosten.setFormId(formular.getFormId());
-            sachkostenDao.save(sachkosten);
-
-            sachkostenGesamt =+ sachkostenArray[i].getCost();
-        }
-        formular.setSachkostenSum(sachkostenGesamt);
-
-
 //        float aufwandGesamt = 0;
 //        List<Aufwand> aufwandTable = aufwandDao.findByFormId(formular.getFormId());
 //        for (int i = 1; i < aufwandTable.size(); i ++) {
@@ -57,20 +63,9 @@ public class FormServiceImpl implements FormService {
 //        }
 //        formular.setAufwandSum(aufwandGesamt);
 
-        formDao.save(formular);
 
 //        eigentlich noch nicht da der Antrag noch in PDF umgewandelt werden soll und abgeschickt :/
         return new ApiResponse(200, "Sie haben erfolgreich Ihren Antrag abgesendet!", null);
     }
-
-//    public static void copyProperties2(Object src, Object trg, Set<String> props) {
-//        String[] excludedProperties =
-//                Arrays.stream(BeanUtils.getPropertyDescriptors(src.getClass()))
-//                        .map(PropertyDescriptor::getName)
-//                        .filter(name -> !props.contains(name))
-//                        .toArray(String[]::new);
-//
-//        BeanUtils.copyProperties(src, trg, excludedProperties);
-//    }
 
 }

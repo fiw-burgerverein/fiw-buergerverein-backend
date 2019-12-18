@@ -1,13 +1,13 @@
 package com.buergervereinHSH.BackendProject.forms.dataAccessObject;
 
+import com.buergervereinHSH.BackendProject.auth.model.User;
 import com.buergervereinHSH.BackendProject.forms.model.Sachkosten;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface SachkostenDao {
-    //wenn ich das zum List machen wollte??
-//    List<Sachkosten> findByFormId(long formId);
-    Sachkosten[] findByFormId(long formId);
-//    List<Sachkosten> getAllSachkosten(long formId);
+public interface SachkostenDao  extends CrudRepository<Sachkosten, Long> {
+
+//    Sachkosten[] findByFormId(long formId);
     Sachkosten save(Sachkosten sachkosten);
 }
