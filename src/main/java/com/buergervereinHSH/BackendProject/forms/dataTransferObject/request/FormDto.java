@@ -2,6 +2,8 @@ package com.buergervereinHSH.BackendProject.forms.dataTransferObject.request;
 
 import com.buergervereinHSH.BackendProject.forms.model.Aufwand;
 import com.buergervereinHSH.BackendProject.forms.model.Sachkosten;
+
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -36,11 +38,11 @@ public class FormDto {
     private String einrichtung;
     @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
     private String strasse;
-//    @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
+    @NotNull
     private int hausNr;
-//    @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
+    @NotNull
     private int plz;
-    @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
+    @Email @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
     private String email;
     private int telNr;
 

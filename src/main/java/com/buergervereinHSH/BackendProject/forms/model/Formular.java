@@ -1,7 +1,6 @@
 package com.buergervereinHSH.BackendProject.forms.model;
 
 import com.buergervereinHSH.BackendProject.auth.model.User;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -22,6 +21,20 @@ public class Formular {
     private Date startDate;
     private Date endDate;
     private String ort;
+//    private enum ort {
+//        HSHN {
+//            @Override
+//            public String toString() { return "Neu-Hohenschönhausen Nord"; }
+//        },
+//        HSHS {
+//            @Override
+//            public String toString() { return "Neu-Hohenschönhausen Süd"; }
+//         },
+//        D {
+//         @Override
+//         public String toString() { return "Wartenberg, Falkenberg und Malchow"; }
+//        }
+//    };
     private String zielgruppe;
     private int anzTeilnehmer;
     private enum activities { JA, NEIN };
