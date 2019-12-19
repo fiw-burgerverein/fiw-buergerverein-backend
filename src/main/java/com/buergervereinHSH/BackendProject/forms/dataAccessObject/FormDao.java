@@ -10,5 +10,5 @@ public interface FormDao extends CrudRepository<Formular, Long> {
     Formular findByEmail(String email);
     Formular save(Formular form);
 
-    Formular findByUser(User user);
+    Formular[] findByUser(User user);
 }

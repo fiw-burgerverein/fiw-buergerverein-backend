@@ -1,14 +1,11 @@
 package com.buergervereinHSH.BackendProject.forms.dataTransferObject.request;
 
-import com.buergervereinHSH.BackendProject.auth.model.User;
 import com.buergervereinHSH.BackendProject.forms.model.Aufwand;
 import com.buergervereinHSH.BackendProject.forms.model.Sachkosten;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
 
 public class FormDto {
 
@@ -24,15 +21,13 @@ public class FormDto {
     private int anzTeilnehmer;
     private String activities;
     private String activitiesBeschreibung;
-    //  es ist viel einfacher als 3 separate DTOs zu haben, da wir den Formular als 1 Objekt erhalten
-//    private List<Sachkosten> sachkosten;
-//    private List<Aufwand> aufwand;
 
     private Sachkosten[] sachkostenArray;
     private Aufwand[] aufwandArray;
+//    auch eine Möglichkeit
+//    private ArrayList<Sachkosten> sachkostenList;
+//    private ArrayList<Aufwand> aufwandList;
 
-//    private long userId;
-//    private User user;
     private String anrede;
     @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
     private String vorname;
@@ -82,12 +77,6 @@ public class FormDto {
 
     public Aufwand[] getAufwandArray() { return aufwandArray; }
     public void setAufwandArray(Aufwand[] aufwandArray) { this.aufwandArray = aufwandArray; }
-
-//    public long getUserId() { return userId; }
-//    public void setUserId(long userId) { this.userId = userId; }
-
-//    public User getUser() { return user; }
-//    public void setUser(User user) { this.user = user; }
 
     public String getAnrede() { return anrede; }
     public void setAnrede(String anrede) { this.anrede = anrede; }

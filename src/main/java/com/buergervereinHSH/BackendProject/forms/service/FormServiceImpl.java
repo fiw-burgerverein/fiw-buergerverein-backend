@@ -65,21 +65,6 @@ public class FormServiceImpl implements FormService {
         formular.setAufwandSum(aufwandGesamt);
         formular.setSachkostenSum(sachkostenGesamt);
         formDao.save(formular);
-//        for (int i = formDto.getSachkosten().size() / 2; i > 0; i--) { //weiss nicht genau wie das zu loesen
-//            Sachkosten sachkosten = new Sachkosten();
-//            BeanUtils.copyProperties(formDto.getSachkosten[i](), sachkosten, "projectName", "beschreibung", "startDate", "endDate",
-//                    "ort", "zielgruppe", "anzTeilnehmer", "activities", "activitiesBeschreibung", "aufwand", "anrede", "vorname",
-//                    "nachname", "einrichtung", "strasse", "hausNr", "plz", "email", "telNr");
-//            sachkosten.setFormId(formular.getFormId());
-//            sachkostenDao.save(sachkosten);
-//        }
-//        float aufwandGesamt = 0;
-//        List<Aufwand> aufwandTable = aufwandDao.findByFormId(formular.getFormId());
-//        for (int i = 1; i < aufwandTable.size(); i ++) {
-//            aufwandGesamt =+ aufwandTable.get(i).getCost();
-//        }
-//        formular.setAufwandSum(aufwandGesamt);
-
 
 //        eigentlich noch nicht da der Antrag noch in PDF umgewandelt werden soll und abgeschickt :/
         return new ApiResponse(200, "Sie haben erfolgreich Ihren Antrag abgesendet!", null);
