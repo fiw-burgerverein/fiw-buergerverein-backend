@@ -13,10 +13,10 @@ public class Formular {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long formId;
     private LocalDateTime createdAt;
-//    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-//    @JoinColumn(nullable = false, name = "userId")
-//    private User user;
-    private long userId;
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false, name = "userId")
+    private User user;
+//    private long userId;
 
     private String projectName;
     private String beschreibung;
@@ -55,11 +55,11 @@ public class Formular {
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
-    public long getUserId() { return userId; }
-    public void setUserId(long userId) { this.userId = userId; }
+//    public long getUserId() { return userId; }
+//    public void setUserId(long userId) { this.userId = userId; }
 
-//    public User getUser() { return user; }
-//    public void setUser(User user) { this.user = user; }
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
 
     public String getProjectName() { return projectName; }
     public void setProjectName(String projectName) { this.projectName = projectName; }

@@ -1,5 +1,6 @@
 package com.buergervereinHSH.BackendProject.forms.dataTransferObject.request;
 
+import com.buergervereinHSH.BackendProject.auth.model.User;
 import com.buergervereinHSH.BackendProject.forms.model.Aufwand;
 import com.buergervereinHSH.BackendProject.forms.model.Sachkosten;
 
@@ -30,7 +31,8 @@ public class FormDto {
     private Sachkosten[] sachkostenArray;
     private Aufwand[] aufwandArray;
 
-    private long userId;
+//    private long userId;
+//    private User user;
     private String anrede;
     @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
     private String vorname;
@@ -81,8 +83,11 @@ public class FormDto {
     public Aufwand[] getAufwandArray() { return aufwandArray; }
     public void setAufwandArray(Aufwand[] aufwandArray) { this.aufwandArray = aufwandArray; }
 
-    public long getUserId() { return userId; }
-    public void setUserId(long userId) { this.userId = userId; }
+//    public long getUserId() { return userId; }
+//    public void setUserId(long userId) { this.userId = userId; }
+
+//    public User getUser() { return user; }
+//    public void setUser(User user) { this.user = user; }
 
     public String getAnrede() { return anrede; }
     public void setAnrede(String anrede) { this.anrede = anrede; }

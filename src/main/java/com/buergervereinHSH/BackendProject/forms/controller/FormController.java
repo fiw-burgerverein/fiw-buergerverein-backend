@@ -16,9 +16,14 @@ public class FormController {
     @Autowired
     private FormService formService;
 
-    @PostMapping("/formular")
-    public ApiResponse saveForm(@Valid @RequestBody FormDto formDto) {
-        return formService.saveForm(formDto);
+    @PostMapping("/{userId}/formular")
+    public ApiResponse saveForm(@PathVariable("userId") long userId, @Valid @RequestBody FormDto formDto) {
+        return formService.saveForm(userId, formDto);
     }
+
+//    @PostMapping("/formular")
+//    public ApiResponse saveForm(@RequestParam("id") long userId, @Valid @RequestBody FormDto formDto) {
+//        return formService.saveForm(userId, formDto);
+//    }
 
 }

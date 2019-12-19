@@ -1,5 +1,7 @@
 package com.buergervereinHSH.BackendProject.forms.service;
 
+import com.buergervereinHSH.BackendProject.auth.dataAccessObject.UserDao;
+import com.buergervereinHSH.BackendProject.auth.model.User;
 import com.buergervereinHSH.BackendProject.auth.web.ApiResponse;
 import com.buergervereinHSH.BackendProject.forms.dataAccessObject.AufwandDao;
 import com.buergervereinHSH.BackendProject.forms.dataAccessObject.FormDao;
@@ -26,11 +28,14 @@ public class FormServiceImpl implements FormService {
     private SachkostenDao sachkostenDao;
     @Autowired
     private AufwandDao aufwandDao;
+    @Autowired
+    private UserDao userDao;
 
     @Override
-    public ApiResponse saveForm(FormDto formDto) {
+    public ApiResponse saveForm(long userId, FormDto formDto) {
         Formular formular = new Formular();
-//        formular.setUserId(userId);
+        User user = userDao.findByUserId(userId);
+        formular.setUser(user);
         BeanUtils.copyProperties(formDto, formular, "sachkosten", "sachkostenSum", "aufwand", "aufwandSum");
         formular.setCreatedAt(LocalDateTime.now());
         formDao.save(formular);

@@ -2,7 +2,6 @@ package com.buergervereinHSH.BackendProject.auth.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -12,7 +11,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long user_id;
+    private long userId;
     private String email;
     @JsonIgnore
     private String password;
@@ -36,8 +35,8 @@ public class User {
         this.enabled = enabled;
     }
 
-    public long getUser_id() {return user_id;}
-    public void setUser_id(long user_id) {this.user_id = user_id;}
+    public long getUserId() {return userId;}
+    public void setUserId(long userId) {this.userId = userId;}
 
     public String getEmail() {return email;}
     public void setEmail(String email) {this.email = email;}
