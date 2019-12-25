@@ -4,25 +4,28 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Sachkosten")
+
 public class Sachkosten {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long sachkostenId;
-    @OneToOne(targetEntity = Formular.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Formular.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "formId")
-    private long formId;
-    private String Zweck;
-    private float cost;
+    private Formular formular;
+   // private long formId;
+
+    private String zweck;
+    private float kosten;
 
     public long getSachkostenId() { return sachkostenId; }
     public void setSachkostenId(long sachkostenId) { this.sachkostenId = sachkostenId; }
 
-    public long getFormId() { return formId; }
-    public void setFormId(long formId) { this.formId = formId; }
+    /*public long getFormId() { return formId; }
+    public void setFormId(long formId) { this.formId = formId; }*/
 
-    public String getZweck() { return Zweck; }
-    public void setZweck(String zweck) { Zweck = zweck; }
+    public String getZweck() { return zweck; }
+    public void setZweck(String zweck) { this.zweck = zweck; }
 
-    public float getCost() { return cost; }
-    public void setCost(float cost) { this.cost = cost; }
+    public float getKosten() { return kosten; }
+    public void setKosten(float kosten) { this.kosten = kosten; }
 }
