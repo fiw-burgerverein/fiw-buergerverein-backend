@@ -1,9 +1,11 @@
 package com.buergervereinHSH.BackendProject.auth.model;
 
+import com.buergervereinHSH.BackendProject.forms.model.Formular;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,7 +22,10 @@ public class User {
     private Set<Role> roles;
     private boolean enabled;
 
-    @JsonIgnore //brauchen wir das?
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Formular> formulare;
+
+    @JsonIgnore
     private String resetToken;
     @JsonIgnore
     private LocalDateTime resetTokenExpiryDate;
