@@ -1,3 +1,4 @@
+/*
 package com.buergervereinHSH.BackendProject.forms.model;
 
 import javax.persistence.*;
@@ -28,3 +29,4 @@ public class Aufwand {
     public void setCost(float cost) { this.cost = cost; }
 
 }
+*/
