@@ -4,7 +4,9 @@ import com.buergervereinHSH.BackendProject.auth.model.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "Formular")
@@ -14,9 +16,14 @@ public class Formular {
     private long formId;
     @GeneratedValue(strategy = GenerationType.AUTO)
     private LocalDateTime createdAt;    //welcher Datentyp?
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "userId")
-    private long userId;
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER) //ManyToOne!
+    @JoinColumn(nullable = false, name = "user_id")
+    //private long userId;
+    private User user;
+
+    //Beziehung zu Sachkosten:
+    @OneToMany(mappedBy = "formular", cascade = CascadeType.ALL)
+    private Set<Sachkosten> sachkostenliste;
 
     private String projectName;
     private String beschreibung;
@@ -37,7 +44,7 @@ public class Formular {
 //                                          Id hier anbinden da es eigtl für jede Spalte einen gibt! Also rufen wir die
 //                                          Sachkosten- und Aufwandtabellen per Fremdschlüssel FormId auf.
     private int sachkostenSum;
-    private int aufwandSum;
+   // private int aufwandSum;
 
     private enum anrede { FRAU, HERR, DIVERSE };
     private String vorname;
@@ -55,7 +62,7 @@ public class Formular {
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
-    public long getUserId() { return userId; }
+    //public long getUserId() { return userId; }
 
     public String getProjectName() { return projectName; }
     public void setProjectName(String projectName) { this.projectName = projectName; }
@@ -85,8 +92,8 @@ public class Formular {
     public int getSachkostenSum() { return sachkostenSum; }
     public void setSachkostenSum(int sachkostenSum) { this.sachkostenSum = sachkostenSum; }
 
-    public int getAufwandSum() { return aufwandSum; }
-    public void setAufwandSum(int aufwandSum) { this.aufwandSum = aufwandSum; }
+/*    public int getAufwandSum() { return aufwandSum; }
+    public void setAufwandSum(int aufwandSum) { this.aufwandSum = aufwandSum; }*/
 
     public String getVorname() { return vorname; }
     public void setVorname(String vorname) { this.vorname = vorname; }
