@@ -1,3 +1,4 @@
+/*
 package com.buergervereinHSH.BackendProject.forms.dataTransferObject.request;
 
 import com.buergervereinHSH.BackendProject.forms.model.Aufwand;
@@ -105,3 +106,4 @@ public class FormDto {
     public void setTelNr(int telNr) { this.telNr = telNr; }
 
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.buergervereinHSH.BackendProject.forms.dataTransferObject.request;
 
 public class SachkostenDto {
@@ -13,3 +14,4 @@ public class SachkostenDto {
     public void setCost(float cost) { this.cost = cost; }
 
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.buergervereinHSH.BackendProject.forms.dataTransferObject.request;
 
 public class AufwandDto {
@@ -13,3 +14,4 @@ public class AufwandDto {
     public void setCost(float cost) { this.cost = cost; }
 
 }
+*/
