@@ -1,15 +1,16 @@
+/*
 package com.buergervereinHSH.BackendProject.forms.service;
 
-import com.buergervereinHSH.BackendProject.auth.web.ApiResponse;
-import com.buergervereinHSH.BackendProject.forms.dataAccessObject.AufwandDao;
-import com.buergervereinHSH.BackendProject.forms.dataAccessObject.FormDao;
-import com.buergervereinHSH.BackendProject.forms.dataAccessObject.SachkostenDao;
 import com.buergervereinHSH.BackendProject.forms.dataTransferObject.request.FormDto;
 import com.buergervereinHSH.BackendProject.forms.model.Aufwand;
 import com.buergervereinHSH.BackendProject.forms.model.Formular;
 import com.buergervereinHSH.BackendProject.forms.model.Sachkosten;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;import com.buergervereinHSH.BackendProject.auth.web.ApiResponse;
+import com.buergervereinHSH.BackendProject.forms.dataAccessObject.AufwandDao;
+import com.buergervereinHSH.BackendProject.forms.dataAccessObject.FormDao;
+import com.buergervereinHSH.BackendProject.forms.dataAccessObject.SachkostenDao;
+
 
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class FormServiceImpl implements FormService {
         }
 
         int sachkostenGesamt;
-        List<Sachkosten> table = sachkostenDao.findByFormId(formular.getFormId());
+        List<Sachkosten> table = sachkostenDao.findByFormId(formular.getFormId()); //Variable int, die zeilen zählt, in denen formID=xy--> die dann für for-schleife?
         for (int i = 1; i < table.size(); i --) {
             sachkostenGesamt =+ table.getCost();
         }
@@ -70,3 +71,4 @@ public class FormServiceImpl implements FormService {
 //    }
 
 }
+*/
