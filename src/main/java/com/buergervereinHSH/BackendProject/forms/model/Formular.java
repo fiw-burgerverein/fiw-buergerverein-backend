@@ -15,29 +15,16 @@ public class Formular {
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "userId")
     private User user;
+    private Status status;
 
     private String projectName;
     private String beschreibung;
     private Date startDate;
     private Date endDate;
     private String ort;
-//    private enum ort {
-//        HSHN {
-//            @Override
-//            public String toString() { return "Neu-Hohenschönhausen Nord"; }
-//        },
-//        HSHS {
-//            @Override
-//            public String toString() { return "Neu-Hohenschönhausen Süd"; }
-//         },
-//        D {
-//         @Override
-//         public String toString() { return "Wartenberg, Falkenberg und Malchow"; }
-//        }
-//    };
     private String zielgruppe;
     private int anzTeilnehmer;
-    private enum activities { JA, NEIN };
+    private String activities;
     private String activitiesBeschreibung;
 
 //    @OneToOne(targetEntity = Sachkosten.class, fetch = FetchType.EAGER)
@@ -51,7 +38,7 @@ public class Formular {
     private float sachkostenSum;
     private float aufwandSum;
 
-    private enum anrede { FRAU, HERR, DIVERSE };
+    private String anrede;
     private String vorname;
     private String nachname;
     private String einrichtung;
@@ -69,6 +56,9 @@ public class Formular {
 
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
+
+    public Status getStatus() { return status; }
+    public void setStatus(Status status) { this.status = status; }
 
     public String getProjectName() { return projectName; }
     public void setProjectName(String projectName) { this.projectName = projectName; }
@@ -91,15 +81,22 @@ public class Formular {
     public int getAnzTeilnehmer() { return anzTeilnehmer; }
     public void setAnzTeilnehmer(int anzTeilnehmer) { this.anzTeilnehmer = anzTeilnehmer; }
 
+    public String getActivities() { return activities; }
+    public void setActivities(String activities) { this.activities = activities; }
+
     public String getActivitiesBeschreibung() { return activitiesBeschreibung; }
-    public void setActivitiesBeschreibung(String activitiesBeschreibung)
-    { this.activitiesBeschreibung = activitiesBeschreibung; }
+    public void setActivitiesBeschreibung(String activitiesBeschreibung) {
+        this.activitiesBeschreibung = activitiesBeschreibung;
+    }
 
     public float getSachkostenSum() { return sachkostenSum; }
     public void setSachkostenSum(float sachkostenSum) { this.sachkostenSum = sachkostenSum; }
 
     public float getAufwandSum() { return aufwandSum; }
     public void setAufwandSum(float aufwandSum) { this.aufwandSum = aufwandSum; }
+
+    public String getAnrede() { return anrede; }
+    public void setAnrede(String anrede) { this.anrede = anrede; }
 
     public String getVorname() { return vorname; }
     public void setVorname(String vorname) { this.vorname = vorname; }

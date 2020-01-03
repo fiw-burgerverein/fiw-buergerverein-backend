@@ -15,12 +15,16 @@ public class FormDto {
     private String projectName;
     @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
     private String beschreibung;
+    @NotNull
     private Date startDate;
+    @NotNull
     private Date endDate;
     @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
     private String ort;
     private String zielgruppe;
+    @NotNull
     private int anzTeilnehmer;
+    @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
     private String activities;
     private String activitiesBeschreibung;
 
@@ -30,6 +34,7 @@ public class FormDto {
 //    private ArrayList<Sachkosten> sachkostenList;
 //    private ArrayList<Aufwand> aufwandList;
 
+    @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
     private String anrede;
     @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
     private String vorname;
