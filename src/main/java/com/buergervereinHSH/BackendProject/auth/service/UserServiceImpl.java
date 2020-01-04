@@ -23,18 +23,15 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
-   /* @Autowired
-    private UserDaoImpl userDaoImpl;*/
     @Autowired
     private BCryptPasswordEncoder encoder;
     @Autowired
-    private VerificationTokenDao tokenRepository;
+    private VerificationTokenDao verificationTokenDao;
     @Autowired
     private EmailServiceImpl emailImpl;
 
     @Override
     public ApiResponse signUp(SignUpDto signUpDto) {
-        validateSignUp(signUpDto);
         User user = new User();
 
         if(!signUpDto.getEmail().equals(signUpDto.getEmailConfirm())) {
@@ -43,8 +40,17 @@ public class UserServiceImpl implements UserService {
         if(!signUpDto.getPassword().equals(signUpDto.getPasswordConfirm())) {
             throw new PasswordMismatchException();
         }
-        if (userDao.findByEmail(signUpDto.getEmail()) != null) {
-            throw new EmailAlreadyInUseException();
+
+        User oldUser = null;
+
+        if ((oldUser = userDao.findByEmail(signUpDto.getEmail())) != null){
+
+            if(oldUser.isEnabled()){
+                throw new EmailAlreadyInUseException();
+            }
+            else {
+                userDao.deleteById(oldUser.getUser_id());
+            }
         }
 
         BeanUtils.copyProperties(signUpDto, user);
@@ -52,13 +58,16 @@ public class UserServiceImpl implements UserService {
         user.setEnabled(false);
         userDao.save(user);
 
-        String token = UUID.randomUUID().toString();  //erstellen eines random Strings (als Token)
-        createVerificationTokenForUser(user, token);  //erstellen eines VerificationTokens mit token als String
+        String token = UUID.randomUUID().toString();
+        createVerificationTokenForUser(user, token);  //Erstellen&Speichern eines VerificationTokens-Objekts&Zuordnung zu User
 
-        //zum testen, noch ohne URL in Email;
-        emailImpl.sendSimpleMessage(user.getEmail(), "Confirmation Registration", "Bitte bestätigen Sie Ihren Account " +
-                "durch Betätigen des Links: "+token);
-        return new ApiResponse(200, "Ein Bestätigungslink wurde an die von Ihnen angebenen Email gesendet.", user);
+        //vollständige URL muss noch geändert werden
+        emailImpl.sendSimpleMessage(user.getEmail(), "Bestätigung Ihres Accounts bei der Stadtteilkoordination HSH Nord",
+                "Herzlich Willkommen bei der Stadtteilkoordination HSH Nord! \n\n" +
+                "Um Ihre Email Adresse zu bestätigen und somit Ihren Account freizuschalten, bitte klicken Sie auf den folgenden Link: "
+                + "http://localhost:8080/accountbestaetigung?token="+token+" \n\nNach erfolgreicher Aktivierung Ihres Accounts haben Sie die Möglichkeit sich einzuloggen. " +
+                "\n\nViele Grüße, \nIhre Stadtteilkoordination Hohenschönhausen Nord");
+        return new ApiResponse(200, "Ein Bestätigungslink wurde an die von Ihnen angebene Email gesendet.", user);
     }
 
     @Override
@@ -66,10 +75,10 @@ public class UserServiceImpl implements UserService {
 
         User user = userDao.findByEmail(loginDto.getEmail());
 
-        if(user == null) {  //noch nicht freigeschaltet --> eigene exception schmeißen besser
+        if(user == null) {
             throw new NoUserFoundException();
         }
-        if(user.isEnabled()==false)
+        if(!user.isEnabled())
         {
             throw new AccountNotActivatedException();
         }
@@ -84,8 +93,28 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createVerificationTokenForUser(User user, String token) {
         VerificationToken myToken = new VerificationToken(user, token);
-        tokenRepository.save(myToken);
-        //return new ApiResponse(200, "Token was created", null);
+        verificationTokenDao.save(myToken);
+    }
+
+    @Override
+    public ApiResponse confirmAccount(String verificationToken) {
+        VerificationToken token = verificationTokenDao.findByToken(verificationToken);
+
+        if(token != null)
+        {
+            User user = token.getUser();
+            user.setEnabled(true);
+            userDao.save(user);
+            return new ApiResponse(200, "Sie haben Ihren Account erfolgreich freigeschalten und " +
+                    "werden nun  weitergeleitet zum Login", user) ; //weiterleitung zum login (return "redirect:/login.html?lang=" + request.getLocale().getLanguage(); )
+        }
+        else
+        {
+            return new ApiResponse(400,"Dieser Link ist nicht gültig", null);
+        }
+
+
+
     }
 
     private void validateSignUp(SignUpDto signUpDto) {
