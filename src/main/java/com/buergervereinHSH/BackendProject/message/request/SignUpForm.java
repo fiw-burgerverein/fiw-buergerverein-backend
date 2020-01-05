@@ -7,7 +7,6 @@ import java.util.Set;
 
 public class SignUpForm {
 
-
     @NotBlank
     @Size(max = 60)
     @Email
@@ -23,7 +22,6 @@ public class SignUpForm {
     public String getEmail() {
         return email;
     }
-
 
     public void setEmail(String email) {
         this.email = email;

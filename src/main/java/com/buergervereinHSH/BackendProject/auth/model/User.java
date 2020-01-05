@@ -29,8 +29,8 @@ public class User {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
-    joinColumns  = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name="role_id"))
+            joinColumns  = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name="role_id"))
     private Set<Role> roles = new HashSet<>();
 
 
@@ -52,7 +52,6 @@ public class User {
 
         this.id = id;
     }
-
 
     public String getEmail() {
 
