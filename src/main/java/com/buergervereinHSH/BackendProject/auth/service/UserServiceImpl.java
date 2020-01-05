@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
                 throw new EmailAlreadyInUseException();
             }
             else {
-                userDao.deleteById(oldUser.getUser_id());
+                userDao.deleteById(oldUser.getUserId());
             }
         }
 
