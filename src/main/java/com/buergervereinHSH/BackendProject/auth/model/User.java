@@ -19,12 +19,11 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
+    private long userId;
 
     @NaturalId
     @NotBlank
     @Size(max = 50)
-    private long userId;
     private String email;
 
     @NotBlank
