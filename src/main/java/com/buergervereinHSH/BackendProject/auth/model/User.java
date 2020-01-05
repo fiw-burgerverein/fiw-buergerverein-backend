@@ -1,8 +1,16 @@
 package com.buergervereinHSH.BackendProject.auth.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.HashSet;
+
 import java.time.LocalDateTime;
+
 import java.util.Set;
 
 @Entity
@@ -11,10 +19,40 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+
+    @NaturalId
+    @NotBlank
+    @Size(max = 50)
     private long userId;
     private String email;
-    @JsonIgnore
+
+    @NotBlank
+    @Size(min=6, max=100)
     private String password;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles",
+            joinColumns  = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name="role_id"))
+    private Set<Role> roles = new HashSet<>();
+
+
+    public User(){}
+  
+    public User(String email, String password, Set<Role> roles, boolean enabled) {
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+        this.enabled = enabled;
+     }
+
+
+  /*  public User(String email, String password){
+        this.email = email;
+        this.password = password;
+    }*/
+
     @ManyToMany
     private Set<Role> roles;
     private boolean enabled;
@@ -28,15 +66,8 @@ public class User {
             cascade =  CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
     private VerificationToken verificationToken;
 
-    public User(){
-    }
 
-    public User(String email, String password, Set<Role> roles, boolean enabled) {
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
-        this.enabled = enabled;
-    }
+   
 
     public long getUserId() {return userId;}
     public void setUserId(long userId) {this.userId = userId;}
@@ -58,5 +89,4 @@ public class User {
 
     public LocalDateTime getResetTokenExpiryDate() { return resetTokenExpiryDate; }
     public void setResetTokenExpiryDate(LocalDateTime resetTokenExpiryDate) { this.resetTokenExpiryDate = resetTokenExpiryDate; }
-
-}
+  
