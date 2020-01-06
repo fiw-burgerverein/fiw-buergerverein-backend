@@ -13,8 +13,11 @@ import com.buergervereinHSH.BackendProject.forms.model.Sachkosten;
 import com.buergervereinHSH.BackendProject.forms.model.Status;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.mail.MessagingException;
 import java.time.LocalDateTime;
 
 @Transactional
@@ -29,6 +32,9 @@ public class FormServiceImpl implements FormService {
     private AufwandDao aufwandDao;
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private FormMailServiceImpl formMailServiceImpl;
 
     @Override
     public ApiResponse saveForm(long userId, FormDto formDto) {
@@ -68,6 +74,23 @@ public class FormServiceImpl implements FormService {
 
 //        eigentlich noch nicht da der Antrag noch in PDF umgewandelt werden soll und abgeschickt :/
         return new ApiResponse(200, "Sie haben erfolgreich Ihren Antrag abgesendet!", null);
+    }
+
+    @Override
+    public ApiResponse sendPDFtoUser(long userId) throws MessagingException {
+
+        User user = userDao.findByUserId(userId);
+
+        //Parameter ändern!
+        try {
+            formMailServiceImpl.sendMailWithAttachment(user.getEmail(), "Mail mit Anhang", "Im Anhang: Antrags als PDF",
+                "src/main/resources/test.pdf");
+            return new ApiResponse(200, "Email wurde versendet", null);
+        } catch (MailException mailException) {
+            System.out.println(mailException);
+            return new ApiResponse(404, "Email konnte nicht gesendet werden", null);
+        }
+
     }
 
 }
