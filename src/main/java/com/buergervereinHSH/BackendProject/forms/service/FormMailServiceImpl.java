@@ -30,6 +30,7 @@ public class FormMailServiceImpl implements FormMailService {
         helper.setSubject(subject);
         helper.setText(text);
 
+        //Filename anpassen
         FileSystemResource file = new FileSystemResource(new File(pathToAttachment));
         helper.addAttachment("Antrag.pdf", file);
 

@@ -8,7 +8,6 @@ import javax.mail.MessagingException;
 public interface FormService {
 
     ApiResponse saveForm(long userId, FormDto formDto);
-
     ApiResponse sendPDFtoUser(long userId) throws MessagingException;
 
 }
