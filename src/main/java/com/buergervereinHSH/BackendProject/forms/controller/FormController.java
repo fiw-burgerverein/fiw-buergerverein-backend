@@ -10,6 +10,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class FormController {
 
     @Autowired

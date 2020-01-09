@@ -54,7 +54,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-<!--			<version>1.4.196</version>-->
+			<version>1.4.196</version>
 		</dependency>
 
 		<!-- für Registrierung/Login Backend -->
@@ -64,10 +64,10 @@
 		</dependency>
 
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-security</artifactId>-->
+<!--		</dependency>-->
 
 		<!-- For Working with Json Web Tokens (JWT) -->
 		<dependency>

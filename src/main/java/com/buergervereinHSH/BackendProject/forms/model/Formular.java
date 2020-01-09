@@ -17,15 +17,15 @@ public class Formular {
     private User user;
     private Status status;
 
-    private String projectName;
+    private String projektname;
     private String beschreibung;
-    private Date startDate;
-    private Date endDate;
+    private Date startdatum;
+    private Date enddatum;
     private String ort;
     private String zielgruppe;
-    private int anzTeilnehmer;
-    private String activities;
-    private String activitiesBeschreibung;
+    private int anzteiln;
+    private String oeffarb;
+    private String oeffarbbeschr;
 
 //    @OneToOne(targetEntity = Sachkosten.class, fetch = FetchType.EAGER)
 //    @JoinColumn(nullable = false, name = "sachkostenId")
@@ -60,17 +60,8 @@ public class Formular {
     public Status getStatus() { return status; }
     public void setStatus(Status status) { this.status = status; }
 
-    public String getProjectName() { return projectName; }
-    public void setProjectName(String projectName) { this.projectName = projectName; }
-
     public String getBeschreibung() { return beschreibung; }
     public void setBeschreibung(String beschreibung) { this.beschreibung = beschreibung; }
-
-    public Date getStartDate() { return startDate; }
-    public void setStartDate(Date startDate) { this.startDate = startDate; }
-
-    public Date getEndDate() { return endDate; }
-    public void setEndDate(Date endDate) { this.endDate = endDate; }
 
     public String getOrt() { return ort; }
     public void setOrt(String ort) { this.ort = ort; }
@@ -78,15 +69,52 @@ public class Formular {
     public String getZielgruppe() { return zielgruppe; }
     public void setZielgruppe(String zielgruppe) { this.zielgruppe = zielgruppe; }
 
-    public int getAnzTeilnehmer() { return anzTeilnehmer; }
-    public void setAnzTeilnehmer(int anzTeilnehmer) { this.anzTeilnehmer = anzTeilnehmer; }
+    public String getProjektname() {
+        return projektname;
+    }
 
-    public String getActivities() { return activities; }
-    public void setActivities(String activities) { this.activities = activities; }
+    public void setProjektname(String projektname) {
+        this.projektname = projektname;
+    }
 
-    public String getActivitiesBeschreibung() { return activitiesBeschreibung; }
-    public void setActivitiesBeschreibung(String activitiesBeschreibung) {
-        this.activitiesBeschreibung = activitiesBeschreibung;
+    public Date getStartdatum() {
+        return startdatum;
+    }
+
+    public void setStartdatum(Date startdatum) {
+        this.startdatum = startdatum;
+    }
+
+    public Date getEnddatum() {
+        return enddatum;
+    }
+
+    public void setEnddatum(Date enddatum) {
+        this.enddatum = enddatum;
+    }
+
+    public int getAnzteiln() {
+        return anzteiln;
+    }
+
+    public void setAnzteiln(int anzteiln) {
+        this.anzteiln = anzteiln;
+    }
+
+    public String getOeffarb() {
+        return oeffarb;
+    }
+
+    public void setOeffarb(String oeffarb) {
+        this.oeffarb = oeffarb;
+    }
+
+    public String getOeffarbbeschr() {
+        return oeffarbbeschr;
+    }
+
+    public void setOeffarbbeschr(String oeffarbbeschr) {
+        this.oeffarbbeschr = oeffarbbeschr;
     }
 
     public float getSachkostenSum() { return sachkostenSum; }

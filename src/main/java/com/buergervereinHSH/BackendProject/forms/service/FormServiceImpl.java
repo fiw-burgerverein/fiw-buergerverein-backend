@@ -39,32 +39,32 @@ public class FormServiceImpl implements FormService {
         formular.setCreatedAt(LocalDateTime.now());
         formular.setStatus(Status.IN_BEARBEITUNG);
         formDao.save(formular);
-
-        float sachkostenGesamt = 0;
-        Sachkosten[] sachkostenArray = formDto.getSachkostenArray();
-        for (Sachkosten value : sachkostenArray) {
-            Sachkosten sachkosten = new Sachkosten();
-            BeanUtils.copyProperties(value, sachkosten);
-            sachkosten.setForm(formular);
-            sachkostenDao.save(sachkosten);
-
-            sachkostenGesamt += value.getCost();
-        }
-
-        float aufwandGesamt = 0;
-        Aufwand[] aufwandArray = formDto.getAufwandArray();
-        for (Aufwand value : aufwandArray) {
-            Aufwand aufwand = new Aufwand();
-            BeanUtils.copyProperties(value, aufwand);
-            aufwand.setForm(formular);
-            aufwandDao.save(aufwand);
-
-            aufwandGesamt += value.getCost();
-        }
-
-        formular.setAufwandSum(aufwandGesamt);
-        formular.setSachkostenSum(sachkostenGesamt);
-        formDao.save(formular);
+//
+//        float sachkostenGesamt = 0;
+//        Sachkosten[] sachkostenArray = formDto.getSachkostenArray();
+//        for (Sachkosten value : sachkostenArray) {
+//            Sachkosten sachkosten = new Sachkosten();
+//            BeanUtils.copyProperties(value, sachkosten);
+//            sachkosten.setForm(formular);
+//            sachkostenDao.save(sachkosten);
+//
+//            sachkostenGesamt += value.getCost();
+//        }
+//
+//        float aufwandGesamt = 0;
+//        Aufwand[] aufwandArray = formDto.getAufwandArray();
+//        for (Aufwand value : aufwandArray) {
+//            Aufwand aufwand = new Aufwand();
+//            BeanUtils.copyProperties(value, aufwand);
+//            aufwand.setForm(formular);
+//            aufwandDao.save(aufwand);
+//
+//            aufwandGesamt += value.getCost();
+//        }
+//
+//        formular.setAufwandSum(aufwandGesamt);
+//        formular.setSachkostenSum(sachkostenGesamt);
+//        formDao.save(formular);
 
 //        eigentlich noch nicht da der Antrag noch in PDF umgewandelt werden soll und abgeschickt :/
         return new ApiResponse(200, "Sie haben erfolgreich Ihren Antrag abgesendet!", null);
