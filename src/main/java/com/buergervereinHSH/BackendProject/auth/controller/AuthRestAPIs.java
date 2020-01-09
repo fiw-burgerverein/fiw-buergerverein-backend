@@ -1,13 +1,13 @@
 package com.buergervereinHSH.BackendProject.auth.controller;
 
+import com.buergervereinHSH.BackendProject.auth.dataAccessObject.RoleDao;
+import com.buergervereinHSH.BackendProject.auth.dataAccessObject.UserDao;
+import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.LoginDto;
+import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.SignUpDto;
 import com.buergervereinHSH.BackendProject.auth.model.Role;
 import com.buergervereinHSH.BackendProject.auth.model.RoleName;
 import com.buergervereinHSH.BackendProject.auth.model.User;
-import com.buergervereinHSH.BackendProject.auth.repository.RoleRepository;
-import com.buergervereinHSH.BackendProject.auth.repository.UserRepository;
 import com.buergervereinHSH.BackendProject.auth.security.jwt.JwtProvider;
-import com.buergervereinHSH.BackendProject.message.request.LoginForm;
-import com.buergervereinHSH.BackendProject.message.request.SignUpForm;
 import com.buergervereinHSH.BackendProject.message.response.JwtResponse;
 import com.buergervereinHSH.BackendProject.message.response.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +34,10 @@ public class AuthRestAPIs {
     AuthenticationManager authenticationManager;
 
     @Autowired
-    UserRepository userRepository;
+    UserDao userDao;
 
     @Autowired
-    RoleRepository roleRepository;
+    RoleDao roleDao;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -46,7 +46,7 @@ public class AuthRestAPIs {
     JwtProvider jwtProvider;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginForm loginRequest){
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDto loginRequest){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
@@ -60,8 +60,8 @@ public class AuthRestAPIs {
 
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpForm signUpRequest){
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpDto signUpRequest){
+        if (userDao.existsByEmail(signUpRequest.getEmail())) {
             return new ResponseEntity<>(new ResponseMessage("Fail -> Email is already in use!"),
                     HttpStatus.BAD_REQUEST);
         }
@@ -76,20 +76,21 @@ public class AuthRestAPIs {
         strRoles.forEach(role -> {
             switch (role){
                 case "admin":
-                    Role adminRole = roleRepository.findByName(RoleName.ROLE_ADMIN)
-                            .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
+                    Role adminRole = roleDao.findByName(RoleName.ROLE_ADMIN);
+                        //    .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
                     roles.add(adminRole);
+                    //if findbyname == null dann exception
 
                     break;
 
                 default:
-                    Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
-                            .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
+                    Role userRole = roleDao.findByName(RoleName.ROLE_USER);
+                         //   .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
                     roles.add(userRole);
             }
         });
         user.setRoles(roles);
-        userRepository.save(user);
+        userDao.save(user);
 
         return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
     }

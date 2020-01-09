@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Transactional
@@ -33,13 +34,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public ApiResponse signUp(SignUpDto signUpDto) {
         User user = new User();
-
+/*
         if(!signUpDto.getEmail().equals(signUpDto.getEmailConfirm())) {
             throw new EmailMismatchException();
         }
         if(!signUpDto.getPassword().equals(signUpDto.getPasswordConfirm())) {
             throw new PasswordMismatchException();
-        }
+        }*/
 
         User oldUser = null;
 
