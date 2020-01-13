@@ -16,7 +16,7 @@ public class SignUpDto {
     private String password;
     @NotBlank @NotNull @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
     private String passwordConfirm;
-    private Role role;
+//    private Role role;
 
     public String getEmail() {
         return email;
@@ -36,6 +36,6 @@ public class SignUpDto {
     }
     public void setPassword(String password) { this.password = password; }
 
-    public Role getRole() { return role; }
-    public void setRole(Role role) { this.role = role; }
+//    public Role getRole() { return role; }
+//    public void setRole(Role role) { this.role = role; }
 }
