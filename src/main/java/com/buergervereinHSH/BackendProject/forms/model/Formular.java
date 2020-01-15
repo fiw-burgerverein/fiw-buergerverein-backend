@@ -15,6 +15,7 @@ public class Formular {
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "userId")
     private User user;
+    @Enumerated(EnumType.ORDINAL)
     private Status status;
 
     private String projectName;
