@@ -30,11 +30,4 @@ public class FormController {
     public ApiResponse sendPDFToUser(@PathVariable("userId") long userId) throws MessagingException {
         return formService.sendPDFtoUser(userId);
     }
-
-    //URL später anders evtl, bzw andere Controllerklasse; Case: GeschStelle eingeloggt, ein ausgewählter Antrag zu sehen
-    @PostMapping("/alleAntraege/{formId}")
-    public ApiResponse changeState(@PathVariable("formId") long formId, @Valid @RequestBody GeschStellenDto geschStellenDto) {
-        return formService.changeState(formId, geschStellenDto);
-    }
-
 }
