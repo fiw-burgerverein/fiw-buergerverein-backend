@@ -1,7 +1,8 @@
 package com.buergervereinHSH.BackendProject.auth.model;
 
+import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "roles")
@@ -10,9 +11,22 @@ public class Role
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    @ManyToMany(mappedBy = "roles")
+
+    @Enumerated(EnumType.STRING)
+    @NaturalId
+    @Column(length = 60)
+    private RoleName name;
+
+    public Role() {
+    }
+
+    public Role(RoleName name){
+        this.name = name;
+    }
+   /* @ManyToMany(mappedBy = "roles")
     private Set<User> users;
+
+    */
 
     public Long getId() {
         return id;
@@ -21,17 +35,19 @@ public class Role
         this.id = id;
     }
 
-    public String getName() {
+    public RoleName getName() {
         return name;
     }
-    public void setName(String name) {
+    public void setName(RoleName name) {
         this.name = name;
     }
 
-    public Set<User> getUsers() {
+  /*  public Set<User> getUsers() {
         return users;
     }
     public void setUsers(Set<User> users) {
         this.users = users;
     }
+
+   */
 }
