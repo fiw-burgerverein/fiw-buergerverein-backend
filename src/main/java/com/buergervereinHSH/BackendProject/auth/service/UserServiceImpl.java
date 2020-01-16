@@ -41,10 +41,8 @@ public class UserServiceImpl implements UserService {
             throw new PasswordMismatchException();
         }
 
-        User oldUser = null;
-
-        if ((oldUser = userDao.findByEmail(signUpDto.getEmail())) != null){
-
+        User oldUser = userDao.findByEmail(signUpDto.getEmail());
+        if ((oldUser != null)) {
             if(oldUser.isEnabled()){
                 throw new EmailAlreadyInUseException();
             }
