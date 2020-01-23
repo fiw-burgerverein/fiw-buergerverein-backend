@@ -52,7 +52,7 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
 //        String reset_url = "http://" + request.getServerName() + request.getServerPort() + request.getContextPath()
 //                + "/reset-password?token=" + resetToken;
 //        auskommentiert, da wir Front- und Backend auf unterschiedlichen Serverports haben
-        String reset_url = "http://localhost:4200/reset-password?token=" + resetToken;
+        String reset_url = "http://localhost:4200/passwort-zuruecksetzen?token=" + resetToken;
         emailImpl.sendSimpleMessage(user.getEmail(), "Reset Password", "Durch Betätigen des Links: " +reset_url);
         return new ApiResponse(200, "Ein Link wurde an die von Ihnen angebenen Email gesendet.", null);
     }

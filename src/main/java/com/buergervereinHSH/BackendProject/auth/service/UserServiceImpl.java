@@ -101,8 +101,8 @@ public class UserServiceImpl implements UserService {
             User user = token.getUser();
             user.setEnabled(true);
             userDao.save(user);
-            return new ApiResponse(200, "Sie haben Ihren Account erfolgreich freigeschalten und " +
-                    "werden nun  weitergeleitet zum Login", null) ;
+            return new ApiResponse(200, "Sie haben Ihren Account erfolgreich freigeschaltet und " +
+                    "werden nun zum Login weitergeleitet", null) ;
             //weiterleitung zum login (return "redirect:/login.html?lang=" + request.getLocale().getLanguage(); )
         }
         else
