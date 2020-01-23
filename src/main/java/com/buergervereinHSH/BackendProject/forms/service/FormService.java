@@ -15,7 +15,6 @@ public interface FormService {
     ApiResponse changeState(long formId, GeschStellenDto geschStellenDto);
 
     ApiResponse getSingleForm(long formId);   //FormController
-
-    //ApiResponse getAllForms();  //GeschStellenController
+    ApiResponse getAllForms();  //GeschStellenController
 
 }
