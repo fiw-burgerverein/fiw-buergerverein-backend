@@ -10,6 +10,7 @@ import com.buergervereinHSH.BackendProject.auth.web.ApiResponse;
 import com.buergervereinHSH.BackendProject.forms.dataAccessObject.AufwandDao;
 import com.buergervereinHSH.BackendProject.forms.dataAccessObject.FormDao;
 import com.buergervereinHSH.BackendProject.forms.dataAccessObject.SachkostenDao;
+import com.buergervereinHSH.BackendProject.forms.dataTransferObject.request.AllFormsDto;
 import com.buergervereinHSH.BackendProject.forms.dataTransferObject.request.FormDto;
 import com.buergervereinHSH.BackendProject.forms.model.Aufwand;
 import com.buergervereinHSH.BackendProject.forms.model.Formular;
@@ -130,16 +131,13 @@ public class FormServiceImpl implements FormService {
         return new ApiResponse(200, "Antrag erfolgreich übermittelt", form);
     }
 
-/*    @Override
-    public ApiResponse getAllForms() {
+    @Override
+    public ApiResponse getAllForms() {  //evtl noch anpassen: nur AllFormsDto wird übergeben, statt aller Daten der Formulare
 
-        List<Long> idListe = formDao.getAllIds();
-        Iterable<Formular> formIt = formDao.findAllByFormId(idListe);
+        List<Formular> allForms = formDao.getAllForms();
 
+        return new ApiResponse(200, "Alle Antraege erfolgreich übermittelt", allForms);
 
-
-        return new ApiResponse(200, "Alle Antraege erfolgreich übermittelt", formIt);
-
-    }*/
+    }
 
 }
