@@ -18,14 +18,15 @@ public class GeschStellenController {
     @Autowired
     private FormService formService;
 
+    @GetMapping("/")
+    public ApiResponse getAllForms() {
+        return formService.getAllForms();
+    }
+
+
     @PostMapping("/{formId}")
     public ApiResponse changeState(@PathVariable("formId") long formId, @Valid @RequestBody GeschStellenDto geschStellenDto) {
         return formService.changeState(formId, geschStellenDto);
     }
-
-/*    @GetMapping("/test")
-    public ApiResponse getAllForms() {
-        return formService.getAllForms();
-    }*/
 
 }
