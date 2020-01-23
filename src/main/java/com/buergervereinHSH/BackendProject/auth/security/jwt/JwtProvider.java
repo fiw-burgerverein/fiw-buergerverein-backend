@@ -1,3 +1,4 @@
+/*
 package com.buergervereinHSH.BackendProject.auth.security.jwt;
 
 import com.buergervereinHSH.BackendProject.auth.security.services.UserPrinciple;
@@ -59,3 +60,4 @@ public class JwtProvider {
                 .getBody().getSubject();
     }
 }
+*/

@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Transactional
 @Service
@@ -80,13 +81,13 @@ public class FormServiceImpl implements FormService {
         formular.setSachkostenSum(sachkostenGesamt);
         formDao.save(formular);
 
-        // Email an entsprechende GS:
+/*        // Email an entsprechende GS:
         String GSName = formular.getOrt();
         GeschStelle geschStelle = geschStellenDao.findByName(GSName);
         String emailGS = geschStelle.getEmail();
 
         emailImpl.sendSimpleMessage(emailGS, "Neuer Antrag eingegangen",
-                "Ein neu eingegangener Antrag liegt für Sie zum Download bereit.");
+                "Ein neu eingegangener Antrag liegt für Sie zum Download bereit.");*/
 
         return new ApiResponse(200, "Sie haben erfolgreich Ihren Antrag abgesendet!", null);
     }
@@ -120,5 +121,25 @@ public class FormServiceImpl implements FormService {
 
         return new ApiResponse(200, "Der Status des Antrags wurde erfolgreich geändert", formular);
     }
+
+    @Override
+    public ApiResponse getSingleForm(long formId) {
+
+        Formular form = formDao.findByFormId(formId);
+
+        return new ApiResponse(200, "Antrag erfolgreich übermittelt", form);
+    }
+
+/*    @Override
+    public ApiResponse getAllForms() {
+
+        List<Long> idListe = formDao.getAllIds();
+        Iterable<Formular> formIt = formDao.findAllByFormId(idListe);
+
+
+
+        return new ApiResponse(200, "Alle Antraege erfolgreich übermittelt", formIt);
+
+    }*/
 
 }

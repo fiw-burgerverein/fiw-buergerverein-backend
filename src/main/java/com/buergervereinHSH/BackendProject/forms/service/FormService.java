@@ -14,4 +14,8 @@ public interface FormService {
     ApiResponse sendPDFtoUser(long userId) throws MessagingException;
     ApiResponse changeState(long formId, GeschStellenDto geschStellenDto);
 
+    ApiResponse getSingleForm(long formId);   //FormController
+
+    //ApiResponse getAllForms();  //GeschStellenController
+
 }
