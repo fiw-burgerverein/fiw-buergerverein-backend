@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
         emailImpl.sendSimpleMessage(user.getEmail(), "Bestätigung Ihres Accounts bei der Stadtteilkoordination HSH Nord",
                 "Herzlich Willkommen bei der Stadtteilkoordination HSH Nord! \n\n" +
                         "Um Ihre Email Adresse zu bestätigen und somit Ihren Account freizuschalten, bitte klicken Sie auf den folgenden Link: "
-                        + "http://localhost:4200/accountbestaetigung?token=" + token + " \n\nNach erfolgreicher Aktivierung Ihres Accounts haben Sie die Möglichkeit sich einzuloggen. " +
+                        + "http://localhost:4200/registrieren/accountbestaetigung?token=" + token + " \n\nNach erfolgreicher Aktivierung Ihres Accounts haben Sie die Möglichkeit sich einzuloggen. " +
                         "\n\nViele Grüße, \nIhre Stadtteilkoordination Hohenschönhausen Nord");
         return new ApiResponse(200, "Ein Bestätigungslink wurde an die von Ihnen angebene Email gesendet.", user);
     }
