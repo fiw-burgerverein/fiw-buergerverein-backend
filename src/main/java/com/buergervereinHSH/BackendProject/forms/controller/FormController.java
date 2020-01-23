@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
 import javax.validation.Valid;
 
-
+@CrossOrigin(origins="*")
 @RestController
 @RequestMapping("/user")
 public class FormController {
@@ -29,5 +29,10 @@ public class FormController {
     @RequestMapping("/{userId}/formular/bestaetigen")  //hier nur zu testzwecken; wird wenn dann später Teil der saveForm methode
     public ApiResponse sendPDFToUser(@PathVariable("userId") long userId) throws MessagingException {
         return formService.sendPDFtoUser(userId);
+    }
+
+    @GetMapping("/{formId}")
+    public ApiResponse getSingleForm(@PathVariable("formId") long formId) {
+        return formService.getSingleForm(formId);
     }
 }

@@ -1,3 +1,4 @@
+/*
 package com.buergervereinHSH.BackendProject.auth.security;
 
 import com.buergervereinHSH.BackendProject.auth.security.jwt.JwtAuthEntryPoint;
@@ -64,9 +65,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+        //http.authorizeRequests().antMatchers("/accountbestaetigung").permitAll();
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }
 
 
 
+*/
