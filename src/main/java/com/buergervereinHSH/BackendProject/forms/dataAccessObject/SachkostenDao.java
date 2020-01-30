@@ -8,4 +8,5 @@ public interface SachkostenDao  extends CrudRepository<Sachkosten, Long> {
 
     Sachkosten[] findByForm(Formular form);
     Sachkosten save(Sachkosten sachkosten);
+
 }

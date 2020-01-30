@@ -1,3 +1,4 @@
+/*
 package com.buergervereinHSH.BackendProject.forms.dataTransferObject.request;
 
 import com.buergervereinHSH.BackendProject.forms.model.Status;
@@ -12,7 +13,5 @@ public class AllFormsDto {
     private Status status;
 
 
-
-
-
 }
+*/

@@ -4,6 +4,7 @@ import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.Gesch
 import com.buergervereinHSH.BackendProject.auth.web.ApiResponse;
 import com.buergervereinHSH.BackendProject.forms.model.Formular;
 import com.buergervereinHSH.BackendProject.forms.service.FormService;
+import org.hibernate.validator.internal.IgnoreForbiddenApisErrors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,4 +30,10 @@ public class GeschStellenController {
         return formService.changeState(formId, geschStellenDto);
     }
 
+    @GetMapping("/{formId}")
+    public ApiResponse getSingleForm(@PathVariable("formId") long formId) {
+        return formService.getSingleForm(formId);
+    }
 }
+
+
