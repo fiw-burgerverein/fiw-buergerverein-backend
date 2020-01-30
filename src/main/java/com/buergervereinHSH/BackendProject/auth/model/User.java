@@ -2,15 +2,11 @@ package com.buergervereinHSH.BackendProject.auth.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.NaturalId;
-
 import javax.persistence.*;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
-
 import java.time.LocalDateTime;
-
 import java.util.Set;
 
 @Entity

@@ -8,4 +8,5 @@ public interface AufwandDao  extends CrudRepository<Aufwand, Long> {
 
     Aufwand[] findByForm(Formular form);
     Aufwand save(Aufwand aufwand);
+
 }

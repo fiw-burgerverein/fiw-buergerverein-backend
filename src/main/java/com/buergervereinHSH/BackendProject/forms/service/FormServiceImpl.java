@@ -3,7 +3,6 @@ package com.buergervereinHSH.BackendProject.forms.service;
 import com.buergervereinHSH.BackendProject.auth.dataAccessObject.GeschStellenDao;
 import com.buergervereinHSH.BackendProject.auth.dataAccessObject.UserDao;
 import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.GeschStellenDto;
-import com.buergervereinHSH.BackendProject.auth.model.GeschStelle;
 import com.buergervereinHSH.BackendProject.auth.model.User;
 import com.buergervereinHSH.BackendProject.auth.service.EmailServiceImpl;
 import com.buergervereinHSH.BackendProject.auth.web.ApiResponse;
@@ -11,6 +10,7 @@ import com.buergervereinHSH.BackendProject.forms.dataAccessObject.AufwandDao;
 import com.buergervereinHSH.BackendProject.forms.dataAccessObject.FormDao;
 import com.buergervereinHSH.BackendProject.forms.dataAccessObject.SachkostenDao;
 import com.buergervereinHSH.BackendProject.forms.dataTransferObject.request.FormDto;
+import com.buergervereinHSH.BackendProject.forms.dataTransferObject.request.SingleFormDto;
 import com.buergervereinHSH.BackendProject.forms.model.Aufwand;
 import com.buergervereinHSH.BackendProject.forms.model.Formular;
 import com.buergervereinHSH.BackendProject.forms.model.Sachkosten;
@@ -43,6 +43,8 @@ public class FormServiceImpl implements FormService {
     private FormMailServiceImpl formMailServiceImpl;
     @Autowired
     private EmailServiceImpl emailImpl;
+    @Autowired
+    SingleFormDto singleFormDto;
 
     @Override
     public ApiResponse saveForm(long userId, FormDto formDto) {
@@ -122,24 +124,30 @@ public class FormServiceImpl implements FormService {
         return new ApiResponse(200, "Der Status des Antrags wurde erfolgreich geändert", formular);
     }
 
+
     @Override
     public ApiResponse getSingleForm(long formId) {
 
-        Formular form = formDao.findByFormId(formId);
 
-        return new ApiResponse(200, "Antrag erfolgreich übermittelt", form);
+        Formular form = formDao.findByFormId(formId);
+        singleFormDto.setFormular(form);
+
+        Sachkosten[] currSachkostenArray = sachkostenDao.findByForm(form);
+        singleFormDto.setSachkostenArray(currSachkostenArray);
+
+        Aufwand[] currAufwandArray = aufwandDao.findByForm(form);
+        singleFormDto.setAufwandArray(currAufwandArray);
+
+        return new ApiResponse(200, "Antrag erfolgreich übermittelt", singleFormDto);
     }
 
-/*    @Override
-    public ApiResponse getAllForms() {
+    @Override
+    public ApiResponse getAllForms() {  //evtl noch anpassen: nur AllFormsDto wird übergeben, statt aller Daten der Formulare
 
-        List<Long> idListe = formDao.getAllIds();
-        Iterable<Formular> formIt = formDao.findAllByFormId(idListe);
+        List<Formular> allForms = formDao.getAllForms();
 
+        return new ApiResponse(200, "Alle Antraege erfolgreich übermittelt", allForms);
 
-
-        return new ApiResponse(200, "Alle Antraege erfolgreich übermittelt", formIt);
-
-    }*/
+    }
 
 }
