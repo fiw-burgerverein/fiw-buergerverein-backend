@@ -142,7 +142,7 @@ public class AuthRestAPIs {
     }
 
     @PostMapping("/accountConfirm")
-    public ApiResponse confirmAccount(@RequestParam("token")String verificationToken) {
+    public ResponseEntity<?> confirmAccount(@RequestParam("token")String verificationToken) {
         VerificationToken token = verificationTokenDao.findByToken(verificationToken);
 
         if(token != null)
@@ -150,14 +150,18 @@ public class AuthRestAPIs {
             User user = token.getUser();
             user.setEnabled(true);
             userDao.save(user);
-            return new ApiResponse(200, "Sie haben Ihren Account erfolgreich freigeschalten und " +
-                    "werden nun  weitergeleitet zum Login", null) ; //weiterleitung zum login (return "redirect:/login.html?lang=" + request.getLocale().getLanguage(); )
+            return new ResponseEntity<>(new ResponseMessage("Sie haben Ihren Account erfolgreich freigeschalten und " +
+                    "werden nun  weitergeleitet zum Login"), HttpStatus.OK);
+
+        /*    return new ApiResponse(200, "Sie haben Ihren Account erfolgreich freigeschalten und " +
+                    "werden nun  weitergeleitet zum Login", null) ; //weiterleitung zum login (return
+            // "redirect:/login.html?lang=" + request.getLocale().getLanguage(); )*/
         }
         else
         {
-            return new ApiResponse(400,"Dieser Link ist nicht gültig", null);
+            throw new VerificationTokenLinkNotValid();
+            //return new ApiResponse(400,"Dieser Link ist nicht gültig", null);
         }
-
     }
 
 }
