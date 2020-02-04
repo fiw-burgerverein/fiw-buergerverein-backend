@@ -39,10 +39,10 @@ public class UserServiceImpl implements UserService {
 /*
         if(!signUpDto.getEmail().equals(signUpDto.getEmailConfirm())) {
             throw new EmailMismatchException();
-        }
+    }
         if(!signUpDto.getPassword().equals(signUpDto.getPasswordConfirm())) {
-            throw new PasswordMismatchException();
-        }*/
+        throw new PasswordMismatchException();
+    }*/
 
         User oldUser = null;
 
@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
         verificationTokenDao.save(myToken);
     }
 
-    @Override
+/*    @Override
     public ApiResponse confirmAccount(String verificationToken) {
         VerificationToken token = verificationTokenDao.findByToken(verificationToken);
 
@@ -116,7 +116,7 @@ public class UserServiceImpl implements UserService {
             return new ApiResponse(400,"Dieser Link ist nicht gültig", null);
         }
 
-    }
+    }*/
 
     @Override
     public Set getAuthorities(User user) {

@@ -2,16 +2,20 @@ package com.buergervereinHSH.BackendProject.auth.controller;
 
 import com.buergervereinHSH.BackendProject.auth.dataAccessObject.RoleDao;
 import com.buergervereinHSH.BackendProject.auth.dataAccessObject.UserDao;
+import com.buergervereinHSH.BackendProject.auth.dataAccessObject.VerificationTokenDao;
 import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.LoginDto;
 import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.SignUpDto;
 import com.buergervereinHSH.BackendProject.auth.exceptions.AccountNotActivatedException;
-import com.buergervereinHSH.BackendProject.auth.exceptions.NoUserFoundException;
+import com.buergervereinHSH.BackendProject.auth.exceptions.EmailMismatchException;
+import com.buergervereinHSH.BackendProject.auth.exceptions.*;
 import com.buergervereinHSH.BackendProject.auth.model.Role;
 import com.buergervereinHSH.BackendProject.auth.model.RoleName;
 import com.buergervereinHSH.BackendProject.auth.model.User;
+import com.buergervereinHSH.BackendProject.auth.model.VerificationToken;
 import com.buergervereinHSH.BackendProject.auth.security.jwt.JwtProvider;
 import com.buergervereinHSH.BackendProject.auth.service.EmailServiceImpl;
 import com.buergervereinHSH.BackendProject.auth.service.UserServiceImpl;
+import com.buergervereinHSH.BackendProject.auth.web.ApiResponse;
 import com.buergervereinHSH.BackendProject.message.response.JwtResponse;
 import com.buergervereinHSH.BackendProject.message.response.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +60,9 @@ public class AuthRestAPIs {
     @Autowired
     EmailServiceImpl emailImpl;
 
+    @Autowired
+    private VerificationTokenDao verificationTokenDao;
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDto loginDto){
 
@@ -79,58 +86,78 @@ public class AuthRestAPIs {
 
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpDto signUpRequest){
-        if (userDao.existsByEmail(signUpRequest.getEmail())) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpDto signUpDto){
+/*        if (userDao.existsByEmail(signUpDto.getEmail())) {
             return new ResponseEntity<>(new ResponseMessage("Fail -> Email is already in use!"),
                     HttpStatus.BAD_REQUEST);
+        }*/
+
+        if(!signUpDto.getEmail().equals(signUpDto.getEmailConfirm())) {
+            throw new EmailMismatchException();
+        }
+        if(!signUpDto.getPassword().equals(signUpDto.getPasswordConfirm())) {
+            throw new PasswordMismatchException();
+        }
+
+        User oldUser;
+
+        if ((oldUser = userDao.findByEmail(signUpDto.getEmail())) != null){
+
+            if(oldUser.isEnabled()){
+                throw new EmailAlreadyInUseException();
+            }
+            else {
+                userDao.deleteById(oldUser.getUserId());
+            }
         }
 
         // Creating user's account
-        User user = new User(signUpRequest.getEmail(),
-                passwordEncoder.encode(signUpRequest.getPassword()));
+        User user = new User(signUpDto.getEmail(),
+                passwordEncoder.encode(signUpDto.getPassword()));
 
-        Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
-
-        strRoles.forEach(role -> {
-            switch (role){
-                case "geschaeftsstelle":
-                    Role gsRole = roleDao.findByName(RoleName.ROLE_GS);
-                    roles.add(gsRole);
-
-                    break;
-                case "admin":
-                    Role adminRole = roleDao.findByName(RoleName.ROLE_ADMIN);
-                        //    .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
-                    roles.add(adminRole);
-                    //if findbyname == null dann exception
-
-                    break;
-
-                default:
-                    Role userRole = roleDao.findByName(RoleName.ROLE_USER);
-                         //   .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
-                    roles.add(userRole);
-            }
-        });
+        Role userRole = roleDao.findByName(RoleName.ROLE_USER);
+        roles.add(userRole);
         user.setRoles(roles);
+
         userDao.save(user);
 
         String token = UUID.randomUUID().toString();
         userServiceImpl.createVerificationTokenForUser(user, token);
 
 
-//vollständige URL muss noch geändert werden
-        emailImpl.sendSimpleMessage(user.getEmail(), "Bestätigung Ihres Accounts bei der Stadtteilkoordination HSH Nord",
+        //vollständige URL muss noch geändert werden
+        emailImpl.sendSimpleMessage(user.getEmail(), "Bestätigung Ihres Accounts bei der Stadtteilkoordination " +
+                        "HSH Nord",
                 "Herzlich Willkommen bei der Stadtteilkoordination HSH Nord! \n\n" +
-                        "Um Ihre Email Adresse zu bestätigen und somit Ihren Account freizuschalten, bitte klicken Sie auf den folgenden Link: "
-                        + "http://localhost:8080/accountbestaetigung?token="+token+" \n\nNach erfolgreicher Aktivierung Ihres Accounts haben Sie die " +
+                        "Um Ihre Email Adresse zu bestätigen und somit Ihren Account freizuschalten, bitte kopieren sie " +
+                        "folgenden Link in ihren Browser: "
+                        + "http://localhost:8080/accountbestaetigung?token="+token+" \n\nNach erfolgreicher Aktivierung " +
+                        "Ihres Accounts haben Sie die " +
                         "Möglichkeit sich einzuloggen. " +
                         "\n\nViele Grüße, \nIhre Stadtteilkoordination Hohenschönhausen Nord");
 
 
-        return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseMessage("Ein Bestätigungslink wurde an die von Ihnen angebene Email gesendet."), HttpStatus.OK);
     }
 
+    @PostMapping("/accountConfirm")
+    public ApiResponse confirmAccount(@RequestParam("token")String verificationToken) {
+        VerificationToken token = verificationTokenDao.findByToken(verificationToken);
+
+        if(token != null)
+        {
+            User user = token.getUser();
+            user.setEnabled(true);
+            userDao.save(user);
+            return new ApiResponse(200, "Sie haben Ihren Account erfolgreich freigeschalten und " +
+                    "werden nun  weitergeleitet zum Login", null) ; //weiterleitung zum login (return "redirect:/login.html?lang=" + request.getLocale().getLanguage(); )
+        }
+        else
+        {
+            return new ApiResponse(400,"Dieser Link ist nicht gültig", null);
+        }
+
+    }
 
 }

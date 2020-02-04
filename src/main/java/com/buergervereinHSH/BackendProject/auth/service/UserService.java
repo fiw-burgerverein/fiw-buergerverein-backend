@@ -15,7 +15,7 @@ public interface UserService {
 
     void createVerificationTokenForUser(User user, String token);
 
-    ApiResponse confirmAccount(String verificationToken);
+   // ApiResponse confirmAccount(String verificationToken);
 
     Set getAuthorities(User user);
 
