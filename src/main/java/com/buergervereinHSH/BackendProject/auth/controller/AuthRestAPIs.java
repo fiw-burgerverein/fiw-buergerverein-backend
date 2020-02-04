@@ -55,16 +55,20 @@ public class AuthRestAPIs {
     EmailServiceImpl emailImpl;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDto loginRequest){
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDto loginDto){
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+                new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = jwtProvider.generateJwtToken(authentication);
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
+        String currEmail = loginDto.getEmail();
+        User user = userDao.findByEmail(currEmail);
+
+        //UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        return ResponseEntity.ok(new JwtResponse(jwt, currEmail, userServiceImpl.getAuthorities(user)));
     }
 
 
@@ -84,6 +88,11 @@ public class AuthRestAPIs {
 
         strRoles.forEach(role -> {
             switch (role){
+                case "geschaeftsstelle":
+                    Role gsRole = roleDao.findByName(RoleName.ROLE_GS);
+                    roles.add(gsRole);
+
+                    break;
                 case "admin":
                     Role adminRole = roleDao.findByName(RoleName.ROLE_ADMIN);
                         //    .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
