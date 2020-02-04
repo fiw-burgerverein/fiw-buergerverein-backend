@@ -5,6 +5,8 @@ import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.Login
 import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.SignUpDto;
 import com.buergervereinHSH.BackendProject.auth.model.User;
 
+import java.util.Set;
+
 public interface UserService {
 
     ApiResponse signUp(SignUpDto signUpDto);
@@ -15,9 +17,6 @@ public interface UserService {
 
     ApiResponse confirmAccount(String verificationToken);
 
-   //public VerificationToken generateNewVerificationToken(final String existingVerificationToken); //neuen Token generieren
-
-
-
+    Set getAuthorities(User user);
 
 }
