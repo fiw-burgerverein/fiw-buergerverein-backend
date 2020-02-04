@@ -1,4 +1,3 @@
-/*
 package com.buergervereinHSH.BackendProject.auth.security.jwt;
 
 import org.slf4j.Logger;
@@ -12,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
+//falls user nicht authorisiert ist wird diese Klasse aufgerufen
 @Component
 public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
 
@@ -27,4 +26,3 @@ public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error -> Unauthorized");
     }
 }
-*/

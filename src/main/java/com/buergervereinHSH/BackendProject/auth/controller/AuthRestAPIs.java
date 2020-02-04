@@ -1,4 +1,3 @@
-/*
 package com.buergervereinHSH.BackendProject.auth.controller;
 
 import com.buergervereinHSH.BackendProject.auth.dataAccessObject.RoleDao;
@@ -120,4 +119,3 @@ public class AuthRestAPIs {
 
 
 }
-*/

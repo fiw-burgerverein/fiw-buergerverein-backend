@@ -2,6 +2,7 @@ package com.buergervereinHSH.BackendProject.auth.web;
 
 public class ApiResponse {
 
+   // @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private int status;
     private String message;
     private Object result;
