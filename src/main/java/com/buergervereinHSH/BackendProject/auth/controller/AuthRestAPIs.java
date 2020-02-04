@@ -4,6 +4,8 @@ import com.buergervereinHSH.BackendProject.auth.dataAccessObject.RoleDao;
 import com.buergervereinHSH.BackendProject.auth.dataAccessObject.UserDao;
 import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.LoginDto;
 import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.SignUpDto;
+import com.buergervereinHSH.BackendProject.auth.exceptions.AccountNotActivatedException;
+import com.buergervereinHSH.BackendProject.auth.exceptions.NoUserFoundException;
 import com.buergervereinHSH.BackendProject.auth.model.Role;
 import com.buergervereinHSH.BackendProject.auth.model.RoleName;
 import com.buergervereinHSH.BackendProject.auth.model.User;
@@ -56,6 +58,12 @@ public class AuthRestAPIs {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDto loginDto){
+
+        User user = userDao.findByEmail(loginDto.getEmail());
+
+        if(user == null) { throw new NoUserFoundException(); }
+        if(!user.isEnabled()) { throw new AccountNotActivatedException(); }
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
 
@@ -63,12 +71,10 @@ public class AuthRestAPIs {
 
         String jwt = jwtProvider.generateJwtToken(authentication);
 
-        String currEmail = loginDto.getEmail();
-        User user = userDao.findByEmail(currEmail);
 
         //UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-        return ResponseEntity.ok(new JwtResponse(jwt, currEmail, userServiceImpl.getAuthorities(user)));
+        return ResponseEntity.ok(new JwtResponse(jwt, loginDto.getEmail(), userServiceImpl.getAuthorities(user)));
     }
 
 
