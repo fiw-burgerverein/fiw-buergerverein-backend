@@ -10,11 +10,13 @@ import com.buergervereinHSH.BackendProject.auth.model.User;
 import com.buergervereinHSH.BackendProject.auth.model.VerificationToken;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Transactional
@@ -114,17 +116,17 @@ public class UserServiceImpl implements UserService {
             return new ApiResponse(400,"Dieser Link ist nicht gültig", null);
         }
 
-
-
     }
 
-    private void validateSignUp(SignUpDto signUpDto) {
+    @Override
+    public Set getAuthorities(User user) {
+        Set authorities = new HashSet<>();
+        user.getRoles().forEach(role -> {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));  //doch als String speichern?
+        });
+        return authorities;
     }
 
-    /*@Override
-    public void setEmailParam(User user, VerificationToken token) {
-
-    }*/
 
    /* @Override   //alten Token überschreiben
     public VerificationToken generateNewVerificationToken(String existingVerificationToken) {
