@@ -1,8 +1,5 @@
 package com.buergervereinHSH.BackendProject.forms.controller;
 
-import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.GeschStellenDto;
-import com.buergervereinHSH.BackendProject.auth.model.GeschStelle;
-import com.buergervereinHSH.BackendProject.auth.model.User;
 import com.buergervereinHSH.BackendProject.auth.web.ApiResponse;
 import com.buergervereinHSH.BackendProject.forms.dataTransferObject.request.FormDto;
 import com.buergervereinHSH.BackendProject.forms.service.FormService;
@@ -13,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
 import javax.validation.Valid;
 
-@CrossOrigin(origins="*")
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/user")
 public class FormController {

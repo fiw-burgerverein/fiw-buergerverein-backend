@@ -15,7 +15,6 @@ import com.buergervereinHSH.BackendProject.auth.model.VerificationToken;
 import com.buergervereinHSH.BackendProject.auth.security.jwt.JwtProvider;
 import com.buergervereinHSH.BackendProject.auth.service.EmailServiceImpl;
 import com.buergervereinHSH.BackendProject.auth.service.UserServiceImpl;
-import com.buergervereinHSH.BackendProject.auth.web.ApiResponse;
 import com.buergervereinHSH.BackendProject.message.response.JwtResponse;
 import com.buergervereinHSH.BackendProject.message.response.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,19 +77,12 @@ public class AuthRestAPIs {
 
         String jwt = jwtProvider.generateJwtToken(authentication);
 
-
-        //UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
         return ResponseEntity.ok(new JwtResponse(jwt, loginDto.getEmail(), userServiceImpl.getAuthorities(user)));
     }
 
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpDto signUpDto){
-/*        if (userDao.existsByEmail(signUpDto.getEmail())) {
-            return new ResponseEntity<>(new ResponseMessage("Fail -> Email is already in use!"),
-                    HttpStatus.BAD_REQUEST);
-        }*/
 
         if(!signUpDto.getEmail().equals(signUpDto.getEmailConfirm())) {
             throw new EmailMismatchException();
@@ -127,18 +119,18 @@ public class AuthRestAPIs {
 
 
         //vollständige URL muss noch geändert werden
-        emailImpl.sendSimpleMessage(user.getEmail(), "Bestätigung Ihres Accounts bei der Stadtteilkoordination " +
-                        "HSH Nord",
+        emailImpl.sendSimpleMessage(user.getEmail(), "Bestätigung Ihres Accounts bei der Stadtteilkoordination "
+                        + "HSH Nord",
                 "Herzlich Willkommen bei der Stadtteilkoordination HSH Nord! \n\n" +
-                        "Um Ihre Email Adresse zu bestätigen und somit Ihren Account freizuschalten, bitte kopieren sie " +
-                        "folgenden Link in ihren Browser: "
-                        + "http://localhost:8080/accountbestaetigung?token="+token+" \n\nNach erfolgreicher Aktivierung " +
-                        "Ihres Accounts haben Sie die " +
-                        "Möglichkeit sich einzuloggen. " +
+                        "Um Ihre Email Adresse zu bestätigen und somit Ihren Account freizuschalten, bitte kopieren sie "
+                        + "folgenden Link in ihren Browser: "
+                        + "http://localhost:8080/accountbestaetigung?token="+token+" \n\nNach erfolgreicher Aktivierung "
+                        + "Ihres Accounts haben Sie die " + "Möglichkeit sich einzuloggen. " +
                         "\n\nViele Grüße, \nIhre Stadtteilkoordination Hohenschönhausen Nord");
 
 
-        return new ResponseEntity<>(new ResponseMessage("Ein Bestätigungslink wurde an die von Ihnen angebene Email gesendet."), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseMessage("Ein Bestätigungslink wurde an die von Ihnen angebene Email " +
+                "gesendet."), HttpStatus.OK);
     }
 
     @PostMapping("/accountConfirm")
