@@ -124,7 +124,7 @@ public class AuthRestAPIs {
                 "Herzlich Willkommen bei der Stadtteilkoordination HSH Nord! \n\n" +
                         "Um Ihre Email Adresse zu bestätigen und somit Ihren Account freizuschalten, bitte kopieren sie "
                         + "folgenden Link in ihren Browser: "
-                        + "http://localhost:8080/accountbestaetigung?token="+token+" \n\nNach erfolgreicher Aktivierung "
+                        + "http://localhost:4200/accountbestaetigung?token="+token+" \n\nNach erfolgreicher Aktivierung "
                         + "Ihres Accounts haben Sie die " + "Möglichkeit sich einzuloggen. " +
                         "\n\nViele Grüße, \nIhre Stadtteilkoordination Hohenschönhausen Nord");
 

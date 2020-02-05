@@ -58,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().
                 authorizeRequests()
-                .antMatchers("/api/auth/**", "/accountbestaetigung").permitAll() //means: no authentication needed to access URL /api/auth; durch Komma weitere hinzufügbar
+                .antMatchers("/api/auth/**", "/resetPassword/**").permitAll() //means: no authentication needed to access URL /api/auth; durch Komma weitere hinzufügbar
                 .anyRequest().authenticated()  //alle anderen erfordern authentifizierung
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
