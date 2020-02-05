@@ -28,8 +28,8 @@ public class FormDto {
     private String oeffarb;
     private String oeffarbbeschr;
 
-//    private Sachkosten[] sachkostenArray;
-//    private Aufwand[] aufwandArray;
+    private Sachkosten[] sachkostenArray;
+    private Aufwand[] aufwandArray;
 //    auch eine Möglichkeit
 //    private ArrayList<Sachkosten> sachkostenList;
 //    private ArrayList<Aufwand> aufwandList;
@@ -104,11 +104,11 @@ public class FormDto {
     public String getZielgruppe() { return zielgruppe; }
     public void setZielgruppe(String zielgruppe) { this.zielgruppe = zielgruppe; }
 
-//    public Sachkosten[] getSachkostenArray() { return sachkostenArray; }
-//    public void setSachkostenArray(Sachkosten[] sachkostenArray) { this.sachkostenArray = sachkostenArray; }
-//
-//    public Aufwand[] getAufwandArray() { return aufwandArray; }
-//    public void setAufwandArray(Aufwand[] aufwandArray) { this.aufwandArray = aufwandArray; }
+    public Sachkosten[] getSachkostenArray() { return sachkostenArray; }
+    public void setSachkostenArray(Sachkosten[] sachkostenArray) { this.sachkostenArray = sachkostenArray; }
+
+    public Aufwand[] getAufwandArray() { return aufwandArray; }
+    public void setAufwandArray(Aufwand[] aufwandArray) { this.aufwandArray = aufwandArray; }
 
     public String getAnrede() { return anrede; }
     public void setAnrede(String anrede) { this.anrede = anrede; }

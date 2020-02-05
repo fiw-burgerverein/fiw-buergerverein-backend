@@ -35,9 +35,10 @@ public class Formular {
 //                                          Sachkosten-Tabelle sollte ihren eigenen Schlüssel haben; und wir können kein
 //                                          Id hier anbinden da es eigtl für jede Spalte einen gibt! Also rufen wir die
 //                                          Sachkosten- und Aufwandtabellen per Fremdschlüssel FormId auf.
-    private float sachkostenSum;
-    private float aufwandSum;
 
+//    private float sachkostenSum;
+//    private float aufwandSum;
+    private float gesamtkosten;
     private String anrede;
     private String vorname;
     private String nachname;
@@ -117,11 +118,14 @@ public class Formular {
         this.oeffarbbeschr = oeffarbbeschr;
     }
 
-    public float getSachkostenSum() { return sachkostenSum; }
-    public void setSachkostenSum(float sachkostenSum) { this.sachkostenSum = sachkostenSum; }
+    public float getGesamtkosten() { return gesamtkosten; }
+    public void setGesamtkosten(float gesamtkosten) { this.gesamtkosten = gesamtkosten; }
 
-    public float getAufwandSum() { return aufwandSum; }
-    public void setAufwandSum(float aufwandSum) { this.aufwandSum = aufwandSum; }
+    //    public float getSachkostenSum() { return sachkostenSum; }
+//    public void setSachkostenSum(float sachkostenSum) { this.sachkostenSum = sachkostenSum; }
+//
+//    public float getAufwandSum() { return aufwandSum; }
+//    public void setAufwandSum(float aufwandSum) { this.aufwandSum = aufwandSum; }
 
     public String getAnrede() { return anrede; }
     public void setAnrede(String anrede) { this.anrede = anrede; }

@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Transactional
 @Service
@@ -35,39 +37,45 @@ public class FormServiceImpl implements FormService {
         Formular formular = new Formular();
         User user = userDao.findByUserId(userId);
         formular.setUser(user);
-        BeanUtils.copyProperties(formDto, formular, "sachkosten", "sachkostenSum", "aufwand", "aufwandSum");
+        BeanUtils.copyProperties(formDto, formular, "sachkosten", "aufwand", "gesamtkosten");
         formular.setCreatedAt(LocalDateTime.now());
         formular.setStatus(Status.IN_BEARBEITUNG);
         formDao.save(formular);
-//
+        float gesamtkosten = 0;
+
 //        float sachkostenGesamt = 0;
-//        Sachkosten[] sachkostenArray = formDto.getSachkostenArray();
-//        for (Sachkosten value : sachkostenArray) {
-//            Sachkosten sachkosten = new Sachkosten();
-//            BeanUtils.copyProperties(value, sachkosten);
-//            sachkosten.setForm(formular);
-//            sachkostenDao.save(sachkosten);
-//
+        Sachkosten[] sachkostenArray = formDto.getSachkostenArray();
+        for (Sachkosten value : sachkostenArray) {
+            Sachkosten sachkosten = new Sachkosten();
+            BeanUtils.copyProperties(value, sachkosten);
+            sachkosten.setForm(formular);
+            sachkostenDao.save(sachkosten);
+
+            gesamtkosten += value.getCost();
 //            sachkostenGesamt += value.getCost();
-//        }
-//
+        }
+
 //        float aufwandGesamt = 0;
-//        Aufwand[] aufwandArray = formDto.getAufwandArray();
-//        for (Aufwand value : aufwandArray) {
-//            Aufwand aufwand = new Aufwand();
-//            BeanUtils.copyProperties(value, aufwand);
-//            aufwand.setForm(formular);
-//            aufwandDao.save(aufwand);
-//
+        Aufwand[] aufwandArray = formDto.getAufwandArray();
+        for (Aufwand value : aufwandArray) {
+            Aufwand aufwand = new Aufwand();
+            BeanUtils.copyProperties(value, aufwand);
+            aufwand.setForm(formular);
+            aufwandDao.save(aufwand);
+
+            gesamtkosten += value.getCost();
 //            aufwandGesamt += value.getCost();
-//        }
-//
+        }
+
 //        formular.setAufwandSum(aufwandGesamt);
 //        formular.setSachkostenSum(sachkostenGesamt);
-//        formDao.save(formular);
+        formular.setGesamtkosten(gesamtkosten);
+        formDao.save(formular);
 
-//        eigentlich noch nicht da der Antrag noch in PDF umgewandelt werden soll und abgeschickt :/
-        return new ApiResponse(200, "Sie haben erfolgreich Ihren Antrag abgesendet!", null);
+        Map<String, Object> result = new HashMap<String,Object>();
+        result.put("formId",formular.getFormId());
+        result.put("createdAt", formular.getCreatedAt());
+        return new ApiResponse(200, "Sie haben erfolgreich Ihren Antrag abgesendet!", result);
     }
 
 }
