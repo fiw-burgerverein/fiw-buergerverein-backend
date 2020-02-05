@@ -1,4 +1,3 @@
-/*
 package com.buergervereinHSH.BackendProject.auth.security.services;
 
 import com.buergervereinHSH.BackendProject.auth.dataAccessObject.UserDao;
@@ -17,7 +16,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     UserDao userDao;
 
-  */
 /*  @Override
     @Transactional
     public UserPrinciple loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -25,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 () -> new UsernameNotFoundException("User Not Found with -> username or email : " + email)));
 
         return UserPrinciple.build(user);
-    }*//*
+    }*/
 
 
   @Override
@@ -39,4 +37,3 @@ public class UserDetailsServiceImpl implements UserDetailsService {
       return UserPrinciple.build(user);
   }
 }
-*/

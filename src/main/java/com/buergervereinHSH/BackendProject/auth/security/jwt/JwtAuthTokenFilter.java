@@ -1,4 +1,3 @@
-/*
 package com.buergervereinHSH.BackendProject.auth.security.jwt;
 
 import com.buergervereinHSH.BackendProject.auth.security.services.UserDetailsServiceImpl;
@@ -60,4 +59,3 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
 
 
 }
-*/

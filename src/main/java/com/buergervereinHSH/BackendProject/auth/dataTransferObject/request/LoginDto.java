@@ -14,17 +14,13 @@ public class LoginDto {
     private String email;
     @NotBlank @NotNull @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
     private String password;
-    private Role role;
+    //private Role role;  // meiner Meinung nach nicht
 
-    public String getEmail() {
-        return email;
-    }
-
+    public String getEmail() { return email; }
     public String getPassword() {
         return password;
     }
 
-    public Role getRole() { return role; }
 
     /*
 

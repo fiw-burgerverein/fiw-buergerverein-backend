@@ -11,7 +11,7 @@ public class JwtResponse {
     private Collection<? extends GrantedAuthority> authorities;
 
     public JwtResponse(String accessToken, String email, Collection<? extends GrantedAuthority> authorities){
-        this.token = accessToken;
+        this.token = accessToken; //typ noch hinzu? In einer Methode wird doch gepräft, ob es der Token mit Bearer beginnt
         this.email = email;
         this.authorities = authorities;
     }

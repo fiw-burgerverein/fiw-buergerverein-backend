@@ -1,4 +1,3 @@
-/*
 package com.buergervereinHSH.BackendProject.auth.security;
 
 import com.buergervereinHSH.BackendProject.auth.security.jwt.JwtAuthEntryPoint;
@@ -59,17 +58,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().
                 authorizeRequests()
-                .antMatchers("/api/auth/**").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/api/auth/**", "/resetPassword/**").permitAll() //means: no authentication needed to access URL /api/auth; durch Komma weitere hinzufügbar
+                .anyRequest().authenticated()  //alle anderen erfordern authentifizierung
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        //http.authorizeRequests().antMatchers("/accountbestaetigung").permitAll();
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+                //authenticationJwtTokenFilter gibt JwtAuthTokenFilter Objekt zurück, das Token anhand Jwt provider validiert
     }
 }
 
 
 
-*/
