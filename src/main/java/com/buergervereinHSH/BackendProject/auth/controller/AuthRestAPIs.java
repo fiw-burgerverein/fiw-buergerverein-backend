@@ -25,6 +25,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,6 +63,9 @@ public class AuthRestAPIs {
     @Autowired
     private VerificationTokenDao verificationTokenDao;
 
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDto loginDto){
 
@@ -69,6 +73,8 @@ public class AuthRestAPIs {
 
         if(user == null) { throw new NoUserFoundException(); }
         if(!user.isEnabled()) { throw new AccountNotActivatedException(); }
+        if(!encoder.matches(loginDto.getPassword(), user.getPassword())) {
+            throw new WrongPasswordException(); }
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
@@ -124,7 +130,7 @@ public class AuthRestAPIs {
                 "Herzlich Willkommen bei der Stadtteilkoordination HSH Nord! \n\n" +
                         "Um Ihre Email Adresse zu bestätigen und somit Ihren Account freizuschalten, bitte kopieren sie "
                         + "folgenden Link in ihren Browser: "
-                        + "http://localhost:4200/accountbestaetigung?token="+token+" \n\nNach erfolgreicher Aktivierung "
+                        + "http://localhost:4200/registrieren/accountbestaetigung?token="+token+" \n\nNach erfolgreicher Aktivierung "
                         + "Ihres Accounts haben Sie die " + "Möglichkeit sich einzuloggen. " +
                         "\n\nViele Grüße, \nIhre Stadtteilkoordination Hohenschönhausen Nord");
 
@@ -145,14 +151,13 @@ public class AuthRestAPIs {
             return new ResponseEntity<>(new ResponseMessage("Sie haben Ihren Account erfolgreich freigeschalten und " +
                     "werden nun  weitergeleitet zum Login"), HttpStatus.OK);
 
-        /*    return new ApiResponse(200, "Sie haben Ihren Account erfolgreich freigeschalten und " +
+     /*       return new ApiResponse(200, "Sie haben Ihren Account erfolgreich freigeschalten und " +
                     "werden nun  weitergeleitet zum Login", null) ; //weiterleitung zum login (return
             // "redirect:/login.html?lang=" + request.getLocale().getLanguage(); )*/
         }
         else
         {
             throw new VerificationTokenLinkNotValid();
-            //return new ApiResponse(400,"Dieser Link ist nicht gültig", null);
         }
     }
 

@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
         emailImpl.sendSimpleMessage(user.getEmail(), "Bestätigung Ihres Accounts bei der Stadtteilkoordination HSH Nord",
                 "Herzlich Willkommen bei der Stadtteilkoordination HSH Nord! \n\n" +
                 "Um Ihre Email Adresse zu bestätigen und somit Ihren Account freizuschalten, bitte klicken Sie auf den folgenden Link: "
-                + "http://localhost:8080/accountbestaetigung?token="+token+" \n\nNach erfolgreicher Aktivierung Ihres Accounts haben Sie die Möglichkeit sich einzuloggen. " +
+                + "http://localhost:4200/registrieren/accountbestaetigung?token="+token+" \n\nNach erfolgreicher Aktivierung Ihres Accounts haben Sie die Möglichkeit sich einzuloggen. " +
                 "\n\nViele Grüße, \nIhre Stadtteilkoordination Hohenschönhausen Nord");
         return new ApiResponse(200, "Ein Bestätigungslink wurde an die von Ihnen angebene Email gesendet.", user);
     }
@@ -99,6 +99,7 @@ public class UserServiceImpl implements UserService {
         verificationTokenDao.save(myToken);
     }
 
+
 /*    @Override
     public ApiResponse confirmAccount(String verificationToken) {
         VerificationToken token = verificationTokenDao.findByToken(verificationToken);
@@ -109,11 +110,11 @@ public class UserServiceImpl implements UserService {
             user.setEnabled(true);
             userDao.save(user);
             return new ApiResponse(200, "Sie haben Ihren Account erfolgreich freigeschalten und " +
-                    "werden nun  weitergeleitet zum Login", user) ; //weiterleitung zum login (return "redirect:/login.html?lang=" + request.getLocale().getLanguage(); )
+                    "werden nun  weitergeleitet zum Login", null) ; //weiterleitung zum login (return "redirect:/login.html?lang=" + request.getLocale().getLanguage(); )
         }
         else
         {
-            return new ApiResponse(400,"Dieser Link ist nicht gültig", null);
+            throw new InvalidLinkException();
         }
 
     }*/
@@ -122,7 +123,7 @@ public class UserServiceImpl implements UserService {
     public Set getAuthorities(User user) {
         Set authorities = new HashSet<>();
         user.getRoles().forEach(role -> {
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));  //doch als String speichern?
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
         });
         return authorities;
     }

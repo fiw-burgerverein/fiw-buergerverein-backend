@@ -58,7 +58,7 @@ public class FormServiceImpl implements FormService {
         formDao.save(formular);
 
         float sachkostenGesamt = 0;
-        Sachkosten[] sachkostenArray = formDto.getSachkostenArray();
+/*        Sachkosten[] sachkostenArray = formDto.getSachkostenArray();
         for (Sachkosten value : sachkostenArray) {
             Sachkosten sachkosten = new Sachkosten();
             BeanUtils.copyProperties(value, sachkosten);
@@ -66,10 +66,10 @@ public class FormServiceImpl implements FormService {
             sachkostenDao.save(sachkosten);
 
             sachkostenGesamt += value.getCost();
-        }
+        }*/
 
         float aufwandGesamt = 0;
-        Aufwand[] aufwandArray = formDto.getAufwandArray();
+/*        Aufwand[] aufwandArray = formDto.getAufwandArray();
         for (Aufwand value : aufwandArray) {
             Aufwand aufwand = new Aufwand();
             BeanUtils.copyProperties(value, aufwand);
@@ -77,7 +77,7 @@ public class FormServiceImpl implements FormService {
             aufwandDao.save(aufwand);
 
             aufwandGesamt += value.getCost();
-        }
+        }*/
 
         formular.setAufwandSum(aufwandGesamt);
         formular.setSachkostenSum(sachkostenGesamt);
