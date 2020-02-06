@@ -1,0 +1,13 @@
+Dokumentation Backend
+
+--> da es mit JWT überhaupt nicht funktionierte (wurde nicht auf mehrere Seiten übertragen) alle dazugehörige Klassen
+    auskommentiert
+--> UserController.java, FormController.java: CrossOrigins-Annotation hinzugefügt
+--> User.java auf eine ältere Version zurückgesetzt
+--> FormDto.java, Formular.java: Variablen umbennant, sodass sie mit Frontend übereinstimmen;
+                                      die Variablen, die für die 1. Formularseite relevant sind, auskommentiert (noch
+                                      keine Ahnung, wie die zwischengespeichert werden sollen)
+--> Formular.java, FormServiceImpl.java: Aufwand, Sachkosten auskommentiert, da es noch keine Tabellen im Frontend gibt
+                                        (ACHTUNG: irgendwie sollte man dann auch die verschachtelten JSON-Objekte
+                                        vom Frontend schicken)
+-->

@@ -10,12 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/resetPassword")
+@RequestMapping("/login")
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 public class ResetPasswordController {
     @Autowired
     private ResetPasswordService resetPasswordService;
 
-    @PostMapping("/forgot")
+    @PostMapping("/forgot-password")
     public ApiResponse sendResetToken(@Valid @RequestBody ForgotPasswordDto forgotPasswordDto) {
         return resetPasswordService.sendResetToken(forgotPasswordDto);
     }
