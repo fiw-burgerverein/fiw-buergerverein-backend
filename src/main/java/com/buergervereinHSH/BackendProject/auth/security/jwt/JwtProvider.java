@@ -1,3 +1,4 @@
+
 package com.buergervereinHSH.BackendProject.auth.security.jwt;
 
 import com.buergervereinHSH.BackendProject.auth.security.services.UserPrinciple;
@@ -19,7 +20,7 @@ public class JwtProvider {
     private String jwtSecret;
 
     @Value("${buergervereinHSH.app.jwtExpiration}")
-    private int jwtExpiration;
+   private int jwtExpiration;
 
     public String generateJwtToken(Authentication authentication){
 
@@ -50,12 +51,13 @@ public class JwtProvider {
         }
 
         return false;
-    }
+   }
 
-    public String getEmailFromJwtToken(String token){
+   public String getEmailFromJwtToken(String token){
         return Jwts.parser()
                 .setSigningKey(jwtSecret)
                 .parseClaimsJws(token)
                 .getBody().getSubject();
     }
 }
+

@@ -23,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 
 @Transactional
@@ -52,46 +54,53 @@ public class FormServiceImpl implements FormService {
         Formular formular = new Formular();
         User user = userDao.findByUserId(userId);
         formular.setUser(user);
-        BeanUtils.copyProperties(formDto, formular, "sachkosten", "sachkostenSum", "aufwand", "aufwandSum");
+        BeanUtils.copyProperties(formDto, formular, "sachkosten", "aufwand", "gesamtkosten");
         formular.setCreatedAt(LocalDateTime.now());
         formular.setStatus(Status.IN_BEARBEITUNG);
         formDao.save(formular);
+        float gesamtkosten = 0;
 
-        float sachkostenGesamt = 0;
-/*        Sachkosten[] sachkostenArray = formDto.getSachkostenArray();
+//        float sachkostenGesamt = 0;
+        Sachkosten[] sachkostenArray = formDto.getSachkostenArray();
         for (Sachkosten value : sachkostenArray) {
             Sachkosten sachkosten = new Sachkosten();
             BeanUtils.copyProperties(value, sachkosten);
             sachkosten.setForm(formular);
             sachkostenDao.save(sachkosten);
 
-            sachkostenGesamt += value.getCost();
-        }*/
+            gesamtkosten += value.getCost();
+//            sachkostenGesamt += value.getCost();
+        }
 
-        float aufwandGesamt = 0;
-/*        Aufwand[] aufwandArray = formDto.getAufwandArray();
+//        float aufwandGesamt = 0;
+        Aufwand[] aufwandArray = formDto.getAufwandArray();
         for (Aufwand value : aufwandArray) {
             Aufwand aufwand = new Aufwand();
             BeanUtils.copyProperties(value, aufwand);
             aufwand.setForm(formular);
             aufwandDao.save(aufwand);
 
-            aufwandGesamt += value.getCost();
-        }*/
+            gesamtkosten += value.getCost();
+//            aufwandGesamt += value.getCost();
+        }
 
-        formular.setAufwandSum(aufwandGesamt);
-        formular.setSachkostenSum(sachkostenGesamt);
+//        formular.setAufwandSum(aufwandGesamt);
+//        formular.setSachkostenSum(sachkostenGesamt);
+        formular.setGesamtkosten(gesamtkosten);
         formDao.save(formular);
 
-/*        // Email an entsprechende GS:
+      /*        // Email an entsprechende GS:
         String GSName = formular.getOrt();
         GeschStelle geschStelle = geschStellenDao.findByName(GSName);
         String emailGS = geschStelle.getEmail();
 
         emailImpl.sendSimpleMessage(emailGS, "Neuer Antrag eingegangen",
                 "Ein neu eingegangener Antrag liegt für Sie zum Download bereit.");*/
-
-        return new ApiResponse(200, "Sie haben erfolgreich Ihren Antrag abgesendet!", null);
+      
+        Map<String, Object> result = new HashMap<String,Object>();
+        result.put("formId",formular.getFormId());
+        result.put("createdAt", formular.getCreatedAt());
+        return new ApiResponse(200, "Sie haben erfolgreich Ihren Antrag abgesendet!", result);
     }
 
     @Override

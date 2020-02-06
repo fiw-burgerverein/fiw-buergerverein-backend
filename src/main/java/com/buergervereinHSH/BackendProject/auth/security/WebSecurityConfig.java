@@ -68,6 +68,3 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //authenticationJwtTokenFilter gibt JwtAuthTokenFilter Objekt zurück, das Token anhand Jwt provider validiert
     }
 }
-
-
-

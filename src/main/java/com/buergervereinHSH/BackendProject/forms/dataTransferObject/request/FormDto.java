@@ -12,29 +12,24 @@ import java.util.Date;
 public class FormDto {
 
     @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
-    private String projectName;
+    private String projektname;
     @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
     private String beschreibung;
     @NotNull
-    private Date startDate;
+    private Date startdatum;
     @NotNull
-    private Date endDate;
+    private Date enddatum;
     @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
     private String ort;
     private String zielgruppe;
     @NotNull
-    private int anzTeilnehmer;
+    private int anzteiln;
     @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
-    private String activities;
-    private String activitiesBeschreibung;
+    private String oeffarb;
+    private String oeffarbbeschr;
 
-/*    private Sachkosten[] sachkostenArray;
-    private Aufwand[] aufwandArray;*/
-
-
-//    auch eine Möglichkeit
-//    private ArrayList<Sachkosten> sachkostenList;
-//    private ArrayList<Aufwand> aufwandList;
+    private Sachkosten[] sachkostenArray;
+    private Aufwand[] aufwandArray;
 
     @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
     private String anrede;
@@ -46,25 +41,59 @@ public class FormDto {
     @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
     private String strasse;
     @NotNull
-    private int hausNr;
+    private int hausnr;
     @NotNull
     private int plz;
     @Email @NotNull @NotBlank @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
     private String email;
-    private int telNr;
+    private int telnr;
 
 //  Getters and Setters
-    public String getProjectName() { return projectName; }
-    public void setProjectName(String projectName) { this.projectName = projectName; }
+    public String getProjektname() { return projektname; }
+    public void setProjektname(String projektname) { this.projektname = projektname; }
 
     public String getBeschreibung() { return beschreibung; }
     public void setBeschreibung(String beschreibung) { this.beschreibung = beschreibung; }
 
-    public Date getStartDate() { return startDate; }
-    public void setStartDate(Date startDate) { this.startDate = startDate; }
+    public Date getStartdatum() {
+        return startdatum;
+    }
 
-    public Date getEndDate() { return endDate; }
-    public void setEndDate(Date endDate) { this.endDate = endDate; }
+    public void setStartdatum(Date startdatum) {
+        this.startdatum = startdatum;
+    }
+
+    public Date getEnddatum() {
+        return enddatum;
+    }
+
+    public void setEnddatum(Date enddatum) {
+        this.enddatum = enddatum;
+    }
+
+    public int getAnzteiln() {
+        return anzteiln;
+    }
+
+    public void setAnzteiln(int anzteiln) {
+        this.anzteiln = anzteiln;
+    }
+
+    public String getOeffarb() {
+        return oeffarb;
+    }
+
+    public void setOeffarb(String oeffarb) {
+        this.oeffarb = oeffarb;
+    }
+
+    public String getOeffarbbeschr() {
+        return oeffarbbeschr;
+    }
+
+    public void setOeffarbbeschr(String oeffarbbeschr) {
+        this.oeffarbbeschr = oeffarbbeschr;
+    }
 
     public String getOrt() { return ort; }
     public void setOrt(String ort) { this.ort = ort; }
@@ -72,20 +101,12 @@ public class FormDto {
     public String getZielgruppe() { return zielgruppe; }
     public void setZielgruppe(String zielgruppe) { this.zielgruppe = zielgruppe; }
 
-    public int getAnzTeilnehmer() { return anzTeilnehmer; }
-    public void setAnzTeilnehmer(int anzTeilnehmer) { this.anzTeilnehmer = anzTeilnehmer; }
 
-    public String getActivities() { return activities; }
-    public void setActivities(String activities) { this.activities = activities; }
-
-    public String getActivitiesBeschreibung() { return activitiesBeschreibung; }
-    public void setActivitiesBeschreibung(String activitiesBeschreibung) { this.activitiesBeschreibung = activitiesBeschreibung; }
-
-/*    public Sachkosten[] getSachkostenArray() { return sachkostenArray; }
+    public Sachkosten[] getSachkostenArray() { return sachkostenArray; }
     public void setSachkostenArray(Sachkosten[] sachkostenArray) { this.sachkostenArray = sachkostenArray; }
 
     public Aufwand[] getAufwandArray() { return aufwandArray; }
-    public void setAufwandArray(Aufwand[] aufwandArray) { this.aufwandArray = aufwandArray; }*/
+    public void setAufwandArray(Aufwand[] aufwandArray) { this.aufwandArray = aufwandArray; }
 
     public String getAnrede() { return anrede; }
     public void setAnrede(String anrede) { this.anrede = anrede; }
@@ -102,8 +123,8 @@ public class FormDto {
     public String getStrasse() { return strasse; }
     public void setStrasse(String strasse) { this.strasse = strasse; }
 
-    public int getHausNr() { return hausNr; }
-    public void setHausNr(int hausNr) { this.hausNr = hausNr; }
+    public int getHausnr() { return hausnr; }
+    public void setHausnr(int hausNr) { this.hausnr = hausnr; }
 
     public int getPlz() { return plz; }
     public void setPlz(int plz) { this.plz = plz; }
@@ -111,7 +132,7 @@ public class FormDto {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public int getTelNr() { return telNr; }
-    public void setTelNr(int telNr) { this.telNr = telNr; }
+    public int getTelnr() { return telnr; }
+    public void setTelnr(int telNr) { this.telnr = telnr; }
 
 }

@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
 import javax.validation.Valid;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 public class FormController {
 
     @Autowired

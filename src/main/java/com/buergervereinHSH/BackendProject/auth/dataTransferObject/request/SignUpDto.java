@@ -28,27 +28,12 @@ public class SignUpDto {
 
     public String getPasswordConfirm() { return passwordConfirm; }
     public void setPasswordConfirm(String passwordConfirm) { this.passwordConfirm = passwordConfirm; }
+  
 /*    public Set<String> getRole() { return role; }
-
-    public void setRole(Set<String> role) { this.role = role; }*/
+    public void setRole(Set<String> role) { this.role = role; } */
 
     public String getPassword() {
         return password;
     }
     public void setPassword(String password) { this.password = password; }
-
-
-
-    /*
-     @NotBlank
-    @Size(max = 60)
-    @Email
-    private String email;
-
-    @NotBlank
-    @Size(min = 6, max = 40)
-    private String password;
-
-
-     */
 }

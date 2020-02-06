@@ -12,6 +12,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/")
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 public class UserController {
 
     @Autowired
@@ -24,7 +25,6 @@ public class UserController {
     public ApiResponse login(@Valid @RequestBody LoginDto loginDto){
         return userService.login(loginDto);
     }
-
 /*    @RequestMapping(value="/registrieren/accountbestaetigung", method= {RequestMethod.GET, RequestMethod.POST})
     public ApiResponse confirmAccount(@RequestParam("token")String verificationToken){
         return userService.confirmAccount(verificationToken);
