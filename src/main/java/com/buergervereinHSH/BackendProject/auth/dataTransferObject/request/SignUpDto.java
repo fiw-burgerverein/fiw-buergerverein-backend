@@ -3,7 +3,9 @@ package com.buergervereinHSH.BackendProject.auth.dataTransferObject.request;
 import com.buergervereinHSH.BackendProject.auth.model.Role;
 
 import javax.validation.constraints.*;
+import java.util.Set;
 
+//setter raus?
 public class SignUpDto {
 
     @NotBlank @NotNull @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
@@ -16,26 +18,22 @@ public class SignUpDto {
     private String password;
     @NotBlank @NotNull @NotEmpty(message = "Sie müssen dieses Feld ausfüllen.")
     private String passwordConfirm;
-//    private Role role;
+    //private Set<String> role;
 
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
     public String getEmailConfirm() { return emailConfirm; }
     public void setEmailConfirm(String emailConfirm) { this.emailConfirm = emailConfirm; }
 
     public String getPasswordConfirm() { return passwordConfirm; }
     public void setPasswordConfirm(String passwordConfirm) { this.passwordConfirm = passwordConfirm; }
+  
+/*    public Set<String> getRole() { return role; }
+    public void setRole(Set<String> role) { this.role = role; } */
 
     public String getPassword() {
         return password;
     }
     public void setPassword(String password) { this.password = password; }
-
-//    public Role getRole() { return role; }
-//    public void setRole(Role role) { this.role = role; }
 }

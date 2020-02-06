@@ -1,5 +1,7 @@
 package com.buergervereinHSH.BackendProject.forms.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,8 +10,8 @@ public class Aufwand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long aufwandId;
-    @ManyToOne(targetEntity = Formular.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "formId")
+    @ManyToOne(targetEntity = Formular.class, fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false, name = "formId")@JsonIgnore
     private Formular form;
 
     private String Zweck;

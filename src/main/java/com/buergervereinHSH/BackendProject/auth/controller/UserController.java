@@ -25,14 +25,9 @@ public class UserController {
     public ApiResponse login(@Valid @RequestBody LoginDto loginDto){
         return userService.login(loginDto);
     }
-
-    @RequestMapping(value="/registrieren/accountbestaetigung", method= {RequestMethod.GET, RequestMethod.POST})
-    // @ResponseBody
+/*    @RequestMapping(value="/registrieren/accountbestaetigung", method= {RequestMethod.GET, RequestMethod.POST})
     public ApiResponse confirmAccount(@RequestParam("token")String verificationToken){
         return userService.confirmAccount(verificationToken);
-    }
+    }*/
 
 }
-
-
-

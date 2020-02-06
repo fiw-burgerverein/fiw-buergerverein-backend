@@ -10,10 +10,13 @@ import com.buergervereinHSH.BackendProject.auth.model.User;
 import com.buergervereinHSH.BackendProject.auth.model.VerificationToken;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Transactional
@@ -33,13 +36,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public ApiResponse signUp(SignUpDto signUpDto) {
         User user = new User();
-
-        if (!signUpDto.getEmail().equals(signUpDto.getEmailConfirm())) {
+/*
+        if(!signUpDto.getEmail().equals(signUpDto.getEmailConfirm())) {
             throw new EmailMismatchException();
-        }
-        if (!signUpDto.getPassword().equals(signUpDto.getPasswordConfirm())) {
-            throw new PasswordMismatchException();
-        }
+    }
+        if(!signUpDto.getPassword().equals(signUpDto.getPasswordConfirm())) {
+        throw new PasswordMismatchException();
+    }*/
 
         User oldUser = userDao.findByEmail(signUpDto.getEmail());
         if ((oldUser != null)) {
@@ -57,14 +60,14 @@ public class UserServiceImpl implements UserService {
 
         String token = UUID.randomUUID().toString();
         createVerificationTokenForUser(user, token);  //Erstellen&Speichern eines VerificationTokens-Objekts&Zuordnung zu User
-
+      
+        return new ApiResponse(200, "Ein Bestätigungslink wurde an die von Ihnen angebene Email gesendet.", user);
         //vollständige URL muss noch geändert werden
         emailImpl.sendSimpleMessage(user.getEmail(), "Bestätigung Ihres Accounts bei der Stadtteilkoordination HSH Nord",
                 "Herzlich Willkommen bei der Stadtteilkoordination HSH Nord! \n\n" +
-                        "Um Ihre Email Adresse zu bestätigen und somit Ihren Account freizuschalten, bitte klicken Sie auf den folgenden Link: "
-                        + "http://localhost:4200/registrieren/accountbestaetigung?token=" + token + " \n\nNach erfolgreicher Aktivierung Ihres Accounts haben Sie die Möglichkeit sich einzuloggen. " +
-                        "\n\nViele Grüße, \nIhre Stadtteilkoordination Hohenschönhausen Nord");
-        return new ApiResponse(200, "Ein Bestätigungslink wurde an die von Ihnen angebene Email gesendet.", user);
+                "Um Ihre Email Adresse zu bestätigen und somit Ihren Account freizuschalten, bitte klicken Sie auf den folgenden Link: "
+                + "http://localhost:4200/registrieren/accountbestaetigung?token="+token+" \n\nNach erfolgreicher Aktivierung Ihres Accounts haben Sie die Möglichkeit sich einzuloggen. " +
+                "\n\nViele Grüße, \nIhre Stadtteilkoordination Hohenschönhausen Nord");
     }
 
     @Override
@@ -92,7 +95,8 @@ public class UserServiceImpl implements UserService {
         verificationTokenDao.save(myToken);
     }
 
-    @Override
+
+/*    @Override
     public ApiResponse confirmAccount(String verificationToken) {
         VerificationToken token = verificationTokenDao.findByToken(verificationToken);
 
@@ -101,23 +105,24 @@ public class UserServiceImpl implements UserService {
             User user = token.getUser();
             user.setEnabled(true);
             userDao.save(user);
-            return new ApiResponse(200, "Sie haben Ihren Account erfolgreich freigeschaltet und " +
-                    "werden nun zum Login weitergeleitet", null) ;
-            //weiterleitung zum login (return "redirect:/login.html?lang=" + request.getLocale().getLanguage(); )
+            return new ApiResponse(200, "Sie haben Ihren Account erfolgreich freigeschalten und " +
+                    "werden nun  weitergeleitet zum Login", null) ; //weiterleitung zum login (return "redirect:/login.html?lang=" + request.getLocale().getLanguage(); )
         }
         else
         {
             throw new InvalidLinkException();
         }
-    }
-
-    private void validateSignUp(SignUpDto signUpDto) {
-    }
-
-    /*@Override
-    public void setEmailParam(User user, VerificationToken token) {
-
     }*/
+
+    @Override
+    public Set getAuthorities(User user) {
+        Set authorities = new HashSet<>();
+        user.getRoles().forEach(role -> {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+        });
+        return authorities;
+    }
+
 
    /* @Override   //alten Token überschreiben
     public VerificationToken generateNewVerificationToken(String existingVerificationToken) {

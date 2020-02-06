@@ -1,6 +1,8 @@
 package com.buergervereinHSH.BackendProject.forms.model;
 
 import com.buergervereinHSH.BackendProject.auth.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -13,8 +15,9 @@ public class Formular {
     private long formId;
     private LocalDateTime createdAt;
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "userId")
+    @JoinColumn(nullable = false, name = "userId")@JsonIgnore
     private User user;
+    @Enumerated(EnumType.ORDINAL)
     private Status status;
 
     private String projektname;
