@@ -101,14 +101,6 @@ public class FormDto {
     public String getZielgruppe() { return zielgruppe; }
     public void setZielgruppe(String zielgruppe) { this.zielgruppe = zielgruppe; }
 
-    public int getAnzTeilnehmer() { return anzTeilnehmer; }
-    public void setAnzTeilnehmer(int anzTeilnehmer) { this.anzTeilnehmer = anzTeilnehmer; }
-
-    public String getActivities() { return activities; }
-    public void setActivities(String activities) { this.activities = activities; }
-
-    public String getActivitiesBeschreibung() { return activitiesBeschreibung; }
-    public void setActivitiesBeschreibung(String activitiesBeschreibung) { this.activitiesBeschreibung = activitiesBeschreibung; }
 
     public Sachkosten[] getSachkostenArray() { return sachkostenArray; }
     public void setSachkostenArray(Sachkosten[] sachkostenArray) { this.sachkostenArray = sachkostenArray; }

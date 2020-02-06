@@ -54,8 +54,6 @@ public class User {
             cascade =  CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
     private VerificationToken verificationToken;
 
-    public User(){
-    }
 
     public User(String email, String password, Set<Role> roles, boolean enabled) {
         this.email = email;
