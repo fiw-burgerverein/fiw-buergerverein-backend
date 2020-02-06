@@ -29,8 +29,8 @@ public class GeschStellenController {
 
     @PreAuthorize("hasRole('GS') or hasRole('ADMIN')")
     @PostMapping("/{formId}")
-    public ApiResponse changeState(@PathVariable("formId") long formId, @Valid @RequestBody GeschStellenDto geschStellenDto) {
-        return formService.changeState(formId, geschStellenDto);
+    public ApiResponse changeState(@PathVariable("formId") long formId, @Valid @RequestBody int statusInt) {
+        return formService.changeState(formId, statusInt);
     }
 
     @PreAuthorize("hasRole('GS') or hasRole('ADMIN')")

@@ -121,11 +121,11 @@ public class FormServiceImpl implements FormService {
     }
 
     @Override
-    public ApiResponse changeState(long formId, GeschStellenDto geschStelleDto) {
+    public ApiResponse changeState(long formId, int statusInt) {
 
         Formular formular = formDao.findByFormId(formId);
 
-        int state = geschStelleDto.getState();
+        int state = statusInt;
         if(state==1) {formular.setStatus(Status.GENEHMIGT);}
         else if(state==2) {formular.setStatus(Status.ABGELEHNT);}
         else {formular.setStatus(Status.IN_BEARBEITUNG);}

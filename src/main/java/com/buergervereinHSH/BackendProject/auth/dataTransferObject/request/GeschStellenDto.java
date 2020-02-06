@@ -1,3 +1,4 @@
+/*
 package com.buergervereinHSH.BackendProject.auth.dataTransferObject.request;
 
 public class GeschStellenDto {
@@ -7,3 +8,4 @@ public class GeschStellenDto {
     public int getState() { return state; }
 
 }
+*/
