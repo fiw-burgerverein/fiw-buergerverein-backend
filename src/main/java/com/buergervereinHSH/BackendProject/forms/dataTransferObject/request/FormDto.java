@@ -28,8 +28,10 @@ public class FormDto {
     private String activities;
     private String activitiesBeschreibung;
 
-    private Sachkosten[] sachkostenArray;
-    private Aufwand[] aufwandArray;
+/*    private Sachkosten[] sachkostenArray;
+    private Aufwand[] aufwandArray;*/
+
+
 //    auch eine Möglichkeit
 //    private ArrayList<Sachkosten> sachkostenList;
 //    private ArrayList<Aufwand> aufwandList;
@@ -79,11 +81,11 @@ public class FormDto {
     public String getActivitiesBeschreibung() { return activitiesBeschreibung; }
     public void setActivitiesBeschreibung(String activitiesBeschreibung) { this.activitiesBeschreibung = activitiesBeschreibung; }
 
-    public Sachkosten[] getSachkostenArray() { return sachkostenArray; }
+/*    public Sachkosten[] getSachkostenArray() { return sachkostenArray; }
     public void setSachkostenArray(Sachkosten[] sachkostenArray) { this.sachkostenArray = sachkostenArray; }
 
     public Aufwand[] getAufwandArray() { return aufwandArray; }
-    public void setAufwandArray(Aufwand[] aufwandArray) { this.aufwandArray = aufwandArray; }
+    public void setAufwandArray(Aufwand[] aufwandArray) { this.aufwandArray = aufwandArray; }*/
 
     public String getAnrede() { return anrede; }
     public void setAnrede(String anrede) { this.anrede = anrede; }
