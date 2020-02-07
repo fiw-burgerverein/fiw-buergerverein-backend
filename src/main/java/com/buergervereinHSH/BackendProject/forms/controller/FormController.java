@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
@@ -19,10 +20,16 @@ public class FormController {
     private FormService formService;
 
 
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+  /*  @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping("/{userId}/formular")
     public ApiResponse saveForm(@PathVariable("userId") long userId, @Valid @RequestBody FormDto formDto) {
         return formService.saveForm(userId, formDto);
+    }*/
+
+   @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+   @PostMapping("/formular")
+   public ApiResponse saveForm(HttpServletRequest request, @Valid @RequestBody FormDto formDto) {
+       return formService.saveForm(request, formDto);
     }
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
@@ -30,6 +37,13 @@ public class FormController {
     public ApiResponse sendPDFToUser(@PathVariable("userId") long userId) throws MessagingException {
         return formService.sendPDFtoUser(userId);
     }
+
+/*    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PostMapping("test/getUserid")
+    *//*  public Long getUserIdfromToken(@RequestHeader (name="Authorization") String token) {*//*
+    public Long getUserIdfromToken(HttpServletRequest request) {
+        return formService.getUserIdfromToken(request);
+    }*/
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/{formId}")
