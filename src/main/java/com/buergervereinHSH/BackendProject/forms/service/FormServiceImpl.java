@@ -2,8 +2,9 @@ package com.buergervereinHSH.BackendProject.forms.service;
 
 import com.buergervereinHSH.BackendProject.auth.dataAccessObject.GeschStellenDao;
 import com.buergervereinHSH.BackendProject.auth.dataAccessObject.UserDao;
-import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.GeschStellenDto;
 import com.buergervereinHSH.BackendProject.auth.model.User;
+import com.buergervereinHSH.BackendProject.auth.security.jwt.JwtAuthTokenFilter;
+import com.buergervereinHSH.BackendProject.auth.security.jwt.JwtProvider;
 import com.buergervereinHSH.BackendProject.auth.service.EmailServiceImpl;
 import com.buergervereinHSH.BackendProject.auth.web.ApiResponse;
 import com.buergervereinHSH.BackendProject.forms.dataAccessObject.AufwandDao;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,9 +49,15 @@ public class FormServiceImpl implements FormService {
     private EmailServiceImpl emailImpl;
     @Autowired
     SingleFormDto singleFormDto;
+    @Autowired
+    JwtProvider jwtProvider;
+    @Autowired
+    JwtAuthTokenFilter jwtAuthTokenFilter;
 
     @Override
-    public ApiResponse saveForm(long userId, FormDto formDto) {
+    public ApiResponse saveForm(HttpServletRequest request, FormDto formDto) {
+
+        Long userId = getUserIdfromToken(request);
 
         Formular formular = new Formular();
         User user = userDao.findByUserId(userId);
@@ -121,11 +129,11 @@ public class FormServiceImpl implements FormService {
     }
 
     @Override
-    public ApiResponse changeState(long formId, GeschStellenDto geschStelleDto) {
+    public ApiResponse changeState(long formId, int statusInt) {
 
-        Formular formular = formDao.findByFormId(formId);
+            Formular formular = formDao.findByFormId(formId);
 
-        int state = geschStelleDto.getState();
+        int state = statusInt;
         if(state==1) {formular.setStatus(Status.GENEHMIGT);}
         else if(state==2) {formular.setStatus(Status.ABGELEHNT);}
         else {formular.setStatus(Status.IN_BEARBEITUNG);}
@@ -148,6 +156,16 @@ public class FormServiceImpl implements FormService {
         singleFormDto.setAufwandArray(currAufwandArray);
 
         return new ApiResponse(200, "Antrag erfolgreich übermittelt", singleFormDto);
+    }
+
+    @Override
+    public Long getUserIdfromToken(HttpServletRequest request) {
+
+        String jwt = jwtAuthTokenFilter.getJwt(request);
+        String email = jwtProvider.getEmailFromJwtToken(jwt);
+        User user = userDao.findByEmail(email);
+        Long user_id = user.getUserId();
+        return user_id;
     }
 
     @Override

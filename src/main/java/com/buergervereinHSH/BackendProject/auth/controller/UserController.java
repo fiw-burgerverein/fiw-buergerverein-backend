@@ -5,6 +5,7 @@ import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.Login
 import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.SignUpDto;
 import com.buergervereinHSH.BackendProject.auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,5 +30,6 @@ public class UserController {
     public ApiResponse confirmAccount(@RequestParam("token")String verificationToken){
         return userService.confirmAccount(verificationToken);
     }*/
+
 
 }
