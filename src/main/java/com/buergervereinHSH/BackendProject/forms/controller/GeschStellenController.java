@@ -3,13 +3,14 @@ package com.buergervereinHSH.BackendProject.forms.controller;
 import com.buergervereinHSH.BackendProject.auth.web.ApiResponse;
 import com.buergervereinHSH.BackendProject.forms.service.FormService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
 @RequestMapping("/alleAntraege")
 public class GeschStellenController {
@@ -27,7 +28,7 @@ public class GeschStellenController {
 
     @PreAuthorize("hasRole('GS') or hasRole('ADMIN')")
     @PostMapping("/{formId}")
-    public ApiResponse changeState(@PathVariable("formId") long formId, @Valid @RequestBody int statusInt) {
+    public ResponseEntity<?> changeState(@PathVariable("formId") long formId, @Valid @RequestBody int statusInt) {
         return formService.changeState(formId, statusInt);
     }
 
