@@ -1,5 +1,6 @@
 package com.buergervereinHSH.BackendProject.forms.controller;
 
+import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.ChangeStateDto;
 import com.buergervereinHSH.BackendProject.auth.web.ApiResponse;
 import com.buergervereinHSH.BackendProject.forms.service.FormService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +26,17 @@ public class GeschStellenController {
         return formService.getAllForms();
     }
 
-
     @PreAuthorize("hasRole('GS') or hasRole('ADMIN')")
-    @PostMapping("/{formId}")
-    public ResponseEntity<?> changeState(@PathVariable("formId") long formId, @Valid @RequestBody int statusInt) {
-        return formService.changeState(formId, statusInt);
+    @PostMapping("/detail")
+    public ResponseEntity<?> changeState(@Valid @RequestBody ChangeStateDto changeStateDto) {
+        return formService.changeState(changeStateDto);
     }
+
+   /* @PreAuthorize("hasRole('GS') or hasRole('ADMIN')")
+    @PostMapping("/{formId}")
+    public ResponseEntity<?> changeState(@PathVariable("formId") String formId, @Valid @RequestBody int statusInt) {
+        return formService.changeState(formId, statusInt);
+    }*/
 
     @PreAuthorize("hasRole('GS') or hasRole('ADMIN')")
     @GetMapping("/{formId}")

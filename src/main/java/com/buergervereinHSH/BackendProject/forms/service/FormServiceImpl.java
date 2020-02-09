@@ -2,6 +2,7 @@ package com.buergervereinHSH.BackendProject.forms.service;
 
 import com.buergervereinHSH.BackendProject.auth.dataAccessObject.GeschStellenDao;
 import com.buergervereinHSH.BackendProject.auth.dataAccessObject.UserDao;
+import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.ChangeStateDto;
 import com.buergervereinHSH.BackendProject.auth.model.User;
 import com.buergervereinHSH.BackendProject.auth.security.jwt.JwtAuthTokenFilter;
 import com.buergervereinHSH.BackendProject.auth.security.jwt.JwtProvider;
@@ -132,9 +133,23 @@ public class FormServiceImpl implements FormService {
     }
 
     @Override
-    public ResponseEntity<?> changeState(long formId, int statusInt) {
+    public ResponseEntity<?> changeState(ChangeStateDto changeStateDto) {
 
+        long formId = changeStateDto.getFormId();
         Formular formular = formDao.findByFormId(formId);
+
+        int state = changeStateDto.getIntState();
+        if(state==1) {formular.setStatus(Status.GENEHMIGT);}
+        else if(state==2) {formular.setStatus(Status.ABGELEHNT);}
+        else {formular.setStatus(Status.IN_BEARBEITUNG);}
+
+        return new ResponseEntity(new ResponseMessage("Status des Antrags erfolgreich geändert"), HttpStatus.OK);
+    }
+    /*@Override
+    public ResponseEntity<?> changeState(String formId, int statusInt) {
+
+        long LongFormid = Long.parseLong( formId );
+        Formular formular = formDao.findByFormId(LongFormid);
 
         int state = statusInt;
         if(state==1) {formular.setStatus(Status.GENEHMIGT);}
@@ -142,7 +157,7 @@ public class FormServiceImpl implements FormService {
         else {formular.setStatus(Status.IN_BEARBEITUNG);}
 
         return new ResponseEntity(new ResponseMessage("Status des Antrags erfolgreich geändert"), HttpStatus.OK);
-    }
+    }*/
 
 
     @Override
