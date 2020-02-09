@@ -18,6 +18,7 @@ import com.buergervereinHSH.BackendProject.forms.model.Sachkosten;
 import com.buergervereinHSH.BackendProject.forms.model.Status;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -175,6 +176,16 @@ public class FormServiceImpl implements FormService {
 
         return new ApiResponse(200, "Alle Antraege erfolgreich übermittelt", allForms);
 
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse> getAllFormsOfUser(HttpServletRequest request) {
+        Long userId = getUserIdfromToken(request);
+        User user = userDao.findByUserId(userId);
+
+        List<Formular> allForms = formDao.getFormularByUser(user);
+
+        return ResponseEntity.ok(new ApiResponse(200, "Alle Anträge übermittelt", allForms));
     }
 
 }

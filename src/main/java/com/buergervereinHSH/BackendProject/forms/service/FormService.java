@@ -2,6 +2,7 @@ package com.buergervereinHSH.BackendProject.forms.service;
 
 import com.buergervereinHSH.BackendProject.auth.web.ApiResponse;
 import com.buergervereinHSH.BackendProject.forms.dataTransferObject.request.FormDto;
+import org.springframework.http.ResponseEntity;
 
 
 import javax.mail.MessagingException;
@@ -13,6 +14,7 @@ public interface FormService {
     ApiResponse sendPDFtoUser(long userId) throws MessagingException;
     ApiResponse changeState(long formId, int statusInt );
     ApiResponse getAllForms();
+    ResponseEntity<ApiResponse>  getAllFormsOfUser(HttpServletRequest request);
     ApiResponse getSingleForm(long formId);
     Long getUserIdfromToken(HttpServletRequest request);
 

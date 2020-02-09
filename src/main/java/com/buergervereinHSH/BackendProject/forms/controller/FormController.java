@@ -4,6 +4,7 @@ import com.buergervereinHSH.BackendProject.auth.web.ApiResponse;
 import com.buergervereinHSH.BackendProject.forms.dataTransferObject.request.FormDto;
 import com.buergervereinHSH.BackendProject.forms.service.FormService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,6 +45,12 @@ public class FormController {
     public Long getUserIdfromToken(HttpServletRequest request) {
         return formService.getUserIdfromToken(request);
     }*/
+
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @GetMapping("alleAntraegeUserin")
+    public ResponseEntity<ApiResponse>getAllFormsOfUser(HttpServletRequest request) {
+        return formService.getAllFormsOfUser(request);
+    }
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/{formId}")
