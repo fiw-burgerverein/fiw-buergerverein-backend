@@ -14,6 +14,7 @@ public interface FormService {
     ApiResponse sendPDFtoUser(long userId) throws MessagingException;
     ResponseEntity<?> changeState(long formId, int statusInt );
     ApiResponse getAllForms();
+    ResponseEntity<ApiResponse>  getAllFormsOfUser(HttpServletRequest request);
     ApiResponse getSingleForm(long formId);
     Long getUserIdfromToken(HttpServletRequest request);
 

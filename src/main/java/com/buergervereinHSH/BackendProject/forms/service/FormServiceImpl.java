@@ -180,4 +180,14 @@ public class FormServiceImpl implements FormService {
 
     }
 
+    @Override
+    public ResponseEntity<ApiResponse> getAllFormsOfUser(HttpServletRequest request) {
+        Long userId = getUserIdfromToken(request);
+        User user = userDao.findByUserId(userId);
+
+        List<Formular> allForms = formDao.getFormularByUser(user);
+
+        return ResponseEntity.ok(new ApiResponse(200, "Alle Anträge übermittelt", allForms));
+    }
+
 }
