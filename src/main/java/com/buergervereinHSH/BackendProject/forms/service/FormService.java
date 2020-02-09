@@ -12,7 +12,7 @@ public interface FormService {
 
     ApiResponse saveForm(HttpServletRequest request, FormDto formDto);
     ApiResponse sendPDFtoUser(long userId) throws MessagingException;
-    ApiResponse changeState(long formId, int statusInt );
+    ResponseEntity<?> changeState(long formId, int statusInt );
     ApiResponse getAllForms();
     ResponseEntity<ApiResponse>  getAllFormsOfUser(HttpServletRequest request);
     ApiResponse getSingleForm(long formId);

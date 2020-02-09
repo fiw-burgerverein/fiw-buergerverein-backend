@@ -16,8 +16,10 @@ import com.buergervereinHSH.BackendProject.forms.model.Aufwand;
 import com.buergervereinHSH.BackendProject.forms.model.Formular;
 import com.buergervereinHSH.BackendProject.forms.model.Sachkosten;
 import com.buergervereinHSH.BackendProject.forms.model.Status;
+import com.buergervereinHSH.BackendProject.message.response.ResponseMessage;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
@@ -130,16 +132,16 @@ public class FormServiceImpl implements FormService {
     }
 
     @Override
-    public ApiResponse changeState(long formId, int statusInt) {
+    public ResponseEntity<?> changeState(long formId, int statusInt) {
 
-            Formular formular = formDao.findByFormId(formId);
+        Formular formular = formDao.findByFormId(formId);
 
         int state = statusInt;
         if(state==1) {formular.setStatus(Status.GENEHMIGT);}
         else if(state==2) {formular.setStatus(Status.ABGELEHNT);}
         else {formular.setStatus(Status.IN_BEARBEITUNG);}
 
-        return new ApiResponse(200, "Der Status des Antrags wurde erfolgreich geändert", formular);
+        return new ResponseEntity(new ResponseMessage("Status des Antrags erfolgreich geändert"), HttpStatus.OK);
     }
 
 
