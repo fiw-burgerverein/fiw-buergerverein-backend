@@ -3,6 +3,7 @@ package com.buergervereinHSH.BackendProject.forms.service;
 import com.buergervereinHSH.BackendProject.auth.dataAccessObject.GeschStellenDao;
 import com.buergervereinHSH.BackendProject.auth.dataAccessObject.UserDao;
 import com.buergervereinHSH.BackendProject.auth.dataTransferObject.request.ChangeStateDto;
+import com.buergervereinHSH.BackendProject.auth.model.GeschStelle;
 import com.buergervereinHSH.BackendProject.auth.model.User;
 import com.buergervereinHSH.BackendProject.auth.security.jwt.JwtAuthTokenFilter;
 import com.buergervereinHSH.BackendProject.auth.security.jwt.JwtProvider;
@@ -101,13 +102,13 @@ public class FormServiceImpl implements FormService {
         formular.setGesamtkosten(gesamtkosten);
         formDao.save(formular);
 
-      /*        // Email an entsprechende GS:
+              // Email an entsprechende GS:
         String GSName = formular.getOrt();
         GeschStelle geschStelle = geschStellenDao.findByName(GSName);
         String emailGS = geschStelle.getEmail();
 
         emailImpl.sendSimpleMessage(emailGS, "Neuer Antrag eingegangen",
-                "Ein neu eingegangener Antrag liegt für Sie zum Download bereit.");*/
+                "Ein neu eingegangener Antrag liegt für Sie zum Download bereit.");
       
         Map<String, Object> result = new HashMap<String,Object>();
         result.put("formId",formular.getFormId());
